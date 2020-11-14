@@ -41,20 +41,15 @@ plt = InitDataPlot(maxloops);
 % initialize uvms structure
 uvms = InitUVMS('Robust');
 % uvms.q 
-% Initial joint positions. You can change these values to initialize the simulation with a 
-% different starting position for the arm
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
+
+
 % uvms.p
-% initial position of the vehicle
-% the vector contains the values in the following order
-% [x y z r(rot_x) p(rot_y) y(rot_z)]
-% RPY angles are applied in the following sequence
-% R(rot_x, rot_y, rot_z) = Rz (rot_z) * Ry(rot_y) * Rx(rot_x)
-uvms.p = [8.5 38.5 -38   0 -0.06 0.5]'; 
+uvms.p = [10.5 35.5 -36 0 0 pi/2]'; 
 
 % defines the goal position for the end-effector/tool position task
-uvms.goalPosition = [12.2025   37.3748  -39.8860]';
-uvms.wRg = rotation(0, pi, pi/2);
+uvms.goalPosition = [10.5   37.5  -38]';
+uvms.wRg = rotation(0, 0, 0);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
 % defines the tool control point
@@ -70,20 +65,25 @@ for t = 0:deltat:end_time
     
     % receive altitude information from unity
     uvms = ReceiveUdpPackets(uvms, uAltitude);
-    
-    % main kinematic algorithm initialization
-    % ydotbar order is [qdot_1, qdot_2, ..., qdot_7, xdot, ydot, zdot, omega_x, omega_y, omega_z]
-    % the vector of the vehicle linear and angular velocities are assumed
-    % projected on <v>
+   
     
     ydotbar = zeros(13,1);
     Qp = eye(13); 
-    % add all the other tasks here!
-    % the sequence of iCAT_task calls defines the priority
+    
+    %   SAFETY OFFSET TASK
+    [Qp, ydotbar] = iCAT_task(uvms.A.z_offset,    uvms.Jz_offset,    Qp, ydotbar, uvms.xdot.z_offset,  0.0001,   0.01, 10);
+    
+    
+    %   POSITION TASK
+    [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
+   
+    %   ATTITUDE TASK
+    [Qp, ydotbar] = iCAT_task(uvms.A.v_att,    uvms.Jv_att,    Qp, ydotbar, uvms.xdot.v_att,  0.0001,   0.01, 10);
+    
     %[Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
     
-    [....]
     [Qp, ydotbar] = iCAT_task(eye(13),     eye(13),    Qp, ydotbar, zeros(13,1),  0.0001,   0.01, 10);    % this task should be the last one
+    
     
     % get the two variables for integration
     uvms.q_dot = ydotbar(1:7);

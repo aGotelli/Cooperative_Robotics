@@ -36,4 +36,15 @@ uvms.Jt_v = [zeros(3) eye(3); eye(3) -skew(uvms.vTt(1:3,4))];
 uvms.Jt = [uvms.Jt_a uvms.Jt_v];
 
 
+%   ATTITUDE AND POSITION CONTROL 
+uvms.Jv_pos = [ zeros(3, 7)     uvms.wTv(1:3, 1:3)      zeros(3, 3)     ];
+uvms.Jv_att = [ zeros(3, 7)         zeros(3, 3)     uvms.wTv(1:3, 1:3)  ];
+
+
+%   JACOBIAN FOR THE TASK OF ESURING OFFSET
+k = [0 0 1]';
+uvms.Jz_offset = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
+
+
+
 end

@@ -34,6 +34,48 @@ figure(4);
 hplot = plot(plt.t, plt.a(8:9,:));
 set(hplot, 'LineWidth', 2);
 legend('Amu', 'Aha');
+
+
+
+figure(5)
+plot3(plt.history.x, plt.history.y, plt.history.z, 'k', 'LineWidth', 2)
+
+hold on
+
+for index = 1:size(plt.axis, 2)
+    scale = 0.2;
+    
+    plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).x(1)], ...
+            [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).x(2)], ...
+             [plt.vehi.z(index),; plt.vehi.z(index) + scale*plt.axis(index).x(3)], 'r');
+    
+    plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).y(1)], ...
+            [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).y(2)], ...
+             [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).y(3)],'g');
+         
+    plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).z(1)], ...
+            [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).z(2)], ...
+             [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).z(3)], 'b');
+    
+    hold on 
+    
+end
+
+
+
+figure(6)
+plot(plt.history.z)
+hold on
+
+ground = plt.history.z - plt.distance;
+ground = ground(100:end);
+thresh_hard = ground + plt.min_offset;
+thresh_soft = ground + plt.min_offset + plt.range;
+plot(ground, 'r')
+plot(thresh_hard, 'k')
+plot(thresh_soft, 'g-')
+legend('path', 'sea floor', 'hard threshold', 'soft threshold')
+
     
 
 
