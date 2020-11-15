@@ -171,7 +171,7 @@ uvms.wTg_t = [uvms.wRg_t uvms.goalPosition_t; 0 0 0 1];
 
 % Defines the goal position of the vehicle frame
 uvms.goalPosition_v = [12.2025   37.3748  -37.8860]';
-uvms.wRg_v = rotation(0, 0, 0);
+uvms.wRg_v = rotation(pi/3, 0, 0);
 uvms.wTg_v = [uvms.wRg_v, uvms.goalPosition_v; 0, 0, 0, 1];
 
 mission.actionSafeNavigationAligned = [2, 3, 4, 5, 8];
