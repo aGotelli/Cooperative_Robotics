@@ -28,6 +28,7 @@ plt.a(9, loop) = uvms.A.ha(1,1);
 plt.toolx(:,loop) = uvms.wTt(1,4);
 plt.tooly(:,loop) = uvms.wTt(2,4);
 
+%% Plot vehicle position, initial position and goal position, frames
 i = [1 0 0]';
 j = [0 1 0]';
 k = [0 0 1]';
@@ -35,28 +36,24 @@ plt.history.x(loop) = i'*uvms.wTv(1:3,4);
 plt.history.y(loop) = j'*uvms.wTv(1:3,4);
 plt.history.z(loop) = k'*uvms.wTv(1:3,4);
 
-scale = 0.1;
-i_ = [scale 0 0 1]';
-j_ = [0 scale 0 1]';
-k_ = [0 0 scale 1]';
-if t == floor(t)
-    index = floor(t) + 1;
+if mod(t, 2) == 0 && t ~= 0 % t == floor(t) to plot every second
+%     index = floor(t) + 1;
+    index = t / 2;
     plt.axis(index).x = uvms.wTv(1:3,1:3)*i;
     plt.axis(index).y = uvms.wTv(1:3,1:3)*j;
-    plt.axis(index).z = uvms.wTv(1:3,1:3)*k; 
-    
-    plt.point(index).i = uvms.wTv*i_;
-    plt.point(index).j = uvms.wTv*j_;
-    plt.point(index).k = uvms.wTv*k_;
+    plt.axis(index).z = uvms.wTv(1:3,1:3)*k;
     
     plt.vehi.x(index) = i'*uvms.wTv(1:3,4);
     plt.vehi.y(index) = j'*uvms.wTv(1:3,4);
     plt.vehi.z(index) = k'*uvms.wTv(1:3,4);
 end
 
-
 plt.distance(loop) = uvms.w_a;
 plt.min_offset = uvms.min_offset;
 plt.range = uvms.range_offset;
+plt.initPos = uvms.initPosition;
+plt.goalPos = uvms.goalPosition;
+plt.wRg = uvms.wRg;
+plt.wRv = uvms.initRotation;
 
 end

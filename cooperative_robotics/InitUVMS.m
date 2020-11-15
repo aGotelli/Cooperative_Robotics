@@ -60,19 +60,16 @@ uvms.Jatt = [];
 uvms.xdot.v_pos = [];
 uvms.xdot.v_att = [];
 
-
 %   ADDING THE DEFINITION FOR THE TASK ENSURING OFFSET
 uvms.Jz_offset = [];
 uvms.xdot.z_offset = 0;
 uvms.A.z_offset = 0;
 
-uvms.min_offset = 10;
+uvms.min_offset = 1;
 uvms.range_offset = 0.5;
 
 uvms.w_a = 0;
 uvms.w_a_previous = 0;
-
-
 
 end
 

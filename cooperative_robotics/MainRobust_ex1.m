@@ -40,12 +40,14 @@ plt = InitDataPlot(maxloops);
 
 % initialize uvms structure
 uvms = InitUVMS('Robust');
+
 % uvms.q 
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
-
 % uvms.p
 uvms.p = [10.5 35.5 -36 0 0 pi/2]'; 
+uvms.initPosition = uvms.p(1:3)';
+uvms.initRotation = rotation(uvms.p(4), uvms.p(5), uvms.p(6));
 
 % defines the goal position for the end-effector/tool position task
 uvms.goalPosition = [10.5   37.5  -38]';
@@ -65,14 +67,13 @@ for t = 0:deltat:end_time
     
     % receive altitude information from unity
     uvms = ReceiveUdpPackets(uvms, uAltitude);
-   
-    
+  
     ydotbar = zeros(13,1);
     Qp = eye(13); 
     
+    
     %   SAFETY OFFSET TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.z_offset,    uvms.Jz_offset,    Qp, ydotbar, uvms.xdot.z_offset,  0.0001,   0.01, 10);
-    
     
     %   POSITION TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);

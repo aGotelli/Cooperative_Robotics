@@ -36,50 +36,87 @@ set(hplot, 'LineWidth', 2);
 legend('Amu', 'Aha');
 
 
-
+%% Plot the 3D path and the frames
 figure(5)
-plot3(plt.history.x, plt.history.y, plt.history.z, 'k', 'LineWidth', 2)
-
+subplot(2, 1, 1)
 hold on
 
-for index = 1:size(plt.axis, 2)
-    scale = 0.2;
+% Plot the initial position, the goal position and the robot's path
+scatter3(plt.initPos(1), plt.initPos(2), plt.initPos(3), 50, 'b', 'filled');
+scatter3(plt.goalPos(1), plt.goalPos(2), plt.goalPos(3), 50, 'g', 'filled');
+plot3(plt.history.x, plt.history.y, plt.history.z, 'r', 'LineWidth', 2);
+legend('Initial position', 'Goal position', '3D path')
+title("Robot's path")
+
+scale = 0.2;
+subplot(2, 1, 2)
+hold on
+
+% Plot the initial vehicle frame
+p1 = plot3([plt.initPos(1); plt.initPos(1) + scale*plt.wRv(1, 1)], ...
+      [plt.initPos(2); plt.initPos(2) + scale*plt.wRv(2, 1)], ...
+      [plt.initPos(3); plt.initPos(3) + scale*plt.wRv(3, 1)], 'b');
     
-    plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).x(1)], ...
-            [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).x(2)], ...
-             [plt.vehi.z(index),; plt.vehi.z(index) + scale*plt.axis(index).x(3)], 'r');
+plot3([plt.initPos(1); plt.initPos(1) + scale*plt.wRv(1, 2)], ...
+      [plt.initPos(2); plt.initPos(2) + scale*plt.wRv(2, 2)], ...
+      [plt.initPos(3); plt.initPos(3) + scale*plt.wRv(3, 2)], 'b');
+         
+plot3([plt.initPos(1); plt.initPos(1) + scale*plt.wRv(1, 3)], ...
+      [plt.initPos(2); plt.initPos(2) + scale*plt.wRv(2, 3)], ...
+      [plt.initPos(3); plt.initPos(3) + scale*plt.wRv(3, 3)], 'b');
+  
+% Plot the goal frame
+p2 = plot3([plt.goalPos(1); plt.goalPos(1) + scale*plt.wRg(1, 1)], ...
+      [plt.goalPos(2); plt.goalPos(2) + scale*plt.wRg(2, 1)], ...
+      [plt.goalPos(3); plt.goalPos(3) + scale*plt.wRg(3, 1)], 'g');
+    
+plot3([plt.goalPos(1); plt.goalPos(1) + scale*plt.wRg(1, 2)], ...
+      [plt.goalPos(2); plt.goalPos(2) + scale*plt.wRg(2, 2)], ...
+      [plt.goalPos(3); plt.goalPos(3) + scale*plt.wRg(3, 2)], 'g');
+         
+plot3([plt.goalPos(1); plt.goalPos(1) + scale*plt.wRg(1, 3)], ...
+      [plt.goalPos(2); plt.goalPos(2) + scale*plt.wRg(2, 3)], ...
+      [plt.goalPos(3); plt.goalPos(3) + scale*plt.wRg(3, 3)], 'g');
+  
+% Plot the vehicle frame every 2 seconds
+for index = 1:size(plt.axis, 2)
+    
+    hold on
+    
+    p3 = plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).x(1)], ...
+          [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).x(2)], ...
+          [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).x(3)], 'r');
     
     plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).y(1)], ...
-            [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).y(2)], ...
-             [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).y(3)],'g');
+          [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).y(2)], ...
+          [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).y(3)], 'r');
          
     plot3([plt.vehi.x(index); plt.vehi.x(index) + scale*plt.axis(index).z(1)], ...
-            [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).z(2)], ...
-             [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).z(3)], 'b');
-    
-    hold on 
+          [plt.vehi.y(index); plt.vehi.y(index) + scale*plt.axis(index).z(2)], ...
+          [plt.vehi.z(index); plt.vehi.z(index) + scale*plt.axis(index).z(3)], 'r');
     
 end
 
+legend([p1, p2, p3], 'Initial vehicle frame', 'Goal frame', 'Vehicle frames')
+title('Frames')
 
+hold off
 
+%% Plot the 2D path with the sea floor and the thresholds
 figure(6)
-plot(plt.history.z)
-hold on
-
 ground = plt.history.z - plt.distance;
 ground = ground(100:end);
 thresh_hard = ground + plt.min_offset;
 thresh_soft = ground + plt.min_offset + plt.range;
+
+hold on
+plot(plt.history.z)
 plot(ground, 'r')
 plot(thresh_hard, 'k')
 plot(thresh_soft, 'g-')
-legend('path', 'sea floor', 'hard threshold', 'soft threshold')
-
-    
-
-
-    
+legend('Path', 'Sea floor', 'Hard threshold', 'Soft threshold')
+title('Vehicle 2D path with sea floor and thresholds')
+hold off
 
 end
 
