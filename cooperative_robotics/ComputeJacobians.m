@@ -46,5 +46,10 @@ k = [0 0 1]';
 uvms.Jz_offset = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
 
 
+%   JACOBIAN FOR THE TASK FOR LANDING
+k = [0 0 1]';
+uvms.Jlanding = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
+
+
 
 end

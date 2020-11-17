@@ -16,3 +16,16 @@ w_d = uvms.wTv(1:3, 1:3)*v_d;
 k = [0 0 1]';
 uvms.w_a = k' * w_d;
 uvms.A.z_offset = DecreasingBellShapedFunction(uvms.min_offset, (uvms.min_offset + uvms.range_offset), 0, 1, uvms.w_a);
+
+%   ACTIVATION FUNCTION FOR THE FOR LANDING
+v_d = [0 0 uvms.sensorDistance]';
+w_d = uvms.wTv(1:3, 1:3)*v_d;
+k = [0 0 1]';
+uvms.w_a = k' * w_d;
+uvms.A.landing = 1;
+
+
+
+
+
+

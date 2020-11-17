@@ -71,5 +71,10 @@ uvms.range_offset = 0.5;
 uvms.w_a = 0;
 uvms.w_a_previous = 0;
 
+
+%   ADDING THE DEFINITION FOR THE TASK FOR LANDING
+uvms.Jlanding = [];
+uvms.xdot.landing = 0;
+uvms.A.landing = 0;
 end
 
