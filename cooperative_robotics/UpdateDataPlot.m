@@ -56,8 +56,8 @@ plt.distance(loop) = uvms.w_a;
 plt.min_offset = uvms.min_offset;
 plt.range = uvms.range_offset;
 plt.initPos = uvms.initPosition;
-plt.goalPos = uvms.goalPosition;
-plt.wRg = uvms.wRg;
+plt.goalPos = uvms.goalPosition_v;
+plt.wRg = uvms.wRg_v;
 plt.wRv = uvms.initRotation;
 
 end

@@ -24,6 +24,7 @@ uvms.jlmax  = [2.9;1.65;2.9;0.01;2.9;1.25;2.8];
 % to be computed at each time step
 uvms.wTv = eye(4,4);
 uvms.wTt = eye(4,4);
+uvms.wTg = eye(4,4);
 uvms.vTw = eye(4,4);
 uvms.vTe = eye(4,4);
 uvms.vTt = eye(4,4);
@@ -38,22 +39,25 @@ uvms.sensorDistance = 0;
 
 uvms.Jjl = [];
 uvms.Jmu = [];
-uvms.Jha = [];
 uvms.Jt_a = [];
 uvms.Jt_v = [];
 uvms.Jt = [];
 
 uvms.xdot.jl = [];
 uvms.xdot.mu = [];
-uvms.xdot.ha = [];
 uvms.xdot.t = [];
     
 uvms.A.jl = zeros(7,7);
 uvms.A.mu = 0;
-uvms.A.ha = zeros(1,1);
 uvms.A.t = zeros(6,6);
 
-%   INITIALIZATION FOR ATTITUDE AND POSITION CONTROL
+%%   INITIALIZATION FOR HORIZONTAL ATTITUDE CONTROL
+uvms.A.ha = zeros(1,1);
+uvms.Jha = [];
+uvms.xdot.ha = [];
+uvms.v_rho = [];
+
+%%   INITIALIZATION FOR ATTITUDE AND POSITION CONTROL
 uvms.A.v_pos = zeros(3, 3);
 uvms.A.v_att = zeros(3, 3);
 uvms.Jatt = [];
@@ -61,10 +65,10 @@ uvms.xdot.v_pos = [];
 uvms.xdot.v_att = [];
 uvms.ang = [];
 
-%   ADDING THE DEFINITION FOR THE TASK ENSURING OFFSET
-uvms.Jz_offset = [];
-uvms.xdot.z_offset = 0;
-uvms.A.z_offset = 0;
+%%   ADDING THE DEFINITION FOR THE TASK ENSURING MINIMUM ALTITUDE
+uvms.JminAlt = [];
+uvms.xdot.minAlt = 0;
+uvms.A.minAlt = 0;
 
 uvms.min_offset = 1;
 uvms.range_offset = 0.5;
@@ -72,10 +76,10 @@ uvms.range_offset = 0.5;
 uvms.w_a = 0;
 uvms.w_a_previous = 0;
 
-
-%   ADDING THE DEFINITION FOR THE TASK FOR LANDING
+%%   ADDING THE DEFINITION FOR THE TASK FOR LANDING
 uvms.Jlanding = [];
 uvms.xdot.landing = 0;
 uvms.A.landing = 0;
+
 end
 

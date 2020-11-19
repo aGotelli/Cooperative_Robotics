@@ -35,21 +35,41 @@ uvms.Jt_v = [zeros(3) eye(3); eye(3) -skew(uvms.vTt(1:3,4))];
 % juxtapose the two Jacobians to obtain the global one
 uvms.Jt = [uvms.Jt_a uvms.Jt_v];
 
+%%   HORIZONTAL ATTITUDE
+w_kw = [0, 0, 1]';
+v_kv = [0, 0, 1]';
+v_kw = uvms.vTw(1:3, 1:3) * w_kw;
 
-%   ATTITUDE AND POSITION CONTROL 
+% rho is the misalignment vector, norm(rho) is the angle
+uvms.v_rho = ReducedVersorLemma(v_kw, v_kv);
+
+if norm(uvms.v_rho) ~= 0
+    
+    v_n = uvms.v_rho / norm(uvms.v_rho);
+    
+else
+
+    v_n = [0, 0, 0]';
+   
+end
+    
+uvms.Jha = [zeros(1, 7), zeros(1, 3), v_n'];
+
+%%   ATTITUDE AND POSITION CONTROL 
 uvms.Jv_pos = [ zeros(3, 7)     uvms.wTv(1:3, 1:3)      zeros(3, 3)     ];
 uvms.Jv_att = [ zeros(3, 7)         zeros(3, 3)     uvms.wTv(1:3, 1:3)  ];
 
+%%   JACOBIAN FOR THE TASK OF ENSURING OFFSET
+v_d = [0 0 uvms.sensorDistance]';
+w_d = uvms.wTv(1:3, 1:3)*v_d;
 
-%   JACOBIAN FOR THE TASK OF ESURING OFFSET
 k = [0 0 1]';
-uvms.Jz_offset = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
+uvms.w_a = k' * w_d;
 
+uvms.JminAlt = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
 
-%   JACOBIAN FOR THE TASK FOR LANDING
+%%   JACOBIAN FOR THE TASK FOR LANDING
 k = [0 0 1]';
 uvms.Jlanding = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
-
-
 
 end
