@@ -59,6 +59,7 @@ uvms.A.v_att = zeros(3, 3);
 uvms.Jatt = [];
 uvms.xdot.v_pos = [];
 uvms.xdot.v_att = [];
+uvms.ang = [];
 
 %   ADDING THE DEFINITION FOR THE TASK ENSURING OFFSET
 uvms.Jz_offset = [];

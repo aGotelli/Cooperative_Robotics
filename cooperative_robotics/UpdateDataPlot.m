@@ -46,6 +46,10 @@ if mod(t, 2) == 0 && t ~= 0 % t == floor(t) to plot every second
     plt.vehi.x(index) = i'*uvms.wTv(1:3,4);
     plt.vehi.y(index) = j'*uvms.wTv(1:3,4);
     plt.vehi.z(index) = k'*uvms.wTv(1:3,4);
+    
+    plt.ang.x(index) = i'*uvms.ang;
+    plt.ang.y(index) = j'*uvms.ang;
+    plt.ang.z(index) = k'*uvms.ang;
 end
 
 plt.distance(loop) = uvms.w_a;

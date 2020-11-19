@@ -55,9 +55,7 @@ for index = 1:size(plt.axis, 2)
           [plt.vehi.z(index); plt.vehi.z(index) + plt.ang.z(index)], 'k');
     view(45, 45);
 end
-xlabel('x [m]');
-ylabel('y [m]');
-zlabel('z [m]');
+xlabel('x [m]')
 legend('Initial position', 'Goal position', '3D path', 'Misalignment vector')
 title("Robot's path")
 
@@ -112,9 +110,6 @@ for index = 1:size(plt.axis, 2)
     
 end
 view(45, 45);
-xlabel('x [m]');
-ylabel('y [m]');
-zlabel('z [m]');
 legend([p1, p2, p3], 'Initial vehicle frame', 'Goal frame', 'Vehicle frames')
 title('Frames')
 

@@ -4,9 +4,15 @@ clc;
 clear;
 close all
 
+
+
+%   So for the plot here you shold plot the derivative of the vector, you
+%   will observe a constant vector which norm decreses. So we need to plot
+%   this vector plus we need to adjust the axis lenght 
+
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 25;
+end_time = 10;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 

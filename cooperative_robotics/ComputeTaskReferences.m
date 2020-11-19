@@ -11,6 +11,7 @@ uvms.xdot.t(4:6) = Saturate(uvms.xdot.t(4:6), 0.2);
 
 %   ATTITUDE AMD POSITION CONTROL 
 [ang, lin] = CartError(uvms.wTg , uvms.wTv);
+uvms.ang = ang;
 
 uvms.xdot.v_pos = Saturate(0.2 * lin , 0.2) ;
 uvms.xdot.v_att = Saturate(0.2 * ang , 0.2) ;
