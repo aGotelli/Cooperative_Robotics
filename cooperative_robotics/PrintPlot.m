@@ -122,16 +122,17 @@ hold off
 
 %% Plot the 2D path with the sea floor and the thresholds
 figure(7)
+% initially distance = 0, ground is wrong
 ground = plt.history.z - plt.distance;
-ground = ground(100:end);
+% ground = ground(100:end);
 thresh_hard = ground + plt.min_offset;
 thresh_soft = ground + plt.min_offset + plt.range;
 
 hold on
-plot(plt.history.z)
-plot(ground, 'r')
-plot(thresh_hard, 'k')
-plot(thresh_soft, 'g-')
+plot(plt.history.x,plt.history.z,'LineWidth',2)
+plot(plt.history.x,ground, 'r')
+plot(plt.history.x,thresh_hard, 'k')
+plot(plt.history.x,thresh_soft, 'g-')
 legend('Path', 'Sea floor', 'Hard threshold', 'Soft threshold')
 title('Vehicle 2D path with sea floor and thresholds')
 hold off

@@ -1,4 +1,4 @@
-function MainRobust
+
 addpath('./simulation_scripts');
 clc;
 clear;
@@ -10,7 +10,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 10;
+end_time = 40;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -147,7 +147,9 @@ for t = 0:deltat:end_time
     % add debug prints here
     if (mod(t,0.1) == 0)
         t
-        uvms.w_a
+        altitude = uvms.w_a
+        [ang, lin] = CartError(uvms.wTg_v , uvms.wTv);
+        distance = norm(lin)
     end
 
     % enable this to have the simulation approximately evolving like real
@@ -160,4 +162,4 @@ fclose(uArm);
 
 PrintPlot(plt);
 
-end
+

@@ -43,7 +43,7 @@ end
 uvms.A.t = eye(6) * mission.activationFunctions{1};
 
 %%   HORIZONTAL ATTITUDE CONTROL
-uvms.A.ha = IncreasingBellShapedFunction(0.1, 0.2, 0, 1, norm(uvms.v_rho)) * mission.activationFunctions{2};
+uvms.A.ha = IncreasingBellShapedFunction(0.01, 0.05, 0, 1, norm(uvms.v_rho)) * mission.activationFunctions{2};
 
 %%   ATTITUDE AND POSITION CONTROL
 uvms.A.v_pos = eye(3) * mission.activationFunctions{3};

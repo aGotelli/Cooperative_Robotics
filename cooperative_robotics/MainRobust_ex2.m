@@ -1,4 +1,4 @@
-function MainRobust
+
 addpath('./simulation_scripts');
 clc;
 clear;
@@ -9,10 +9,6 @@ deltat = 0.005;
 end_time = 25;
 loop = 1;
 maxloops = ceil(end_time/deltat);
-
-% this struct can be used to evolve what the UVMS has to do
-mission.phase = 1;
-mission.phase_time = 0;
 
 % Rotation matrix to convert coordinates between Unity and the <w> frame
 % do not change
@@ -41,22 +37,60 @@ plt = InitDataPlot(maxloops);
 % initialize uvms structure
 uvms = InitUVMS('Robust');
 
+%% Define actions and initialize the mission structure
+% Tool position = 1
+% Horizontal attitude = 2
+% Vehicle position = 3
+% Vehicle attitude = 4
+% Vehicle minimum altitude = 5
+% Vehicle altitude control = 6
+
+% this struct can be used to evolve what the UVMS has to do
+mission.phase = 1;
+mission.phase_time = 0;
+mission.switch = 0;
+mission.activationFunctions = {uvms.A.t, uvms.A.ha, uvms.A.v_pos, uvms.A.v_att, uvms.A.minAlt, uvms.A.landing};
+mission.totalNumOfTasks = numel(mission.activationFunctions);
+
 % uvms.q 
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
-% uvms.p
-uvms.p = [10.5 35.5 -38 0 -0.06 0.5]'; 
+%% Point 2.1
+% % Initial position
+% uvms.p = [10.5 37.5 -38 0 -0.06 0.5]';
+% 
+% % Defines the goal position for the vehicle position and attitude task
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.wRg_v = rotation(0, 0, 0);
+% 
+% % Actions definition
+% mission.actionLanding = [2,6];
+
+% mission.currentAction = mission.actionLanding;
+
+%% Point 2.2
+% Initial position
+uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+
+% Defines the goal position for the vehicle position and attitude task
+uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.wRg_v = rotation(0, -0.06, 0.5);
+
+% Actions definition
+mission.actionLanding = [2,6];
+mission.actionSafeNavigation = [2, 3, 4, 5];
+
+mission.currentAction = mission.actionSafeNavigation;
+
+%% Initialization
 uvms.initPosition = uvms.p(1:3)';
 uvms.initRotation = rotation(uvms.p(4), uvms.p(5), uvms.p(6));
+uvms.wTg_v = [uvms.wRg_v uvms.goalPosition_v; 0 0 0 1];
 
-% defines the goal position for the end-effector/tool position task
-uvms.goalPosition = [10.5   37.5  -38]';
-uvms.wRg = rotation(0, 0, 0);
-uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
+mission.previousAction = [];
 
 % defines the tool control point
 uvms.eTt = eye(4);
-
 
 tic
 for t = 0:deltat:end_time
@@ -72,17 +106,27 @@ for t = 0:deltat:end_time
     ydotbar = zeros(13,1);
     Qp = eye(13); 
     
+    % Tool position = 1
+    % Horizontal attitude = 2
+    % Vehicle position = 3
+    % Vehicle attitude = 4
+    % Vehicle minimum altitude = 5
+    % Vehicle altitude control = 6
     
-    %   SAFETY OFFSET TASK
+     %   SAFETY MINIMUM ALTITUDE TASK 
+    [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
+    
+    %   HORIZONTAL ATTITUDE TASK 
+    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
+    
+    %   LANDING TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.landing,    uvms.Jlanding,    Qp, ydotbar, uvms.xdot.landing,  0.0001,   0.01, 10);
     
     %   POSITION TASK
-    %[Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
    
     %   ATTITUDE TASK
-    %[Qp, ydotbar] = iCAT_task(uvms.A.v_att,    uvms.Jv_att,    Qp, ydotbar, uvms.xdot.v_att,  0.0001,   0.01, 10);
-    
-    %[Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.v_att,    uvms.Jv_att,    Qp, ydotbar, uvms.xdot.v_att,  0.0001,   0.01, 10);
     
     [Qp, ydotbar] = iCAT_task(eye(13),     eye(13),    Qp, ydotbar, zeros(13,1),  0.0001,   0.01, 10);    % this task should be the last one
     
@@ -97,7 +141,8 @@ for t = 0:deltat:end_time
     uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
     
     % check if the mission phase should be changed
-    [uvms, mission] = UpdateMissionPhase(uvms, mission);
+    mission.phase_time = mission.phase_time + deltat;
+    [uvms, mission] = UpdateMissionPhase_ex2(uvms, mission);
     
     % send packets to Unity viewer
     SendUdpPackets(uvms,wuRw,vRvu,uArm,uVehicle);
@@ -109,7 +154,10 @@ for t = 0:deltat:end_time
     % add debug prints here
     if (mod(t,0.1) == 0)
         t
-        uvms.sensorDistance
+        [~, w_vlin] = CartError(uvms.wTg_v , uvms.wTv);
+        distance = norm(w_vlin)
+        phase = mission.phase
+%         mission.activationFunctions{6}
     end
 
     % enable this to have the simulation approximately evolving like real
@@ -122,4 +170,3 @@ fclose(uArm);
 
 PrintPlot(plt);
 
-end
