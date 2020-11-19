@@ -70,11 +70,11 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
 %% Point 2.2
 % Initial position
-uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+uvms.p = [8.5 38.5 -36 0 0.06 0]';
 
 % Defines the goal position for the vehicle position and attitude task
 uvms.goalPosition_v = [10.5   37.5  -38]';
-uvms.wRg_v = rotation(0, -0.06, 0.5);
+uvms.wRg_v = rotation(0, 0, 0.5);
 
 % Actions definition
 mission.actionLanding = [2,6];
@@ -155,6 +155,8 @@ for t = 0:deltat:end_time
     if (mod(t,0.1) == 0)
         t
         [~, w_vlin] = CartError(uvms.wTg_v , uvms.wTv);
+        uvms.A.ha
+        uvms.p(4:6)
         distance = norm(w_vlin)
         phase = mission.phase
 %         mission.activationFunctions{6}

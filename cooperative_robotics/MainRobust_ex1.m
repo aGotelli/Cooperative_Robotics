@@ -60,16 +60,19 @@ mission.totalNumOfTasks = numel(mission.activationFunctions);
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
 %% Point 1.1
-% Initial position
+% % Initial position
 % uvms.p = [10.5 35.5 -36 0 0 pi/2]';
-
-% Defines the goal position for the vehicle position and attitude task
+% 
+% % Defines the goal position for the vehicle position and attitude task
 % uvms.goalPosition_v = [10.5   37.5  -38]';
 % uvms.wRg_v = rotation(0, 0, 0);
-
-% Actions definition
-mission.actionNavigation = [2, 3, 4];
-mission.actionToolNavigation = [1, 2, 3, 4];
+% 
+% % Actions definition
+% mission.actionNavigation = [2, 3, 4];
+% mission.actionToolNavigation = [1, 2, 3, 4];
+% 
+% mission.currentAction = mission.actionToolNavigation;
+% 
 
 %% Point 1.2
 % Initial position
@@ -81,6 +84,8 @@ uvms.wRg_v = rotation(0, 0, -pi/2);
 
 % Actions definition
 mission.actionSafeNavigation = [2, 3, 4, 5];
+
+mission.currentAction = mission.actionSafeNavigation;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
