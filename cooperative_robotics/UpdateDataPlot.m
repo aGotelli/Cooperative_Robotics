@@ -28,7 +28,7 @@ plt.a(9, loop) = uvms.A.ha(1,1);
 plt.toolx(:,loop) = uvms.wTt(1,4);
 plt.tooly(:,loop) = uvms.wTt(2,4);
 
-%% Plot vehicle position, initial position and goal position, frames
+%% Plot vehicle position, initial position and goal position frames and misalignment vector
 i = [1 0 0]';
 j = [0 1 0]';
 k = [0 0 1]';
@@ -37,16 +37,20 @@ plt.history.y(loop) = j'*uvms.wTv(1:3,4);
 plt.history.z(loop) = k'*uvms.wTv(1:3,4);
 
 if mod(t, 2) == 0 && t ~= 0 % t == floor(t) to plot every second
-%     index = floor(t) + 1;
+
     index = t / 2;
+    
+    %   The vehicle directors i, j and k 
     plt.axis(index).x = uvms.wTv(1:3,1:3)*i;
     plt.axis(index).y = uvms.wTv(1:3,1:3)*j;
     plt.axis(index).z = uvms.wTv(1:3,1:3)*k;
     
+    %   The vehicle position [x, y, z]
     plt.vehi.x(index) = i'*uvms.wTv(1:3,4);
     plt.vehi.y(index) = j'*uvms.wTv(1:3,4);
     plt.vehi.z(index) = k'*uvms.wTv(1:3,4);
     
+    %   Misalignment vector
     plt.ang.x(index) = i'*uvms.ang;
     plt.ang.y(index) = j'*uvms.ang;
     plt.ang.z(index) = k'*uvms.ang;
