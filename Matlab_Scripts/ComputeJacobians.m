@@ -96,6 +96,7 @@ else
 end
 
 v_d = uvms.vTw(1:3, 1:3) * w_d;
+v_d_proj = uvms.vTw(1:3, 1:3) * w_d_proj;
 v_d_proj_vers = uvms.vTw(1:3, 1:3) * w_d_proj_vers;
 v_iv = [1, 0, 0]';
 
@@ -116,6 +117,6 @@ end
 uvms.theta = norm(misalignVector);
 
 % Obtain the jacobian matrix
-uvms.JhorAlign = rho_vers' * [zeros(3, 7), -(1 / (norm(v_d) * norm(v_d))) * skew(v_d), -eye(3)];
+uvms.JhorAlign = rho_vers' * [zeros(3, 7), -(1 / (norm(v_d_proj) * norm(v_d_proj))) * skew(v_d_proj), -eye(3)];
 
 end
