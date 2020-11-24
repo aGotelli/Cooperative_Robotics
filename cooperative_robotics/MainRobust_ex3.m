@@ -55,32 +55,35 @@ mission.totalNumOfTasks = numel(mission.activationFunctions);
 % uvms.q 
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
-%% Point 3.1
-% % Initial position
+% %% Point 3.1
+% % % Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Defines the goal position for the vehicle position and attitude task
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.wRg_v = rotation(0, -0.06, 0.5);
+% 
+% % Actions definition
+% mission.actionAlignedLanding = [2, 6, 7];
+% mission.actionSafeNavigation = [2, 3, 4, 5];
+% 
+% mission.currentAction = mission.actionSafeNavigation;
+
+%% Point 3.1.3
+% Initial position
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task
 uvms.goalPosition_v = [10.5   37.5  -38]';
 uvms.wRg_v = rotation(0, -0.06, 0.5);
 
+ 
 % Actions definition
+mission.actionAligning = [2, 7];
 mission.actionAlignedLanding = [2, 6, 7];
 mission.actionSafeNavigation = [2, 3, 4, 5];
 
 mission.currentAction = mission.actionSafeNavigation;
-
-%% Point 3.1.3
-% % Initial position
-% uvms.p = [8.5 38.5 -36 0 0.06 0]';
-% 
-% % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-% uvms.wRg_v = rotation(0, 0, 0.5);
-% 
-% % Actions definition
-% 
-% mission.currentAction = mission.;
-
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
 uvms.initRotation = rotation(uvms.p(4), uvms.p(5), uvms.p(6));
@@ -117,14 +120,14 @@ for t = 0:deltat:end_time
     %   SAFETY MINIMUM ALTITUDE TASK 
     [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
     
-    %   HORIZONTAL ATTITUDE TASK 
-    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
-    
     %   HORIZONTAL ALIGNMENT TO TARGET TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.horAlign,    uvms.JhorAlign,    Qp, ydotbar, uvms.xdot.horAlign,  0.0001,   0.01, 10);
     
     %   LANDING TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.landing,    uvms.Jlanding,    Qp, ydotbar, uvms.xdot.landing,  0.0001,   0.01, 10);
+    
+    %   HORIZONTAL ATTITUDE TASK 
+    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
     
     %   POSITION TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
@@ -160,9 +163,10 @@ for t = 0:deltat:end_time
     if (mod(t,0.1) == 0)
         t
         [~, w_vlin] = CartError(uvms.wTg_v , uvms.wTv);
-        
+        distance = w_vlin
         theta = uvms.theta
         phase = mission.phase
+        activ = uvms.A.horAlign
     end
 
     % enable this to have the simulation approximately evolving like real

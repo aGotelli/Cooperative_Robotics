@@ -78,7 +78,8 @@ uvms.Jlanding = k' * [zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3)];
 %%   JACOBIAN FOR THE HORIZONTAL ALIGNMENT TO TARGET
 % Compute the projection on the horizontal plane of the distance vector 
 % from the goal to the current vehicle position 
-w_d = uvms.wTg_v(1:3, 4) - uvms.wTv(1:3, 4);
+rock_center = [12.2025   37.3748  -39.8860]'; % in world frame coordinates
+w_d = rock_center - uvms.wTv(1:3, 4);
 w_d_proj = w_d - ((w_d' * w_kw) * w_kw);
 
 % Get the corresponding versor
