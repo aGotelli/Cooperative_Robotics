@@ -76,10 +76,17 @@ uvms.range_offset = 0.5;
 uvms.w_a = 0;
 uvms.w_a_previous = 0;
 
-%%   ADDING THE DEFINITION FOR THE TASK FOR LANDING
+%%   ADDING THE DEFINITION FOR THE LANDING TASK 
 uvms.Jlanding = [];
 uvms.xdot.landing = 0;
 uvms.A.landing = 0;
+
+%%   ADDING THE DEFINITION FOR THE HORIZONTAL ALIGNMENT TO TARGET
+uvms.JhorAlign = [];
+uvms.xdot.horAlign = 0;
+uvms.A.horAlign = 0;
+
+uvms.theta = 0;
 
 end
 

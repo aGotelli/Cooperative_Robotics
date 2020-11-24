@@ -1,4 +1,3 @@
-
 addpath('./simulation_scripts');
 clc;
 clear;

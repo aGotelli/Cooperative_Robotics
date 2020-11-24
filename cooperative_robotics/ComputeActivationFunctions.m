@@ -52,9 +52,10 @@ uvms.A.v_att = eye(3) * mission.activationFunctions{4};
 %%   ACTIVATION FUNCTION FOR THE TASK ENSURING OFFSET 
 uvms.A.minAlt = DecreasingBellShapedFunction(uvms.min_offset, (uvms.min_offset + uvms.range_offset), 0, 1, uvms.w_a) * mission.activationFunctions{5};
 
-%%   ACTIVATION FUNCTION FOR THE FOR LANDING
-v_d = [0 0 uvms.sensorDistance]';
-w_d = uvms.wTv(1:3, 1:3)*v_d;
-k = [0 0 1]';
-uvms.w_a = k' * w_d;
-uvms.A.landing = 1 * mission.activationFunctions{6};
+%%   ACTIVATION FUNCTION FOR THE LANDING TASK
+uvms.A.landing = eye(1) * mission.activationFunctions{6};
+
+%%   ACTIVATION FUNCTION FOR THE HORIZONTAL ALIGNMENT TO TARGET
+uvms.A.horAlign = eye(1) * mission.activationFunctions{7};
+
+end

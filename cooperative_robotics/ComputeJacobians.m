@@ -66,10 +66,53 @@ w_d = uvms.wTv(1:3, 1:3)*v_d;
 k = [0 0 1]';
 uvms.w_a = k' * w_d;
 
-uvms.JminAlt = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
+uvms.JminAlt = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3)];
 
 %%   JACOBIAN FOR THE TASK FOR LANDING
+v_d = [0 0 uvms.sensorDistance]';
+w_d = uvms.wTv(1:3, 1:3) * v_d;
 k = [0 0 1]';
-uvms.Jlanding = k'*[zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3) ];
+uvms.w_a = k' * w_d;
+uvms.Jlanding = k' * [zeros(3, 7)    uvms.wTv(1:3, 1:3)  zeros(3, 3)];
+
+%%   JACOBIAN FOR THE HORIZONTAL ALIGNMENT TO TARGET
+% Compute the projection on the horizontal plane of the distance vector 
+% from the goal to the current vehicle position 
+w_d = uvms.wTg_v(1:3, 4) - uvms.wTv(1:3, 4);
+w_d_proj = w_d - ((w_d' * w_kw) * w_kw);
+
+% Get the corresponding versor
+if norm(w_d_proj) ~= 0
+    
+    w_d_proj_vers = w_d_proj / norm(w_d_proj);
+    
+else
+
+    w_d_proj_vers = [0, 0, 0]';
+   
+end
+
+v_d_proj = uvms.vTw(1:3, 1:3) * w_d_proj;
+v_d_proj_vers = uvms.vTw(1:3, 1:3) * w_d_proj_vers;
+v_iv = [1, 0, 0]';
+
+% Compute the misalignment vector and its versor
+misalignVector = ReducedVersorLemma(v_iv, v_d_proj_vers);
+
+if norm(misalignVector) ~= 0
+    
+    rho_vers = misalignVector / norm(misalignVector);
+    
+else
+
+    rho_vers = [0, 0, 0]';
+   
+end
+
+% Store the misalignment angle theta for the task reference
+uvms.theta = norm(misalignVector);
+
+% Obtain the jacobian matrix
+uvms.JhorAlign = rho_vers' * [zeros(3, 7), -(1 / (norm(v_d_proj) * norm(v_d_proj))) * skew(v_d_proj), -eye(3)];
 
 end
