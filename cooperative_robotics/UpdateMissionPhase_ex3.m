@@ -11,7 +11,7 @@ function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
                 mission.previousAction = mission.currentAction;
                 % Exercise 3.1
                 % mission.currentAction = mission.actionAlignedLanding; 
-                % Exercise 3.1.3
+                % Exercise 3.1.3 and 3.1.4
                 mission.currentAction = mission.actionAligning; 
 
             end
@@ -22,12 +22,20 @@ function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
                 mission.phase_time = 0;
                 mission.switch = 1;
                 mission.previousAction = mission.currentAction;
-                % Exercise 3.1.3
+                % Exercise 3.1.3 and 3.1.4
                 mission.currentAction = mission.actionAlignedLanding; 
                 
             end
         case 3
+            if (uvms.w_a < 0.05)
+                mission.phase = 4;
+                mission.phase_time = 0;
+                mission.switch = 1;
+                mission.previousAction = mission.currentAction;
+                % Exercise and 3.1.4
+                mission.currentAction = mission.actionGraspObject; 
+            end
             
-            
+        case 4
     end
 end

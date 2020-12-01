@@ -88,5 +88,13 @@ uvms.A.horAlign = 0;
 
 uvms.theta = 0;
 
+
+%%   ADDING THE DEFINITION FOR ENSURING THE GOAL IN THE ARM WORKSPACE
+uvms.dist_to_goal_proj = 0;
+uvms.JdistGoal = [];
+uvms.A.distGoal = 0;
+uvms.xdot.distGoal = 0;
+uvms.ensured_distance = 0.3;
+
 end
 

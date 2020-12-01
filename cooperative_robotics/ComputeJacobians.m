@@ -116,4 +116,14 @@ uvms.theta = norm(misalignVector);
 % Obtain the jacobian matrix
 uvms.JhorAlign = rho_vers' * [zeros(3, 7), -(1 / (norm(v_d_proj) * norm(v_d_proj))) * skew(v_d_proj), -eye(3)];
 
+%%   JACOBIAN FOR ENSURING THE GOAL IN THE ARM WORKSPACE
+uvms.dist_to_goal_proj = norm(w_d_proj);
+xd = [1 0 0]' *uvms.dist_to_goal_proj;
+yd = [0 1 0]' *uvms.dist_to_goal_proj;
+M = [xd 0  0;
+     0  yd 0 ];
+uvms.JdistGoal = [zeros(2, 7)    M*uvms.wTv(1:3, 1:3)  zeros(2, 3)];
+
+
+
 end

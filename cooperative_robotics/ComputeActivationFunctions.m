@@ -58,4 +58,8 @@ uvms.A.landing = eye(1) * mission.activationFunctions{6};
 %%   ACTIVATION FUNCTION FOR THE HORIZONTAL ALIGNMENT TO TARGET
 uvms.A.horAlign = eye(1) * mission.activationFunctions{7};
 
+%%   ACTIVATION FUNCTION FOR ENSURING THE GOAL IN THE ARM WORKSPACE
+uvms.A.distGoal = IncreasingBellShapedFunction(uvms.ensured_distance, 1.0, 0, 1, uvms.dist_to_goal_proj) * mission.activationFunctions{8};
+
+
 end
