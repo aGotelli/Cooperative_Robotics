@@ -90,7 +90,8 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task
-uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.goalPosition_v = [10.5   35.5  -38]';
 uvms.wRg_v = rotation(0, -0.06, 0.5);
 
 uvms.goalPosition = rock_center;
@@ -101,7 +102,7 @@ uvms.wRg = rotation(0, pi, pi/2);
 mission.actionSafeNavigation = [2, 3, 4, 5];
 mission.actionAligning = [2, 7, 8];
 mission.actionAlignedLanding = [2, 6, 7, 8];
-mission.actionGraspObject = [1, 2, 6, 7, 8];
+mission.actionGraspObject = [1, 2, 6, 8];
 
 mission.currentAction = mission.actionSafeNavigation;
 
@@ -198,7 +199,8 @@ for t = 0:deltat:end_time
         phase = mission.phase
 %         activ = uvms.A.horAlign
 %         uvms.w_a
-        uvms.dist_to_goal_proj
+        activ = uvms.A.distGoal
+        dist = uvms.dist_to_goal_proj
     end
 
     % enable this to have the simulation approximately evolving like real

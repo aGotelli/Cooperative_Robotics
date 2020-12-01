@@ -30,7 +30,8 @@ uvms.xdot.landing = Saturate(0.5 * ( - uvms.w_a), 0.5) ;
 uvms.xdot.horAlign = Saturate(0.5 * (0 - uvms.theta), 0.5);
 
 %%   THE TASK REFERENCE FOR ENSURING THE TAGET IN THE MANIPULATOR WORKSPACE
-uvms.xdot.distGoal = Saturate(0.5 * (uvms.ensured_distance - uvms.dist_to_goal_proj), 0.5) ;
+uvms.xdot.distGoal = [Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
+                      Saturate(0.5 * (uvms.ensured_distance_y - uvms.yd), 0.5) ];
 
 
 end
