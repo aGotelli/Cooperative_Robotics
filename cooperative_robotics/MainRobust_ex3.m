@@ -50,7 +50,7 @@ uvms = InitUVMS('Robust');
 mission.phase = 1;
 mission.phase_time = 0;
 mission.switch = 0;
-mission.activationFunctions = {uvms.A.t, uvms.A.ha, uvms.A.v_pos, uvms.A.v_att, uvms.A.minAlt, uvms.A.landing, uvms.A.horAlign, uvms.A.distGoal};
+mission.activationFunctions = {uvms.A.t, uvms.A.ha, uvms.A.v_pos, uvms.A.v_att, uvms.A.minAlt, uvms.A.landing, uvms.A.horAlign, uvms.A.distGoal,uvms.A.constraint};
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
 % uvms.q 
@@ -90,8 +90,8 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task
-uvms.goalPosition_v = [10.5   37.5  -38]';
-% uvms.goalPosition_v = [10.5   35.5  -38]';
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.goalPosition_v = [10.5   35.5  -38]';
 uvms.wRg_v = rotation(0, -0.06, 0.5);
 
 uvms.goalPosition = rock_center;
@@ -100,7 +100,7 @@ uvms.wRg = rotation(0, pi, pi/2);
  
 % Actions definition
 mission.actionSafeNavigation = [2, 3, 4, 5];
-mission.actionAligning = [2, 7, 8];
+mission.actionAligning = [2, 5, 7, 8];
 mission.actionAlignedLanding = [2, 6, 7, 8];
 mission.actionGraspObject = [1, 2, 6, 8];
 

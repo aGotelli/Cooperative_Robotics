@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 5;
+end_time = 35;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -59,41 +59,41 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
 
 %% Point 4.1.1
-% % Initial position
-% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-% 
-% % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-% 
-% uvms.wRg_v = rotation(0, -0.06, 0.5);
-% 
-% uvms.goalPosition = rock_center;
-% uvms.wRg = rotation(0, pi, pi/2);
-% 
-%  
-% % Actions definition
-% mission.actionSafeNavigation = [2, 3, 4, 5];
-% mission.actionAligning = [2, 7, 8];
-% mission.actionAlignedLanding = [2, 6, 7, 8];
-% mission.actionGraspObject = [1, 2, 6, 8, 9];
-% 
-% mission.currentAction = mission.actionSafeNavigation;
-
-%% Point 4.1.3
 % Initial position
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
-% Actions definition
-mission.actionConstraint = 9;
+% Defines the goal position for the vehicle position and attitude task
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.goalPosition_v = [8.5   35.5  -38]';
+uvms.wRg_v = rotation(0, -0.06, 0.5);
 
-mission.currentAction = mission.actionConstraint;
+uvms.goalPosition = rock_center;
+uvms.wRg = rotation(0, pi, pi/2);
+
+ 
+% Actions definition
+mission.actionSafeNavigation = [2, 3, 4, 5];
+mission.actionAligning = [2, 5, 7, 8];
+mission.actionAlignedLanding = [2, 6, 7, 8];
+mission.actionGraspObject = [1, 2, 6, 8, 9];
+
+mission.currentAction = mission.actionSafeNavigation;
+
+%% Point 4.1.3
+% % Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Actions definition
+% mission.actionConstraint = 9;
+% 
+% mission.currentAction = mission.actionConstraint;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
 uvms.initRotation = rotation(uvms.p(4), uvms.p(5), uvms.p(6));
 
-% uvms.wTg_v = [uvms.wRg_v uvms.goalPosition_v; 0 0 0 1];
-% uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
+uvms.wTg_v = [uvms.wRg_v uvms.goalPosition_v; 0 0 0 1];
+uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
 mission.previousAction = [];
 
@@ -164,10 +164,11 @@ for t = 0:deltat:end_time
     % beware: p_dot should be projected on <v>
     uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
     
-    % Ex 4.1.3 
-    % Constant current on y 
-    uvms.p_dot(2) = uvms.p_dot(2) + 1;
-    % uvms.p_dot(2) =  uvms.p_dot(2) + 0.5*sin(2*pi*0.5*t);
+%     % Ex 4.1.3 
+%     % Constant current on y 
+%     uvms.p_dot(2) = uvms.p_dot(2) + 1;
+%     % uvms.p_dot(2) =  uvms.p_dot(2) + 0.5*sin(2*pi*0.5*t);
+
     % check if the mission phase should be changed
     mission.phase_time = mission.phase_time + deltat;
     [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission);
