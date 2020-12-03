@@ -62,6 +62,7 @@ uvms.A.horAlign = eye(1) * mission.activationFunctions{7};
 uvms.A.distGoal = diag([IncreasingBellShapedFunction(uvms.ensured_distance_x, 2, 0, 1, uvms.xd),...
                         IncreasingBellShapedFunction(uvms.ensured_distance_y, 1, 0, 1, uvms.yd)]).* mission.activationFunctions{8};
                
-
+%%   ACTIVATION FUNCTION FOR CONTRAINING THE VELOCITIES
+uvms.A.constraint = eye(6) * mission.activationFunctions{9};
 
 end

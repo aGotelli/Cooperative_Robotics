@@ -124,6 +124,9 @@ w_Dxy = [uvms.xd,0,0; 0,uvms.yd,0 ];
          
 uvms.JdistGoal = [zeros(2, 7) -w_Dxy * uvms.wTv(1:3, 1:3)  zeros(2, 3)];
 
+%%  JACOBIAN FOR UNDERACTUATION
+
+uvms.Jconstraint = [zeros(6,7) eye(6,6)];
 
 
 end

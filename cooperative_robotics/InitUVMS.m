@@ -37,6 +37,10 @@ uvms.mu  = 0;
 uvms.phi = zeros(3,1);
 uvms.sensorDistance = 0;
 
+uvms.wTg_v = eye(4,4);
+uvms.wRg_v = eye(3,3);
+uvms.goalPosition_v = zeros(3,1);
+
 uvms.Jjl = [];
 uvms.Jmu = [];
 uvms.Jt_a = [];
@@ -98,6 +102,11 @@ uvms.A.distGoal = 0;
 uvms.xdot.distGoal = 0;
 uvms.ensured_distance_x = 1.5;
 uvms.ensured_distance_y = 0.5;
+
+%%  ADDING THE DEFINITION FOR CONSTRAINING VELOCITIES
+ uvms.Jconstraint = [];
+ uvms.xdot.constraint = zeros(6,1);
+ uvms.A.constraint = zeros(6);
 
 end
 

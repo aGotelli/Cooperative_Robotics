@@ -33,6 +33,7 @@ uvms.xdot.horAlign = Saturate(0.5 * (0 - uvms.theta), 0.5);
 uvms.xdot.distGoal = [Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
                       Saturate(0.5 * (uvms.ensured_distance_y - uvms.yd), 0.5) ];
 
-
+%%  THE TASK REFERENCE FOR CONSTRAINING THE VELOCITIES
+uvms.xdot.constraint = zeros(6,1);
 end
 

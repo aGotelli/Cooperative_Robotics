@@ -39,12 +39,14 @@ legend('Amu', 'Aha');
 %% Plot the 3D path and the misalignment vector
 figure(5)
 hold on
+rock_center = [12.2025   37.3748  -39.8860]'; % in world frame coordinates
 
 % Plot the initial position, the goal position and the robot's path
 scatter3(plt.initPos(1), plt.initPos(2), plt.initPos(3), 50, 'b', 'filled');
 scatter3(plt.goalPos(1), plt.goalPos(2), plt.goalPos(3), 50, 'g', 'filled');
 plot3(plt.history.x, plt.history.y, plt.history.z, 'r', 'LineWidth', 2);
-
+% Comment if not needed
+scatter3(rock_center(1),rock_center(2),rock_center(3), 50, 'k', 'filled');
 % Plot the misalignment vector every 2 seconds
 for index = 1:size(plt.axis, 2)
     
@@ -58,7 +60,7 @@ end
 xlabel('x [m]');
 ylabel('y [m]');
 zlabel('z [m]');
-legend('Initial position', 'Goal position', '3D path', 'Misalignment vector')
+legend('Initial position', 'Goal position', '3D path', 'Rock center' , 'Misalignment vector')
 title("Robot's path")
 
 scale = 0.2;
@@ -66,6 +68,8 @@ scale = 0.2;
 %%  Plot the frames
 figure(6)
 hold on
+% Comment if not needed
+p4 = scatter3(rock_center(1),rock_center(2),rock_center(3), 50, 'k', 'filled');
 
 % Plot the initial vehicle frame
 p1 = plot3([plt.initPos(1); plt.initPos(1) + scale*plt.wRv(1, 1)], ...
@@ -115,7 +119,7 @@ view(45, 45);
 xlabel('x [m]');
 ylabel('y [m]');
 zlabel('z [m]');
-legend([p1, p2, p3], 'Initial vehicle frame', 'Goal frame', 'Vehicle frames')
+legend([p1, p2, p3, p4], 'Initial vehicle frame', 'Goal frame', 'Vehicle frames', 'Rock center')
 title('Frames')
 
 hold off
