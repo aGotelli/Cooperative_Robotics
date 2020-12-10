@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 15;
+end_time = 30;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -17,6 +17,7 @@ mission.phase_time = 0;
 % do not change
 wuRw = rotation(0,-pi/2,pi/2);
 vRvu = rotation(-pi/2,0,-pi/2);
+
 
 % pipe parameters
 u_pipe_center = [-10.66 31.47 -1.94]'; % in unity coordinates
@@ -34,6 +35,10 @@ plt = InitDataPlot(maxloops);
 
 % initialize uvms structure
 uvms = InitUVMS('DexROV');
+
+% Null initialization to avoid uninitialized errors;
+uvms.goalPosition_v = [0 0 0]';
+uvms.wRg_v = rotation(0, 0, 0);
 
 %% Define actions and initialize the mission structure
 % Tool position = 1
@@ -67,36 +72,28 @@ mission.activationFunctions = {uvms.A.t,...
                                uvms.A.armPrefPos};
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
-
-%%  INITIALIZATION
-% uvms.q 
+% initial arm position
 uvms.q = [-0.0031 1.2586 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
 %%  EXERCISE 5.1
-distanceGoalWrtPipe = 0.3;
+
 % Initial position
-%uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
-uvms.p = pipe_center + (pipe_radius + 2)*[0 0 1]';
-% Defines the goal position for the vehicle position and attitude task
-uvms.goalPosition_v = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
+uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
 
-uvms.wRg_v = rotation(0, 0, 0);
-
-% initial goal position definition
+% Initial goal position definition
 % slightly over the top of the pipe
+distanceGoalWrtPipe = 0.3;
 uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
 uvms.wRg = rotation(pi,0,0);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
 % Actions definition
-mission.actionSafeNavigation = [2, 3, 4, 5];
-mission.actionFloatingManip = [1, 12];
+mission.actionTool = [1, 2, 7, 12];
 
-
-
-mission.currentAction = mission.actionSafeNavigation;
+mission.currentAction = mission.actionTool;
 
 %% Initialization
+
 uvms.initPosition = uvms.p(1:3)';
 uvms.initRotation = rotation(uvms.p(4), uvms.p(5), uvms.p(6));
 
@@ -123,38 +120,40 @@ for t = 0:deltat:end_time
     % the sequence of iCAT_task calls defines the priority
     
     %   CONSTRAIN VELOCITIES
-    [Qp, ydotbar] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, ydotbar, uvms.xdot.constraint,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, rhop, uvms.xdot.constraint,  0.0001,   0.01, 10);
     
     %   AVOID LOWER BOUND JOINT LIMITS
-    [Qp, ydotbar] = iCAT_task(uvms.A.lbJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.lbJointLimits,    uvms.JjointLimits,    Qp, rhop, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
     
     %   AVOID UPPER BOUND JOINT LIMITS
-    [Qp, ydotbar] = iCAT_task(uvms.A.ubJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.ubJointLimits,    uvms.JjointLimits,    Qp, rhop, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
     
     %   SAFETY MINIMUM ALTITUDE TASK 
-    [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
+    %[Qp, rhop] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, rhop, uvms.xdot.minAlt,  0.0001,   0.01, 10);
     
     %   HORIZONTAL ATTITUDE TASK 
-    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, rhop, uvms.xdot.ha,  0.0001,   0.01, 10);
     
     %   HORIZONTAL ALIGNMENT TO TARGET TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.horAlign,    uvms.JhorAlign,    Qp, ydotbar, uvms.xdot.horAlign,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.horAlign,    uvms.JhorAlign,    Qp, rhop, uvms.xdot.horAlign,  0.0001,   0.01, 10);
     
     %   LANDING TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.landing,    uvms.Jlanding,    Qp, ydotbar, uvms.xdot.landing,  0.0001,   0.01, 10);
+    %[Qp, rhop] = iCAT_task(uvms.A.landing,    uvms.Jlanding,    Qp, rhop, uvms.xdot.landing,  0.0001,   0.01, 10);
     
     %   POSITION TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, rhop, uvms.xdot.v_pos,  0.0001,   0.01, 10);
    
     %   ATTITUDE TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.v_att,    uvms.Jv_att,    Qp, ydotbar, uvms.xdot.v_att,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.v_att,    uvms.Jv_att,    Qp, rhop, uvms.xdot.v_att,  0.0001,   0.01, 10);
     
     %   DISTANCE FROM THE TOOL TARGET
-    [Qp, ydotbar] = iCAT_task(uvms.A.distGoal,    uvms.JdistGoal,    Qp, ydotbar, uvms.xdot.distGoal,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.distGoal,    uvms.JdistGoal,    Qp, rhop, uvms.xdot.distGoal,  0.0001,   0.01, 10);
     
     %   TOOL FRAME TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, rhop, uvms.xdot.t,  0.0001,   0.01, 10);
     
+    %   OPTIMAL ARM POSITION FRAME TASK
+    [Qp, rhop] = iCAT_task(uvms.A.armPrefPos,    uvms.JarmPrefPos,    Qp, rhop, uvms.xdot.armPrefPos,  0.0001,   0.01, 10);
     
     [Qp, rhop] = iCAT_task(eye(13),     eye(13),    Qp, rhop, zeros(13,1),  0.0001,   0.01, 10);    % this task should be the last one
     
