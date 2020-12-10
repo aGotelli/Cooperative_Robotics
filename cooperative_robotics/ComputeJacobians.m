@@ -130,4 +130,7 @@ uvms.Jconstraint = [zeros(6,7) eye(6,6)];
 %%  JACOBIAN FOR AVOIDING JOINT LIMITS
 uvms.JjointLimits = [eye(7), zeros(7, 6)];
 
+%%  JACOBIAN FOR THE ARM PREFERRED SHAPE 
+uvms.JarmPrefPos = [eye(4) zeros(4, 9)];
+
 end

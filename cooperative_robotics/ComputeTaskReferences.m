@@ -29,7 +29,7 @@ uvms.xdot.landing = Saturate(0.5 * ( - uvms.w_a), 0.5) ;
 %%   THE TASK REFERENCE FOR THE HORIZONTAL ALIGNMENT TO TARGET
 uvms.xdot.horAlign = Saturate(0.5 * (0 - uvms.theta), 0.5);
 
-%%   THE TASK REFERENCE FOR ENSURING THE TAGET IN THE MANIPULATOR WORKSPACE
+%%   THE TASK REFERENCE FOR ENSURING THE TARGET IN THE MANIPULATOR WORKSPACE
 uvms.xdot.distGoal = [Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
                       Saturate(0.5 * (uvms.ensured_distance_y - uvms.yd), 0.5) ];
 
@@ -37,7 +37,12 @@ uvms.xdot.distGoal = [Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
 uvms.xdot.constraint = zeros(6,1);
 
 %%  THE TASK REFERENCE FOR AVOIDING JOINT LIMITS
-uvms.xdot.jointLimits = uvms.q_dot;
+offset = 0.5;
+uvms.xdot.lbjointLimits = uvms.jlmin + offset - uvms.q_dot;
+uvms.xdot.ubjointLimits = uvms.jlmax - offset - uvms.q_dot;
+
+%%   THE TASK FOR ENSURING OPTIMAL POSITION FOR THE ARM 
+uvms.xdot.armPrefPos = uvms.armPrefPos - uvms.q_dot(1:4);
 
 end
 

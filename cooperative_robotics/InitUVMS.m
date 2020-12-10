@@ -113,5 +113,10 @@ uvms.xdot.jointLimits = zeros(7, 1);
 uvms.A.lbJointLimits = zeros(7);
 uvms.A.ubJointLimits = zeros(7);
 
+%%  ADDING THE DEFINITION FOR THE ARM PREFERRED SHAPE 
+uvms.xdot.armPrefPos = zeros(4, 1);
+uvms.A.armPrefPos = eye(4);
+uvms.JarmPrefPos = [];
+uvms.armPrefPos = [-0.0031 1.2586 0.0128 -1.2460]';
 end
 

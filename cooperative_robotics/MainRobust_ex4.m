@@ -169,10 +169,10 @@ for t = 0:deltat:end_time
     [Qp, ydotbar] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, ydotbar, uvms.xdot.constraint,  0.0001,   0.01, 10);
     
     %   AVOID LOWER BOUND JOINT LIMITS
-    [Qp, ydotbar] = iCAT_task(uvms.A.lbJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.lbJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.lbjointLimits,  0.0001,   0.01, 10);
     
     %   AVOID UPPER BOUND JOINT LIMITS
-    [Qp, ydotbar] = iCAT_task(uvms.A.ubJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.ubJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.ubjointLimits,  0.0001,   0.01, 10);
     
     %   SAFETY MINIMUM ALTITUDE TASK 
     [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
