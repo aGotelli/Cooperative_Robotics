@@ -38,11 +38,11 @@ uvms.xdot.constraint = zeros(6,1);
 
 %%  THE TASK REFERENCE FOR AVOIDING JOINT LIMITS
 offset = 0.5;
-uvms.xdot.lbjointLimits = uvms.jlmin + offset - uvms.q_dot;
-uvms.xdot.ubjointLimits = uvms.jlmax - offset - uvms.q_dot;
+uvms.xdot.lbjointLimits = Saturate(0.5 * (uvms.jlmin + offset) - uvms.q, 0.5);
+uvms.xdot.ubjointLimits = Saturate(0.5 * (uvms.jlmax - offset) - uvms.q, 0.5);
 
 %%   THE TASK FOR ENSURING OPTIMAL POSITION FOR THE ARM 
-uvms.xdot.armPrefPos = uvms.armPrefPos - uvms.q_dot(1:4);
+uvms.xdot.armPrefPos = uvms.armPrefPos - uvms.q(1:4);
 
 end
 

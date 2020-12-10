@@ -65,6 +65,7 @@ mission.activationFunctions = {uvms.A.t,...
                                uvms.A.lbJointLimits,...
                                uvms.A.ubJointLimits,...
                                uvms.A.armPrefPos};
+                           
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
 % uvms.q 
@@ -109,7 +110,7 @@ uvms.goalPosition_v = [10.5   37.5  -38]';
 % uvms.goalPosition_v = [9.5   37.5  -38]';
 % uvms.goalPosition_v = rock_center + [0 0 2 ]';
 
-uvms.wRg_v = rotation(0, pi/12, 0.5);
+uvms.wRg_v = rotation(0, -0.06, 0.5);
 
 uvms.goalPosition = rock_center;
 uvms.wRg = rotation(0, pi, pi/2);
