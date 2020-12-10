@@ -1,4 +1,4 @@
-function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
+function [uvms, mission] = UpdateMissionPhase_ex4(uvms, mission)
     switch mission.phase
         case 1  
             [~, w_vlin] = CartError(uvms.wTg_v , uvms.wTv);
@@ -16,6 +16,7 @@ function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
             
         case 2  
             if (uvms.theta < 0.02 && uvms.dist_to_goal_proj < 2)
+%             if (uvms.dist_to_goal_proj < 2) % (To screw up the robot)
                 mission.phase = 3;
                 mission.phase_time = 0;
                 mission.switch = 1;

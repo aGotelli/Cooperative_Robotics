@@ -104,9 +104,11 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-uvms.goalPosition_v = [8.5   35.5  -38]';
-uvms.wRg_v = rotation(0, -0.06, 0.5);
+uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.goalPosition_v = [9.5   37.5  -38]';
+% uvms.goalPosition_v = rock_center + [0 0 2 ]';
+
+uvms.wRg_v = rotation(0, pi/12, 0.5);
 
 uvms.goalPosition = rock_center;
 uvms.wRg = rotation(0, pi, pi/2);
@@ -116,6 +118,11 @@ mission.actionSafeNavigation = [2, 3, 4, 5];
 mission.actionAligning = [2, 5, 7, 8];
 mission.actionAlignedLanding = [2, 6, 7, 8];
 mission.actionGraspObject = [1, 2, 6, 8, 9, 10, 11];
+% mission.actionSafeNavigation = [3, 4, 5];
+% mission.actionAligning = [5, 8];
+% mission.actionAlignedLanding = [6, 8];
+% mission.actionGraspObject = [1, 6, 8, 9, 10, 11];
+
 
 mission.currentAction = mission.actionSafeNavigation;
 
