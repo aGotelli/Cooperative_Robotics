@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 35;
+end_time = 50;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -46,12 +46,24 @@ uvms = InitUVMS('Robust');
 % Horizontal alignment to target = 7
 % Ensuring distance from the tool target = 8
 % Constrain velocities = 9
+% Avoid lower bound joint limits = 10
+% Avoid upper bound joint limits = 11
 
 % this struct can be used to evolve what the UVMS has to do
 mission.phase = 1;
 mission.phase_time = 0;
 mission.switch = 0;
-mission.activationFunctions = {uvms.A.t, uvms.A.ha, uvms.A.v_pos, uvms.A.v_att, uvms.A.minAlt, uvms.A.landing, uvms.A.horAlign, uvms.A.distGoal, uvms.A.constraint};
+mission.activationFunctions = {uvms.A.t,...
+                               uvms.A.ha,...
+                               uvms.A.v_pos,...
+                               uvms.A.v_att,...
+                               uvms.A.minAlt,...
+                               uvms.A.landing,...
+                               uvms.A.horAlign,...
+                               uvms.A.distGoal,...
+                               uvms.A.constraint,...
+                               uvms.A.lbJointLimits,...
+                               uvms.A.ubJointLimits};
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
 % uvms.q 
@@ -59,6 +71,35 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
 
 %% Point 4.1.1
+% Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Defines the goal position for the vehicle position and attitude task
+% % uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.goalPosition_v = [8.5   35.5  -38]';
+% uvms.wRg_v = rotation(0, -0.06, 0.5);
+% 
+% uvms.goalPosition = rock_center;
+% uvms.wRg = rotation(0, pi, pi/2);
+% 
+% % Actions definition
+% mission.actionSafeNavigation = [2, 3, 4, 5];
+% mission.actionAligning = [2, 5, 7, 8];
+% mission.actionAlignedLanding = [2, 6, 7, 8];
+% mission.actionGraspObject = [1, 2, 6, 8, 9];
+% 
+% mission.currentAction = mission.actionSafeNavigation;
+
+%% Point 4.1.3
+% % Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Actions definition
+% mission.actionConstraint = 9;
+% 
+% mission.currentAction = mission.actionConstraint;
+
+%% Point 4.2
 % Initial position
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
@@ -70,23 +111,13 @@ uvms.wRg_v = rotation(0, -0.06, 0.5);
 uvms.goalPosition = rock_center;
 uvms.wRg = rotation(0, pi, pi/2);
 
- 
 % Actions definition
 mission.actionSafeNavigation = [2, 3, 4, 5];
 mission.actionAligning = [2, 5, 7, 8];
 mission.actionAlignedLanding = [2, 6, 7, 8];
-mission.actionGraspObject = [1, 2, 6, 8, 9];
+mission.actionGraspObject = [1, 2, 6, 8, 9, 10, 11];
 
 mission.currentAction = mission.actionSafeNavigation;
-
-%% Point 4.1.3
-% % Initial position
-% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-% 
-% % Actions definition
-% mission.actionConstraint = 9;
-% 
-% mission.currentAction = mission.actionConstraint;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
@@ -124,9 +155,17 @@ for t = 0:deltat:end_time
     % Horizontal alignment to target = 7
     % Ensuring distance from the tool target = 8
     % Constrain velocities = 9
+    % Avoid lower bound joint limits = 10
+    % Avoid upper bound joint limits = 11
     
     %   CONSTRAIN VELOCITIES
     [Qp, ydotbar] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, ydotbar, uvms.xdot.constraint,  0.0001,   0.01, 10);
+    
+    %   AVOID LOWER BOUND JOINT LIMITS
+    [Qp, ydotbar] = iCAT_task(uvms.A.lbJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
+    
+    %   AVOID UPPER BOUND JOINT LIMITS
+    [Qp, ydotbar] = iCAT_task(uvms.A.ubJointLimits,    uvms.JjointLimits,    Qp, ydotbar, uvms.xdot.jointLimits,  0.0001,   0.01, 10);
     
     %   SAFETY MINIMUM ALTITUDE TASK 
     [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
@@ -171,7 +210,7 @@ for t = 0:deltat:end_time
 
     % check if the mission phase should be changed
     mission.phase_time = mission.phase_time + deltat;
-    [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission);
+    [uvms, mission] = UpdateMissionPhase_ex4(uvms, mission);
     
     % send packets to Unity viewer
     SendUdpPackets(uvms,wuRw,vRvu,uArm,uVehicle);
@@ -188,7 +227,9 @@ for t = 0:deltat:end_time
 %         theta = uvms.theta
         phase = mission.phase
 %         activ_constr = uvms.A.constraint
-%         activ = uvms.A.horAlign
+        activLB = uvms.A.lbJointLimits
+        activUB = uvms.A.ubJointLimits
+        joint_pos = uvms.q
 %         uvms.w_a
 %         activ = uvms.A.distGoal
 %         dist = uvms.dist_to_goal_proj

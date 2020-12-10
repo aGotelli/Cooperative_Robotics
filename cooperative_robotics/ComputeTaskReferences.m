@@ -35,5 +35,9 @@ uvms.xdot.distGoal = [Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
 
 %%  THE TASK REFERENCE FOR CONSTRAINING THE VELOCITIES
 uvms.xdot.constraint = zeros(6,1);
+
+%%  THE TASK REFERENCE FOR AVOIDING JOINT LIMITS
+uvms.xdot.jointLimits = uvms.q_dot;
+
 end
 

@@ -125,8 +125,9 @@ w_Dxy = [1,0,0; 0,1,0];
 uvms.JdistGoal = [zeros(2, 7) -w_Dxy * uvms.wTv(1:3, 1:3)  zeros(2, 3)];
 
 %%  JACOBIAN FOR UNDERACTUATION
-
 uvms.Jconstraint = [zeros(6,7) eye(6,6)];
 
+%%  JACOBIAN FOR AVOIDING JOINT LIMITS
+uvms.JjointLimits = [eye(7), zeros(7, 6)];
 
 end

@@ -92,7 +92,6 @@ uvms.A.horAlign = 0;
 
 uvms.theta = 0;
 
-
 %%   ADDING THE DEFINITION FOR ENSURING THE GOAL IN THE ARM WORKSPACE
 uvms.dist_to_goal_proj = 0;
 uvms.xd = 0;
@@ -104,9 +103,15 @@ uvms.ensured_distance_x = 1.5;
 uvms.ensured_distance_y = 0.5;
 
 %%  ADDING THE DEFINITION FOR CONSTRAINING VELOCITIES
- uvms.Jconstraint = [];
- uvms.xdot.constraint = zeros(6,1);
- uvms.A.constraint = zeros(6);
+uvms.Jconstraint = [];
+uvms.xdot.constraint = zeros(6,1);
+uvms.A.constraint = zeros(6);
+
+%%  ADDING THE DEFINITION FOR AVOIDING JOINT LIMITS
+uvms.JjointLimits = [];
+uvms.xdot.jointLimits = zeros(7, 1);
+uvms.A.lbJointLimits = zeros(7);
+uvms.A.ubJointLimits = zeros(7);
 
 end
 
