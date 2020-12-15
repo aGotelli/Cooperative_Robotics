@@ -53,6 +53,7 @@ uvms.wRg_v = rotation(0, 0, 0);
 % Avoid lower bound joint limits = 10
 % Avoid upper bound joint limits = 11
 % Ensure preferred position for the arm = 12
+% Arm vehicle coordination = 13
 
 % this struct can be used to evolve what the UVMS has to do
 mission.phase = 1;
@@ -69,30 +70,14 @@ mission.activationFunctions = {uvms.A.t,...
                                uvms.A.constraint,...
                                uvms.A.lbJointLimits,...
                                uvms.A.ubJointLimits,...
-                               uvms.A.armPrefPos};
+                               uvms.A.armPrefPos,...
+                               uvms.A.armVehiCoord};
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
 % initial arm position
 uvms.q = [-0.0031 1.2586 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
-%%  EXERCISE 5.1
-% 
-% % Initial position
-% uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
-% 
-% % Initial goal position definition
-% % slightly over the top of the pipe
-% distanceGoalWrtPipe = 0.3;
-% uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
-% uvms.wRg = rotation(pi,0,0);
-% uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
-% 
-% % Actions definition
-% mission.actionTool = [1, 2, 7, 12];
-% 
-% mission.currentAction = mission.actionTool;
-
-%%  EXERCISE 5.2
+%%  EXERCISE 6
 
 % Initial position
 uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
@@ -104,17 +89,10 @@ uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
 uvms.wRg = rotation(pi,0,0);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
-% Goal position for safe navigation 
-distance = 2;
-uvms.goalPosition_v = pipe_center + (pipe_radius + distanceGoalWrtPipe + distance)*[0 0 1]';
-uvms.wRg_v = rotation(0, 0, 0);
-
-
 % Actions definition
-mission.actionTool = [1, 2, 7, 10, 11, 12];
-mission.safeNavigation = [2, 3, 4];
+mission.actionTool = [1, 2, 7, 12, 13];
 
-mission.currentAction = mission.safeNavigation;
+mission.currentAction = mission.actionTool;
 
 %% Initialization
 
@@ -142,6 +120,9 @@ for t = 0:deltat:end_time
     Qp = eye(13); 
     % add all the other tasks here!
     % the sequence of iCAT_task calls defines the priority
+    
+    %   CONSTRAIN VELOCITIES
+    [Qp, rhop] = iCAT_task(uvms.A.armVehiCoord,    uvms.JarmVehiCoord,    Qp, rhop, uvms.xdot.armVehiCoord,  0.0001,   0.01, 10);
     
     %   CONSTRAIN VELOCITIES
     [Qp, rhop] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, rhop, uvms.xdot.constraint,  0.0001,   0.01, 10);
@@ -185,15 +166,20 @@ for t = 0:deltat:end_time
     uvms.q_dot = rhop(1:7);
     uvms.p_dot = rhop(8:13);
     
-    % Integration
+     % Integration
 	uvms.q = uvms.q + uvms.q_dot*deltat;
+    
+    %   Exercise 6 add sinusiodal disturbance to the vehicle position
+    uvms.p_dot(4) = 0.5*sin(2*pi*0.5*t);
+    
     % beware: p_dot should be projected on <v>
     uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
-    
-    mission.phase_time = mission
+
+    mission.phase_time = mission.phase_time + deltat;
+   
     
     % check if the mission phase should be changed
-    [uvms, mission] = UpdateMissionPhase_ex5(uvms, mission);
+    [uvms, mission] = UpdateMissionPhase_ex6(uvms, mission);
     
     % send packets to Unity viewer
     SendUdpPackets(uvms,wuRw,vRvu,uArm,uVehicle);

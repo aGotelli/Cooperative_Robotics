@@ -118,5 +118,10 @@ uvms.xdot.armPrefPos = zeros(4, 1);
 uvms.A.armPrefPos = eye(4);
 uvms.JarmPrefPos = [];
 uvms.armPrefPos = [-0.0031 1.2586 0.0128 -1.2460]';
+
+%%  ADDING THE DEFINITION FOR THE ARM VEHICLE COORDINATION
+uvms.JarmVehiCoord = [];
+uvms.xdot.armVehiCoord = zeros(6, 1);
+uvms.A.armVehiCoord = eye(6);
 end
 

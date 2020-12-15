@@ -133,4 +133,7 @@ uvms.JjointLimits = [eye(7), zeros(7, 6)];
 %%  JACOBIAN FOR THE ARM PREFERRED SHAPE 
 uvms.JarmPrefPos = [eye(4) zeros(4, 9)];
 
+%%  JACOBIAN FOR ARM VEHICLE COORDINATION
+uvms.JarmVehiCoord = [zeros(6,7) eye(6,6)];
+
 end

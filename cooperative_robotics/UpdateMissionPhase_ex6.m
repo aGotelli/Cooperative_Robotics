@@ -9,12 +9,12 @@ function [uvms, mission] = UpdateMissionPhase_ex5(uvms, mission)
                 mission.phase_time = 0;
                 mission.switch = 1;
                 mission.previousAction = mission.currentAction;
-                % Exercise 4.1
-                mission.currentAction = mission.actionAligning; 
+                % Exercise 5.2
+                mission.currentAction = mission.actionTool; 
 
             end
             
-        case 2  
+        case 2 
             
     end
 end

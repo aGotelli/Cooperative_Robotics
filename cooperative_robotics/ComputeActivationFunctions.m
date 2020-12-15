@@ -86,4 +86,8 @@ uvms.A.ubJointLimits = diag([IncreasingBellShapedFunction(uvms.jlmax(1) - offset
 
 %%  ACTIVATION FOR THE ARM PREFERRED POSITION 
 uvms.A.armPrefPos = eye(4) .* mission.activationFunctions{12};
+
+%%  ACTIVATION FOR THE ARM VEHICLE COORDINATION
+uvms.A.armVehiCoord = eye(6) .* mission.activationFunctions{13};
+
 end
