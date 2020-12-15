@@ -48,6 +48,8 @@ uvms = InitUVMS('Robust');
 % Constrain velocities = 9
 % Avoid lower bound joint limits = 10
 % Avoid upper bound joint limits = 11
+% Ensure preferred position for the arm = 12
+% Arm vehicle coordination = 13
 
 % this struct can be used to evolve what the UVMS has to do
 mission.phase = 1;
@@ -64,7 +66,8 @@ mission.activationFunctions = {uvms.A.t,...
                                uvms.A.constraint,...
                                uvms.A.lbJointLimits,...
                                uvms.A.ubJointLimits,...
-                               uvms.A.armPrefPos};
+                               uvms.A.armPrefPos,...
+                               uvms.A.armVehiCoord};
                            
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 

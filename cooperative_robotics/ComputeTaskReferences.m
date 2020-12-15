@@ -46,5 +46,6 @@ uvms.xdot.armPrefPos = Saturate(0.5 * (uvms.armPrefPos - uvms.q(1:4)), 0.5);
 
 %%   THE TASK FOR THE ARM VEHICLE COORDINATION
 uvms.xdot.armVehiCoord = uvms.p_dot;
+
 end
 

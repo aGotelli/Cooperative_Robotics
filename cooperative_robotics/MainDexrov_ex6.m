@@ -125,7 +125,7 @@ for t = 0:deltat:end_time
     [Qp, rhop] = iCAT_task(uvms.A.armVehiCoord,    uvms.JarmVehiCoord,    Qp, rhop, uvms.xdot.armVehiCoord,  0.0001,   0.01, 10);
     
     %   CONSTRAIN VELOCITIES
-    [Qp, rhop] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, rhop, uvms.xdot.constraint,  0.0001,   0.01, 10);
+    %[Qp, rhop] = iCAT_task(uvms.A.constraint,    uvms.Jconstraint,    Qp, rhop, uvms.xdot.constraint,  0.0001,   0.01, 10);
     
     %   AVOID LOWER BOUND JOINT LIMITS
     [Qp, rhop] = iCAT_task(uvms.A.lbJointLimits,    uvms.JjointLimits,    Qp, rhop, uvms.xdot.jointLimits,  0.0001,   0.01, 10);

@@ -53,6 +53,7 @@ uvms.wRg_v = rotation(0, 0, 0);
 % Avoid lower bound joint limits = 10
 % Avoid upper bound joint limits = 11
 % Ensure preferred position for the arm = 12
+% Arm vehicle coordination = 13
 
 % this struct can be used to evolve what the UVMS has to do
 mission.phase = 1;
@@ -69,7 +70,8 @@ mission.activationFunctions = {uvms.A.t,...
                                uvms.A.constraint,...
                                uvms.A.lbJointLimits,...
                                uvms.A.ubJointLimits,...
-                               uvms.A.armPrefPos};
+                               uvms.A.armPrefPos,...
+                               uvms.A.armVehiCoord};
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
 % initial arm position
@@ -206,7 +208,7 @@ for t = 0:deltat:end_time
     if (mod(t,0.1) == 0)
         t
         phase = mission.phase
-        %uvms.p'
+        uvms.p'
     end
     
     % enable this to have the simulation approximately evolving like real

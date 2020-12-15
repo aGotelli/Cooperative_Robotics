@@ -1,4 +1,4 @@
-function [uvms, mission] = UpdateMissionPhase_ex5(uvms, mission)
+function [uvms, mission] = UpdateMissionPhase_ex6(uvms, mission)
     switch mission.phase
         case 1  
             [~, w_vlin] = CartError(uvms.wTg_v , uvms.wTv);
@@ -9,7 +9,7 @@ function [uvms, mission] = UpdateMissionPhase_ex5(uvms, mission)
                 mission.phase_time = 0;
                 mission.switch = 1;
                 mission.previousAction = mission.currentAction;
-                % Exercise 5.2
+                % Exercise 6.1
                 mission.currentAction = mission.actionTool; 
 
             end
