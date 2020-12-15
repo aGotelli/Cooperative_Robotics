@@ -190,7 +190,7 @@ for t = 0:deltat:end_time
     % beware: p_dot should be projected on <v>
     uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
     
-    mission.phase_time = mission.phase_time + deltat;
+    mission.phase_time = mission
     
     % check if the mission phase should be changed
     [uvms, mission] = UpdateMissionPhase_ex5(uvms, mission);
