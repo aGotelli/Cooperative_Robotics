@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 40;
+end_time = 15;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -75,16 +75,18 @@ mission.activationFunctions = {uvms.A.t,...
 mission.totalNumOfTasks = numel(mission.activationFunctions);
 
 % initial arm position
-uvms.q = [-0.0031 1.2586 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
+uvms.q = [-0.0044    1.1582    0.0175   -1.0710    3.0318    0.0876    1.1906]';
 
 %%  EXERCISE 6
 
 % Initial position
-uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
+%uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
+uvms.p = [-1.8446   10.8430  -29.5    0.0065   -0.0001    1.0838]';
+
 
 % Initial goal position definition
 % slightly over the top of the pipe
-distanceGoalWrtPipe = 0.3;
+distanceGoalWrtPipe = 0.1;
 uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
 uvms.wRg = rotation(pi,0,0);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
@@ -169,8 +171,12 @@ for t = 0:deltat:end_time
      % Integration
 	uvms.q = uvms.q + uvms.q_dot*deltat;
     
-    %   Exercise 6 add sinusiodal disturbance to the vehicle position
-    uvms.p_dot(4) = 0.5*sin(2*pi*0.5*t);
+    %   Exercise 6 add sinusiodal disturbance to the vehicle positions
+    disturb = [0 0.025 0]';
+    disturb_ang = [0 0 0]';
+    disturb_ang = disturb_ang*0.5*sin(0.5*t*2*pi);
+    uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
+    uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
     
     % beware: p_dot should be projected on <v>
     uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
@@ -192,7 +198,7 @@ for t = 0:deltat:end_time
     if (mod(t,0.1) == 0)
         t
         phase = mission.phase
-        %uvms.p'
+        %uvms.q'
     end
     
     % enable this to have the simulation approximately evolving like real
@@ -203,4 +209,4 @@ end
 fclose(uVehicle);
 fclose(uArm);
 
-PrintPlot(plt);
+PrintPlot_ex6(plt);

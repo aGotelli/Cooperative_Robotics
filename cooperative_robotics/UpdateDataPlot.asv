@@ -66,8 +66,8 @@ plt.wRv = uvms.initRotation;
 
 %   Exercise 6
 glob_tool_pos = uvms.wTv*uvms.vTt;
-plt.t_x(loop) = glob_tool_pos(1,4);
-plt.t_y(loop) = glob_tool_pos(2,4);
-plt.t_z(loop) = glob_tool_pos(3,4);
+plt.t_x =glob_tool_pos
+plt.t_y = 
+plt.t_z = 
 
 end

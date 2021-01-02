@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry} 
+\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{makeidx}         % allows index generation
 \usepackage[pdftex]{graphicx,color}          % standard LaTeX graphics tool
 \DeclareGraphicsRule{.pdftex}{pdf}{.pdftex}{}
@@ -47,7 +47,7 @@
 
 \begin{document}
 \frontmatter
-\onecolumn 
+\onecolumn
 \vskip 1cm
 %\pagestyle{empty}
 \begin{center}
@@ -59,9 +59,9 @@
 \vskip 5cm
 
 \normalsize
-Authors: Names\\
-EMAILs \\
-Date:  \\
+Authors: Piccinini Davide, Porta Francesco and Gotelli Andrea
+EMAILs: 4343879@studenti.unige.it
+Date: 21/12/2020
 \end{center}
 \clearpage
 \mainmatter
@@ -74,7 +74,7 @@ Date:  \\
 	\item Report the thresholds whenever relevant.
 	\item Report the mathematical formula employed to derive the task jacobians and the control laws when asked, including where they are projected.
 	\item If needed, part of the code can be inserted as a discussion reference.
-\end{itemize} 
+\end{itemize}
 
 
 Use the following template when you need to discuss the hierarchy of tasks of a given action or set of actions:
@@ -84,7 +84,7 @@ Use the following template when you need to discuss the hierarchy of tasks of a 
 	\begin{center}
 		\footnotesize
 		\begin{tabular}{ccccc}
-			\toprule		
+			\toprule
 			Task & Type & $\mathcal{A}_{1}$ & $\mathcal{A}_{2}$ & $\mathcal{A}_{3} $	 \\
 			\midrule
 			Task A                    & I & 1 &   & 1  \\
@@ -92,7 +92,7 @@ Use the following template when you need to discuss the hierarchy of tasks of a 
 			Task B                & I & 2 & 1 &   \\
 			\hdashline
 			Task C                       & E &   & 2 & 2   \\
-		
+
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -132,7 +132,7 @@ The Jacobian relationship for the Vehicle Position control task need to take int
 Initialize the vehicle at the position:
 \begin{displaymath}
 \begin{bmatrix} 48.5 & 11.5 & -33 & 0 & 0 &-\pi/2\end{bmatrix}^\top
-\end{displaymath} 
+\end{displaymath}
 Choose as target point for the vehicle position the following one:
 \begin{displaymath}
 \begin{bmatrix} 50 & -12.5 & -33 & 0 & 0 & -\pi/2 \end{bmatrix}^\top
@@ -156,7 +156,7 @@ Goal: Implement a task to control the altitude from the seafloor. Check that at 
 Initialize the vehicle at the position:
 \begin{displaymath}
 \begin{bmatrix} 10.5 & 37.5 & -38 & 0 & -0.06 & 0.5 \end{bmatrix}^\top
-\end{displaymath} 
+\end{displaymath}
 
 Goal: add a control task to regulate the altitude to zero.
 
@@ -170,11 +170,11 @@ Goal: add a control task to regulate the altitude to zero.
 Initialize the vehicle at the position:
 \begin{displaymath}
 \begin{bmatrix} 8.5 & 38.5 & -36 & 0 & -0.06 & 0.5 \end{bmatrix}^\top
-\end{displaymath} 
-Use a "safe waypoint navigation action" to reach the following position: 
+\end{displaymath}
+Use a "safe waypoint navigation action" to reach the following position:
 \begin{displaymath}
 \begin{bmatrix} 10.5 & 37.5 & -38 & 0 & -0.06 & 0.5 \end{bmatrix}^\top
-\end{displaymath} 
+\end{displaymath}
 When the position has been reached, land on the seafloor using the basic "landing" action.
 
 \subsubsection{Q1: Report the unified hierarchy of tasks used and their priorities.}
@@ -185,16 +185,16 @@ When the position has been reached, land on the seafloor using the basic "landin
 
 \section{Exercise 3: Improve the “Landing” Action}
 \subsection{Adding an alignment to target control objective}
-If we use the landing action, there is no guarantee that we land in from of the nodule/rock. We need to add additional constraints to make the vehicle face the nodule. The position of the rock is contained in the variable \texttt{rock\_center}. 
+If we use the landing action, there is no guarantee that we land in from of the nodule/rock. We need to add additional constraints to make the vehicle face the nodule. The position of the rock is contained in the variable \texttt{rock\_center}.
 
 Initialize the vehicle at the position:
 \begin{displaymath}
 \begin{bmatrix} 8.5 & 38.5 & -36 & 0 & -0.06 & 0.5 \end{bmatrix}^\top
-\end{displaymath} 
-Use a "safe waypoint navigation action" to reach the following position: 
+\end{displaymath}
+Use a "safe waypoint navigation action" to reach the following position:
 \begin{displaymath}
 \begin{bmatrix} 10.5 & 37.5 & -38 & 0 & -0.06 & 0.5 \end{bmatrix}^\top
-\end{displaymath} 
+\end{displaymath}
 Then land, aligning to the nodule.
 
 Goal: Add an alignment task between the longitudinal axis of the vehicle ($x$ axis) and the nodule target. In particular, the $x$ axis of the vehicle should align to the projection, on the inertial horizontal plane, of the unit vector joining the vehicle frame to the nodule frame.
@@ -234,7 +234,7 @@ Goal: Add a joint limits avoidance task. Land on the seafloor. Try reaching the 
 \clearpage
 \section{Exercise 5: Floating Manipulation}
 \subsection{Adding an optimization control objective}
-Use the DexROV simulation for this exercise. 
+Use the DexROV simulation for this exercise.
 
 The goal is to try to optimize the joint positions, if possible, to keep the first four joints in a "preferred shape", represented by the following vector
 \begin{displaymath}
@@ -261,7 +261,7 @@ Goal: introduce mission phases in the floating manipulation scenario. Observe th
 \clearpage
 \section{Exercise 6: Floating Manipulation with Arm-Vehicle Coordination Scheme}
 \subsection{Adding the parallel arm-vehicle coordination scheme}
-Let us now see how the two different subsystems (arm and vehicle) can be properly coordinate. Introduce in the simulation a sinusoidal velocity disturbance acting on the vehicle, and assume the actual vehicle velocity measurable. To do so, add a constant (in the inertial frame) velocity vector to the reference vehicle velocity before integrating it in the simulator. 
+Let us now see how the two different subsystems (arm and vehicle) can be properly coordinate. Introduce in the simulation a sinusoidal velocity disturbance acting on the vehicle, and assume the actual vehicle velocity measurable. To do so, add a constant (in the inertial frame) velocity vector to the reference vehicle velocity before integrating it in the simulator.
 
 Goal: modify the control part to implement the parallel arm-vehicle coordination scheme. Observe that, even with a disturbance acting on the vehicle, the end-effector can stay in the required constant position.
 
@@ -281,10 +281,10 @@ Goal: modify the control part to implement the parallel arm-vehicle coordination
 %\end{figure}
 
 
-		
+
 %		\begin{figure}[b]
 %			\centering
-%			\subfloat[]{\frame{\includegraphics[keepaspectratio,height=3cm]{trident1.eps}}} 
+%			\subfloat[]{\frame{\includegraphics[keepaspectratio,height=3cm]{trident1.eps}}}
 %			\subfloat[]{\frame{\includegraphics[keepaspectratio,height=3cm]{trident2.eps}}}
 %			\subfloat[]{\frame{\includegraphics[keepaspectratio,height=3cm]{trident3.eps}}}
 %			\subfloat[]{\frame{\includegraphics[keepaspectratio,height=3cm]{trident4.eps}}}
@@ -294,5 +294,3 @@ Goal: modify the control part to implement the parallel arm-vehicle coordination
 
 
 \end{document}
-
-
