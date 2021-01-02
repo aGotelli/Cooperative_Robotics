@@ -97,7 +97,7 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 uvms.p = [48.5 11.5 -33 0 0 -pi/2]'; 
 
 % defines the goal position for the vehicle position and attitude task
-uvms.goalPosition_v = [50   -12.5  -33]';
+uvms.goalPosition_v = [70   11.5 -33]';
 uvms.wRg_v = rotation(0, 0, -pi/2);
 
 % Actions definition
@@ -173,6 +173,7 @@ for t = 0:deltat:end_time
         altitude = uvms.w_a
         [ang, lin] = CartError(uvms.wTg_v , uvms.wTv);
         distance = norm(lin)
+        uvms.p_dot'
     end
 
     % enable this to have the simulation approximately evolving like real

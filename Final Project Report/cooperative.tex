@@ -280,13 +280,90 @@ uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
 % beware: p_dot should be projected on <v>
 uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
 \end{lstlisting}
+This task objective is to keep the end effector position stable while the vehicle moves. As a result, the arm and the vehicle result as two different systems; specifically, the first could cope with incugruences in the second, but only in a limited way.
+In order to cope with this disturbances we defined a new task called: armVehiCoord.
+This task is placed with the highest hierarchy, limiting the manifold of solution to the ones accounting for the vehicle velocities. In fact, in order to decouple the two systems, we need to feed the arm with the vehicle velocities, the jacobian matrix accounts only for the vehicle velocities, disregarding the arm velocities.
+The task takes as a reference the velocities of the vehicle, as this is the input the arm has to compensate. Concerning the activation funtion, this is defined as an identity matrix, as the task is an equality one. 
 
-In order to cope 
 
 
 \subsubsection{Q2: Show the plot of the position of the end-effector, showing that it is constant. Show also a plot of the velocities of the vehicle and of the arm.}
-\includegraphics{EE_velocities}
+In the following images, the end effector position is plotted, showing the three cartesian components. The scale of the plots clearly states that the end effector position could be assumed as constant, as it only suffers from oscillation smaller than a millimiter. 
+
+\includegraphics[width=\textwidth]{tool_coord}
+\centering
+
+The following image compares the vehicle velocities, expressed in the vehicle frame, and the velocites of the arm joints. The vehicle linear velocities show the effect of the linear disturbance, which brings a change in the vehicle velocities on x and y. 
+The arm velocities are the resultant for the control of the end effector in its original position. 
+
+\includegraphics[width=\textwidth]{Vehicle_arm_volocities}
+\centering
+
+
+
+In this last image, we would like to show the evolution of the end effector velocities expressed in the inertial frame. The velocities start with a nonzero infinitesimal value, but they converge to zero in few seconds.
+
+\includegraphics[width=\textwidth]{EE_velocities}
+\centering
+
+
 \subsubsection{Q3: What happens if the sinusoidal disturbance becomes too big? Try increasing the saturation value of the end-effector task if it is too low.}
+If we add a sinusoidal disturbance, it deteriorates the ability of keeping the end effector still. The disturbance is added as described below. 
+\begin{lstlisting}
+%	Adding the disturbances
+disturb = [0 0.0 0]';
+disturb_ang = [0 1 0]';
+disturb_ang = disturb_ang*0.2*sin(0.5*t*2*pi);
+uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
+uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
+\end{lstlisting}
+However, as it can be seen in the following images, the end effector does not moves much. 
+The following figure shows that the oscillations of the tool position are of the order of one millimiter, which can be considered as a acceptable result. 
+
+\includegraphics[width=\textwidth]{tool_coord_sinus_debole}
+\centering
+
+The following images compares the vehicle velocities with the joint rotational speed. 
+\includegraphics[width=\textwidth]{Vehicle_arm_volocities_sinus_debole}
+\centering
+
+Finally, this last image shows that the end effector velocities remains reasonable small. 
+\includegraphics[width=\textwidth]{EE_velocities_sinus_debole}
+\centering
+ 
+However, if we increase the disturbance too much, the arms cannot cope with the disturbance in the vehicle. As a result, the displacement of the end effer are not negletable. Even if we increase the gain and the saturation of the tool control task, this is not sufficient to cancel the disturbannce.  The disturbance is added as described below.
+\begin{lstlisting}
+%	Adding the disturbances
+    disturb = [0 0.0 0]';
+    disturb_ang = [0 1 0]';
+    disturb_ang = disturb_ang*1*sin(0.5*t*2*pi);
+    uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
+    uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
+\end{lstlisting}
+The results of such a disturbance as shown in the images below.
+First from this first image we can see that the end effecor is clearly moving from the 
+desired position. The displacemnts on x reach almost 10 cm. 
+\includegraphics[width=\textwidth]{tool_coord_sinus_forte}
+\centering
+
+\includegraphics[width=\textwidth]{Vehicle_arm_volocities_sinus_forte}
+\centering
+Comparing the vehicle velocities with either the arm joints or end effector velocities, it is clear that in this case the task fails in its purpose. 
+\includegraphics[width=\textwidth]{EE_velocities_sinus_forte}
+\centering
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

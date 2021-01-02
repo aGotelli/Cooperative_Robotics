@@ -173,9 +173,9 @@ for t = 0:deltat:end_time
     
     %   Exercise 6 add sinusiodal disturbance to the vehicle positions
     %	Adding the disturbances
-    disturb = [0 0.025 0]';
-    disturb_ang = [0 0 0]';
-    disturb_ang = disturb_ang*0.5*sin(0.5*t*2*pi);
+    disturb = [0 0.0 0]';
+    disturb_ang = [0 1 0]';
+    disturb_ang = disturb_ang*0.2*sin(0.5*t*2*pi);
     uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
     uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
     

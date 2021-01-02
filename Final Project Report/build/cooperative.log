@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2020.12.30)  2 JAN 2021 17:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2020.12.30)  2 JAN 2021 18:42
 entering extended mode
 **./cooperative.tex
 (cooperative.tex
@@ -526,22 +526,86 @@ File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 280.
-<./images/Ex6//EE_velocities.png, id=37, 421.575pt x 316.18124pt>
+<./images/Ex6//tool_coord.png, id=37, 421.575pt x 316.18124pt>
+File: ./images/Ex6//tool_coord.png Graphic file (type png)
+<use ./images/Ex6//tool_coord.png>
+Package pdftex.def Info: ./images/Ex6//tool_coord.png  used on input line 293.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 293--295
+ [][] 
+ []
+
+[7
+
+]
+<./images/Ex6//Vehicle_arm_volocities.png, id=41, 421.575pt x 316.18124pt>
+File: ./images/Ex6//Vehicle_arm_volocities.png Graphic file (type png)
+<use ./images/Ex6//Vehicle_arm_volocities.png>
+Package pdftex.def Info: ./images/Ex6//Vehicle_arm_volocities.png  used on inpu
+t line 299.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [8 <./images/Ex6//tool_coord.png (PNG copy)>]
+<./images/Ex6//EE_velocities.png, id=45, 421.575pt x 316.18124pt>
 File: ./images/Ex6//EE_velocities.png Graphic file (type png)
 <use ./images/Ex6//EE_velocities.png>
-Package pdftex.def Info: ./images/Ex6//EE_velocities.png  used on input line 28
-7.
-(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
- [7
-
-] [8 <./images/Ex6//EE_velocities.png (PNG copy)>]
+Package pdftex.def Info: ./images/Ex6//EE_velocities.png  used on input line 30
+6.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [9 <./images/Ex6//Vehicle_arm_volocities.png (PNG copy)>]
+<./images/Ex6//tool_coord_sinus_debole.png, id=49, 421.575pt x 316.18124pt>
+File: ./images/Ex6//tool_coord_sinus_debole.png Graphic file (type png)
+<use ./images/Ex6//tool_coord_sinus_debole.png>
+Package pdftex.def Info: ./images/Ex6//tool_coord_sinus_debole.png  used on inp
+ut line 323.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//Vehicle_arm_volocities_sinus_debole.png, id=50, 421.575pt x 316.
+18124pt>
+File: ./images/Ex6//Vehicle_arm_volocities_sinus_debole.png Graphic file (type 
+png)
+<use ./images/Ex6//Vehicle_arm_volocities_sinus_debole.png>
+Package pdftex.def Info: ./images/Ex6//Vehicle_arm_volocities_sinus_debole.png 
+ used on input line 329.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//EE_velocities_sinus_debole.png, id=51, 421.575pt x 316.18124pt>
+File: ./images/Ex6//EE_velocities_sinus_debole.png Graphic file (type png)
+<use ./images/Ex6//EE_velocities_sinus_debole.png>
+Package pdftex.def Info: ./images/Ex6//EE_velocities_sinus_debole.png  used on 
+input line 333.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//tool_coord_sinus_forte.png, id=52, 421.575pt x 316.18124pt>
+File: ./images/Ex6//tool_coord_sinus_forte.png Graphic file (type png)
+<use ./images/Ex6//tool_coord_sinus_forte.png>
+Package pdftex.def Info: ./images/Ex6//tool_coord_sinus_forte.png  used on inpu
+t line 352.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//Vehicle_arm_volocities_sinus_forte.png, id=53, 421.575pt x 316.1
+8124pt>
+File: ./images/Ex6//Vehicle_arm_volocities_sinus_forte.png Graphic file (type p
+ng)
+<use ./images/Ex6//Vehicle_arm_volocities_sinus_forte.png>
+Package pdftex.def Info: ./images/Ex6//Vehicle_arm_volocities_sinus_forte.png  
+used on input line 356.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//EE_velocities_sinus_forte.png, id=54, 421.575pt x 316.18124pt>
+File: ./images/Ex6//EE_velocities_sinus_forte.png Graphic file (type png)
+<use ./images/Ex6//EE_velocities_sinus_forte.png>
+Package pdftex.def Info: ./images/Ex6//EE_velocities_sinus_forte.png  used on i
+nput line 360.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [10 <./images/Ex6//EE_velocities.png (PNG copy)>]
+[11 <./images/Ex6//tool_coord_sinus_debole.png (PNG copy)> <./images/Ex6//Vehic
+le_arm_volocities_sinus_debole.png (PNG copy)>] [12 <./images/Ex6//EE_velocitie
+s_sinus_debole.png (PNG copy)> <./images/Ex6//tool_coord_sinus_forte.png (PNG c
+opy)>] [13 <./images/Ex6//Vehicle_arm_volocities_sinus_forte.png (PNG copy)> <.
+/images/Ex6//EE_velocities_sinus_forte.png (PNG copy)>]
 ("/home/andrea/git/Cooperative_Robotics/Final Project Report/build/cooperative.
 aux") ) 
 Here is how much of TeX's memory you used:
- 6675 strings out of 481629
- 99201 string characters out of 2918595
- 381851 words of memory out of 3000000
- 23391 multiletter control sequences out of 15000+200000
+ 6747 strings out of 481629
+ 101950 string characters out of 2918595
+ 386853 words of memory out of 3000000
+ 23455 multiletter control sequences out of 15000+200000
  415838 words of font info for 72 fonts, out of 3000000 for 9000
  0 hyphenation exceptions out of 8191
  66i,12n,72p,467b,1226s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -560,9 +624,9 @@ mr6.pfb></home/andrea/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr
 pfb></home/andrea/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt10.
 pfb>
 Output written on "/home/andrea/git/Cooperative_Robotics/Final Project Report/b
-uild/cooperative.pdf" (9 pages, 181224 bytes).
+uild/cooperative.pdf" (14 pages, 373708 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
+ 111 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
