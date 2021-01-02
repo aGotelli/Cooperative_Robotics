@@ -23,6 +23,8 @@
 \usepackage{epstopdf}
 \usepackage[caption=false,font=footnotesize]{subfig}
 
+\usepackage{listings}
+
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 
@@ -266,9 +268,24 @@ Let us now see how the two different subsystems (arm and vehicle) can be properl
 Goal: modify the control part to implement the parallel arm-vehicle coordination scheme. Observe that, even with a disturbance acting on the vehicle, the end-effector can stay in the required constant position.
 
 \subsubsection{Q1: Which tasks did you introduce to implement the parallel coordination scheme?}
-\includegraphics{EE_velocities}
-\subsubsection{Q2: Show the plot of the position of the end-effector, showing that it is constant. Show also a plot of the velocities of the vehicle and of the arm.}
+In order to obtain the desired behavior we have introduced two kinds of disturbances, one linear and the other as angular velocity disturbance, expressed in the inertial frame. The vehicle suffers from these velocities, as they are added before integration. 
+\begin{lstlisting}
+%	Adding the disturbances
+disturb = [0 0.025 0]';
+disturb_ang = [0 0 0]';
+disturb_ang = disturb_ang*0.5*sin(0.5*t*2*pi);
+uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
+uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
+    
+% beware: p_dot should be projected on <v>
+uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
+\end{lstlisting}
 
+In order to cope 
+
+
+\subsubsection{Q2: Show the plot of the position of the end-effector, showing that it is constant. Show also a plot of the velocities of the vehicle and of the arm.}
+\includegraphics{EE_velocities}
 \subsubsection{Q3: What happens if the sinusoidal disturbance becomes too big? Try increasing the saturation value of the end-effector task if it is too low.}
 
 

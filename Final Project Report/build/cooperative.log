@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2020.12.30)  2 JAN 2021 17:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2020.12.30)  2 JAN 2021 17:35
 entering extended mode
 **./cooperative.tex
 (cooperative.tex
@@ -371,29 +371,54 @@ Package caption Info: Standard document class detected.
 \sf@top=\skip59
 \sf@bottom=\skip60
 )
+(/home/andrea/.miktex/texmfs/install/tex/latex/listings/listings.sty
+\lst@mode=\count299
+\lst@gtempboxa=\box96
+\lst@token=\toks25
+\lst@length=\count300
+\lst@currlwidth=\dimen198
+\lst@column=\count301
+\lst@pos=\count302
+\lst@lostspace=\dimen199
+\lst@width=\dimen256
+\lst@newlines=\count303
+\lst@lineno=\count304
+\lst@maxwidth=\dimen257
+
+(/home/andrea/.miktex/texmfs/install/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count305
+\lst@skipnumbers=\count306
+\lst@framebox=\box97
+)
+(/home/andrea/.miktex/texmfs/install/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+
 (/home/andrea/.miktex/texmfs/install/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
-\l__kernel_color_stack_int=\count299
-\l__pdf_internal_box=\box96
+\l__kernel_color_stack_int=\count307
+\l__pdf_internal_box=\box98
 )
 ("/home/andrea/git/Cooperative_Robotics/Final Project Report/build/cooperative.
 aux")
 \openout1 = `cooperative.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -431,33 +456,34 @@ LaTeX Font Info:    ... okay on input line 48.
 
 (/home/andrea/.miktex/texmfs/install/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count300
-\scratchdimen=\dimen198
-\scratchbox=\box97
-\nofMPsegments=\count301
-\nofMParguments=\count302
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count303
-\MPscratchDim=\dimen199
-\MPnumerator=\count304
-\makeMPintoPDFobject=\count305
-\everyMPtoPDFconversion=\toks26
+\scratchcounter=\count308
+\scratchdimen=\dimen258
+\scratchbox=\box99
+\nofMPsegments=\count309
+\nofMParguments=\count310
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count311
+\MPscratchDim=\dimen259
+\MPnumerator=\count312
+\makeMPintoPDFobject=\count313
+\everyMPtoPDFconversion=\toks27
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count314
  [1
 
 
 
 {/home/andrea/.miktex/texmfs/data/pdftex/config/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 86.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 88.
 
 
 (/home/andrea/.miktex/texmfs/install/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 86.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 88.
 
 
 (/home/andrea/.miktex/texmfs/install/tex/latex/amsfonts/umsb.fd
@@ -466,7 +492,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ]
-Overfull \hbox (6.99434pt too wide) in paragraph at lines 104--104
+Overfull \hbox (6.99434pt too wide) in paragraph at lines 106--106
 []\OT1/cmr/bx/n/14.4 Exercise 1: Implement a \Safe Waypoint Navigation" Action.
  
  []
@@ -476,7 +502,7 @@ Overfull \hbox (6.99434pt too wide) in paragraph at lines 104--104
 ] [3
 
 ]
-Overfull \hbox (4.26958pt too wide) in paragraph at lines 202--202
+Overfull \hbox (4.26958pt too wide) in paragraph at lines 204--204
 []\OT1/cmr/bx/n/10 Q1: Report the hierarchy of tasks used and their priorities 
 in each action. Comment
  []
@@ -488,30 +514,37 @@ in each action. Comment
 ] [6
 
 ]
-Overfull \hbox (43.22758pt too wide) in paragraph at lines 262--262
+Overfull \hbox (43.22758pt too wide) in paragraph at lines 264--264
 []\OT1/cmr/bx/n/14.4 Exercise 6: Floating Manipulation with Arm-Vehicle Coordin
 ation
  []
 
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 2
+80.
+(/home/andrea/.miktex/texmfs/install/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 280.
 <./images/Ex6//EE_velocities.png, id=37, 421.575pt x 316.18124pt>
 File: ./images/Ex6//EE_velocities.png Graphic file (type png)
 <use ./images/Ex6//EE_velocities.png>
-Package pdftex.def Info: ./images/Ex6//EE_velocities.png  used on input line 26
-9.
+Package pdftex.def Info: ./images/Ex6//EE_velocities.png  used on input line 28
+7.
 (pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
-[7
+ [7
 
- <./images/Ex6//EE_velocities.png (PNG copy)>]
+] [8 <./images/Ex6//EE_velocities.png (PNG copy)>]
 ("/home/andrea/git/Cooperative_Robotics/Final Project Report/build/cooperative.
 aux") ) 
 Here is how much of TeX's memory you used:
- 5049 strings out of 481629
- 77657 string characters out of 2918595
- 359635 words of memory out of 3000000
- 21784 multiletter control sequences out of 15000+200000
+ 6675 strings out of 481629
+ 99201 string characters out of 2918595
+ 381851 words of memory out of 3000000
+ 23391 multiletter control sequences out of 15000+200000
  415838 words of font info for 72 fonts, out of 3000000 for 9000
  0 hyphenation exceptions out of 8191
- 66i,12n,72p,467b,326s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 66i,12n,72p,467b,1226s stack positions out of 5000i,500n,10000p,200000b,50000s
  </home/andrea/.miktex/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/tc
 rm1000.pk></home/andrea/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/c
 mbx10.pfb></home/andrea/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/c
@@ -527,9 +560,9 @@ mr6.pfb></home/andrea/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmr
 pfb></home/andrea/.miktex/texmfs/install/fonts/type1/public/amsfonts/cm/cmtt10.
 pfb>
 Output written on "/home/andrea/git/Cooperative_Robotics/Final Project Report/b
-uild/cooperative.pdf" (8 pages, 178119 bytes).
+uild/cooperative.pdf" (9 pages, 181224 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
+ 87 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
