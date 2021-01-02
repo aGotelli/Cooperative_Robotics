@@ -105,7 +105,7 @@ Use the following template when you need to discuss the hierarchy of tasks of a 
 
 \section{Exercise 1: Implement a “Safe Waypoint Navigation” Action.}
 
-\subsection{Adding a vehicle position control objective}
+\subsection{Adding a vehicle position and attitude control objective}
 Initialize the vehicle far away from the seafloor. An example position could be
 \begin{displaymath}
 \begin{bmatrix} 10.5 & 35.5 & -36 & 0 & 0 & \pi/2\end{bmatrix}^\top
@@ -115,12 +115,27 @@ Give a target position that is also sufficiently away from the seafloor, e.g.,
 \begin{bmatrix} 10.5 & 37.5 & -38 & 0 & 0 & 0 \end{bmatrix}^\top
 \end{displaymath}
 
-Goal: Implement a vehicle position control task, and test that the vehicle reaches the required position and orientation.
+Goal: Implement a vehicle position and attitude control task, and test that the vehicle reaches the required position and orientation.
 
 
-\subsubsection{Q1: What is the Jacobian relationship for the Vehicle Position control task? How was the task reference computed?}
-The Jacobian relationship for the Vehicle Position control task need to take into account the linear velocities of the vehicle. In the configuration vector y the velocities are expressed in the vehicle frame so the Jacobian has to project them in the reference frame. In fact, the task reference was computed taking into account the position of the goal and the vehicle expressed in the reference frame.
+\subsubsection{Q1: What is the Jacobian relationship for the Vehicle Position and Attitude control task? How was the task reference computed?}
 
+The Vehicle Position and Attitude control task controls both the position and the attitude of the vehicle in order to make them converge to a desired goal position. Since there are in principle one goal for the position and another for the attitude, there are two Jacobian matrices, one for each control problem. \\
+Since the goal position and goal attitude are expressed with respect to the world frame, our task reference vector $ \dot{x} = J\dot{y} $ needs to be projected on the world frame too. \\
+For this reason, since the control vector $ \dot{y} = \begin{bmatrix} \dot{q} & \dot{v} & \dot{\omega}\end{bmatrix}^\top $ is projected in the vehicle frame, the two Jacobian matrices will be:
+\begin{gather*}
+uvms.Jv\_pos = \begin{bmatrix} zeros(3, 7) & uvms.wTv(1:3, 1:3) & zeros(3,3)\end{bmatrix}^\top \\
+uvms.Jv\_att = \begin{bmatrix} zeros(3, 7) & zeros(3, 3) & uvms.wTv(1:3, 1:3)\end{bmatrix}^\top
+\end{gather*}
+
+The task reference vector must be in the form $ \dot{\bar{x}} = \lambda(\bar{x} - x), \lambda > 0 $, where the reference value $ \bar{x} $ represents the desired value and $ x $ is the current value. In our case the desired value is the goal position (or attitude) obtained with the \textit{CartError()} function and the current value is the current position (or attitude). \\
+The two task reference vectors are computed in this way:
+\begin{gather*}
+[ang, lin] = CartError(uvms.wTg\_v , uvms.wTv);\\
+uvms.xdot.v\_pos = Saturate(0.5 * lin, 0.5);\\
+uvms.xdot.v\_att = Saturate(0.5 * ang, 0.5);
+\end{gather*}
+Where $ uvms.wTg\_v $ and $ uvms.wTv $ are respectively the transformation matrix of the goal frame with respect to the world frame and the transformation matrix of the vehicle frame with respect to the world frame. 
 
 \subsubsection{Q2: What is the behaviour if the Horizontal Attitude is enabled or not? Try changing the initial or target orientation in terms of roll and pitch angles. Discuss the behaviour.}
 
