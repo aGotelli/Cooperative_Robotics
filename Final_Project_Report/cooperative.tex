@@ -298,6 +298,9 @@ uvms.p = integrate_vehicle(uvms.p, uvms.p_dot, deltat);
 This task objective is to keep the end effector position stable while the vehicle moves. As a result, the arm and the vehicle result as two different systems; specifically, the first could cope with incugruences in the second, but only in a limited way.
 In order to cope with this disturbances we defined a new task called: armVehiCoord.
 This task is placed with the highest hierarchy, limiting the manifold of solution to the ones accounting for the vehicle velocities. In fact, in order to decouple the two systems, we need to feed the arm with the vehicle velocities, the jacobian matrix accounts only for the vehicle velocities, disregarding the arm velocities.
+$ \bm{\dot{x}} = \bm{J\dot{y}} $ which in this case becames 
+$$ \bm{\dot{x}} = \begin{bmatrix} \bm{0}_{[6x7]} \\ \bm{I}_{[6x6]} \end{bmatrix} \begin{bmatrix} \bm{q}   \\ \bm{\textit{v}} \\ \bm{\omega} \end{bmatrix} $$
+
 The task takes as a reference the velocities of the vehicle, as this is the input the arm has to compensate. Concerning the activation funtion, this is defined as an identity matrix, as the task is an equality one. 
 
 
