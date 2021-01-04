@@ -6,6 +6,7 @@ function [uvms, mission] = UpdateMissionPhase_ex1(uvms, mission)
             if (norm(w_vlin) < 0.1)
                 
                 mission.phase = 2;
+                % Exercise 1.2
 %                 mission.phase_time = 0;
 %                 mission.switch = 1;
 %                 mission.previousAction = mission.currentAction;
