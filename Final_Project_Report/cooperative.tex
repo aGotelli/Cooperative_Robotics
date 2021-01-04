@@ -21,6 +21,7 @@
 \usepackage{multirow}
 \usepackage{amsmath}
 \usepackage{epstopdf}
+\usepackage{float}
 \usepackage[caption=false,font=footnotesize]{subfig}
 
 \usepackage{listings}
@@ -217,6 +218,65 @@ Then land, aligning to the nodule.
 Goal: Add an alignment task between the longitudinal axis of the vehicle ($x$ axis) and the nodule target. In particular, the $x$ axis of the vehicle should align to the projection, on the inertial horizontal plane, of the unit vector joining the vehicle frame to the nodule frame.
 
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. Comment the behaviour.}
+
+\begin{table}[htb]
+	\caption{Task hierarchy for the set of actions used to move the vehicle near the target and then align it.}
+	\begin{itemize}
+		\item Action 1 ($\mathcal{A}_{1}$) : Safe Navigation
+		\item Action 2 ($\mathcal{A}_{2}$) : Aligned Landing
+	\end{itemize}
+	\label{tb_align:actions_table}
+	% Horizontal attitude = 2
+	% Vehicle position = 3
+	% Vehicle attitude = 4
+	% Vehicle minimum altitude = 5
+	% Vehicle altitude control = 6
+	% Horizontal alignment to target = 7
+	% A1:[2, 6, 7]
+	% A2:[2, 3, 4, 5]
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{cccc}
+			\toprule
+			Task & Type & $\mathcal{A}_{1}$ & $\mathcal{A}_{2}$ \\
+			\midrule
+			Horizontal Attitude             & I & 2 & 1 \\
+			\hdashline
+			Vehicle Position				& E & 3 &   \\
+			\hdashline
+			Vehicle Attitude                & E & 4 &   \\
+			\hdashline
+			Vehicle Minimum Altitude        & I & 1 &   \\
+			\hdashline
+			Vehicle Altitude Control        & E &   & 3 \\
+			\hdashline
+			Alignment to Target             & E &   & 2 \\
+			
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}% %
+
+The vehicle initially starts from a point quite high with respect to the ground and some meters away from the target ({\small\(\begin{bmatrix} 8.5 & 38.5 & -36 & 0 & -0.06 & 0.5 \end{bmatrix}^\top\)})\\
+The first action performed is the Safe Navigation, which leads the vehicle to move to a specified point using two safety tasks, which have the top priority, the Minimum Altitude Task and the Horizontal Attitude Task, and two tasks to move the vehicle to the goal, the Vehicle Position and Vehicle Attitude Tasks.\\
+When the linear distance between the vehicle and the goal position ({\small \(\begin{bmatrix} 10.5 & 37.5 & -38 & 0 & -0.06 & 0.5 \end{bmatrix}^\top\) }) falls under $0.1 m$, the action changes and the vehicle begins the landing. This second action is called Aligned Landing and it is composed by three tasks, one safety task which is the Horizontal Attitude, and the two tasks for landing in front of the rock: Vehicle Minimum Altitude that makes the vehicle land on the sea floor, and the Alignment to Target, which makes the vehicle $x$ axis align to the projection on the inertial horizontal plane of the unit vector joining the vehicle frame to the nodule frame.\\ 
+The vehicle successfully manages to land right in front of the rock and with the expected alignment, as shown in Figure \ref{im:v_align_land}.
+
+\begin{figure}[H]
+	\centering
+	{\includegraphics[scale=0.35]{vehicle_aligned_landing.png}}
+	\caption{Simulation showing the vehicle after landing in front of the rock.}
+	\label{im:v_align_land}
+\end{figure}
+
+Here the path that the robot performs is shown in a 3D plot, joint with the misalignment vector between the x axis of the robot and the projection on the inertial horizontal plane of the unit vector joining the vehicle frame to the rock frame.
+
+\begin{figure}[H]
+	\centering
+	{\includegraphics[scale=0.65]{plot_3_1_misalignment.png}}
+	\caption{Plot of the Vehicle path.}
+	\label{im:v_path_align_land}
+\end{figure}
 
 \subsubsection{Q2: What is the Jacobian relationship for the Alignment to Target control task? How was the task reference computed?}
 

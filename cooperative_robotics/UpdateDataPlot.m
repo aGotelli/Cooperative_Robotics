@@ -70,4 +70,16 @@ plt.t_x(loop) = glob_tool_pos(1,4);
 plt.t_y(loop) = glob_tool_pos(2,4);
 plt.t_z(loop) = glob_tool_pos(3,4);
 
+% Exercise 3 misalignment 
+if mod(t, 2) == 0 && t ~= 0 % t == floor(t) to plot every second
+
+    index = t / 2;
+ 
+    %   Misalignment vector
+    plt.misal_rock.x(index) = uvms.misalignVector(1);
+    plt.misal_rock.y(index) = uvms.misalignVector(2);
+    plt.misal_rock.z(index) = uvms.misalignVector(3);
+    
+end
+
 end

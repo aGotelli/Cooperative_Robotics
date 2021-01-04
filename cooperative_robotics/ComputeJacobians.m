@@ -98,11 +98,11 @@ v_d_proj_vers = uvms.vTw(1:3, 1:3) * w_d_proj_vers;
 v_iv = [1, 0, 0]';
 
 % Compute the misalignment vector and its versor
-misalignVector = ReducedVersorLemma(v_iv, v_d_proj_vers);
+uvms.misalignVector = ReducedVersorLemma(v_iv, v_d_proj_vers);
 
-if norm(misalignVector) ~= 0
+if norm(uvms.misalignVector) ~= 0
     
-    rho_vers = misalignVector / norm(misalignVector);
+    rho_vers = uvms.misalignVector / norm(uvms.misalignVector);
     
 else
 
@@ -111,7 +111,7 @@ else
 end
 
 % Store the misalignment angle theta for the task reference
-uvms.theta = norm(misalignVector);
+uvms.theta = norm(uvms.misalignVector);
 
 % Obtain the jacobian matrix
 uvms.JhorAlign = rho_vers' * [zeros(3, 7), -(1 / (norm(v_d_proj) * norm(v_d_proj))) * skew(v_d_proj), -eye(3)];

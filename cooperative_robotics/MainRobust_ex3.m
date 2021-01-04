@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 35;
+end_time = 25;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -73,19 +73,20 @@ mission.totalNumOfTasks = numel(mission.activationFunctions);
 % uvms.q 
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
-% %% Point 3.1
-% % % Initial position
-% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-% 
-% % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-% uvms.wRg_v = rotation(0, -0.06, 0.5);
-% 
-% % Actions definition
-% mission.actionAlignedLanding = [2, 6, 7];
-% mission.actionSafeNavigation = [2, 3, 4, 5];
-% 
-% mission.currentAction = mission.actionSafeNavigation;
+%% Point 3.1
+% % Initial position
+uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+
+% Defines the goal position for the vehicle position and attitude task
+uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.wRg_v = rotation(0, -0.06, 0.5);
+
+% Actions definition
+mission.actionSafeNavigation = [2, 3, 4, 5];
+mission.actionAlignedLanding = [2, 6, 7];
+
+
+mission.currentAction = mission.actionSafeNavigation;
 
 %% Point 3.1.3
 % % Initial position
@@ -103,31 +104,30 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 % 
 % mission.currentAction = mission.actionSafeNavigation;
 %% Point 3.1.4
-% Initial position
-uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-
-% Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-uvms.goalPosition_v = [10.5   35.5  -38]';
-uvms.wRg_v = rotation(0, -0.06, 0.5);
-
-uvms.goalPosition = rock_center;
-uvms.wRg = rotation(0, pi, pi/2);
-
- 
-% Actions definition
-mission.actionSafeNavigation = [2, 3, 4, 5];
-mission.actionAligning = [2, 5, 7, 8];
-mission.actionAlignedLanding = [2, 6, 7, 8];
-mission.actionGraspObject = [1, 2, 6, 8];
-
-mission.currentAction = mission.actionSafeNavigation;
+% % Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Defines the goal position for the vehicle position and attitude task
+% % uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.goalPosition_v = [10.5   35.5  -38]';
+% uvms.wRg_v = rotation(0, -0.06, 0.5);
+% % 
+%  
+% % Actions definition
+% mission.actionSafeNavigation = [2, 3, 4, 5];
+% mission.actionAligning = [2, 5, 7, 8];
+% mission.actionAlignedLanding = [2, 6, 7, 8];
+% mission.actionGraspObject = [1, 2, 6, 8];
+% 
+% mission.currentAction = mission.actionSafeNavigation;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
 uvms.initRotation = rotation(uvms.p(4), uvms.p(5), uvms.p(6));
 uvms.wTg_v = [uvms.wRg_v uvms.goalPosition_v; 0 0 0 1];
 
+uvms.goalPosition = rock_center;
+uvms.wRg = rotation(0, pi, pi/2);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
 mission.previousAction = [];
@@ -216,7 +216,7 @@ for t = 0:deltat:end_time
         phase = mission.phase
 %         activ = uvms.A.horAlign
 %         uvms.w_a
-        activ = uvms.A.distGoal
+%         activ = uvms.A.distGoal
         dist = uvms.dist_to_goal_proj
     end
 
@@ -228,5 +228,5 @@ end
 fclose(uVehicle);
 fclose(uArm);
 
-PrintPlot(plt);
+PrintPlot_ex3(plt);
 

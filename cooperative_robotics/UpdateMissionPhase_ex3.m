@@ -10,9 +10,9 @@ function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
                 mission.switch = 1;
                 mission.previousAction = mission.currentAction;
                 % Exercise 3.1
-                % mission.currentAction = mission.actionAlignedLanding; 
+                mission.currentAction = mission.actionAlignedLanding; 
                 % Exercise 3.1.3 and 3.1.4
-                mission.currentAction = mission.actionAligning; 
+                % mission.currentAction = mission.actionAligning; 
 
             end
             
@@ -33,7 +33,7 @@ function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
                 mission.switch = 1;
                 mission.previousAction = mission.currentAction;
                 % Exercise and 3.1.4
-                mission.currentAction = mission.actionGraspObject; 
+                % mission.currentAction = mission.actionGraspObject; 
             end
             
         case 4

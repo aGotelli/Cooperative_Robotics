@@ -36,6 +36,7 @@ uvms.djdq = zeros(6,7,7);
 uvms.mu  = 0;
 uvms.phi = zeros(3,1);
 uvms.sensorDistance = 0;
+uvms.misalignVector = zeros(3,1);
 
 uvms.wTg_v = eye(4,4);
 uvms.wRg_v = eye(3,3);
