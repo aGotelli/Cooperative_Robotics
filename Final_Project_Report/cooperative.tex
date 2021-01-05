@@ -384,9 +384,86 @@ Goal: Add an optimization objective to keep the first four joints of the manipul
 
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. At which priority level did you add the optimization task?}
 
+In order to accoplish the goal, we have chosen to implement an action with the following task. We first want to ensure the safety of the robot so the safety task is added with the highest priority, as shown in the table below. 
+
+\begin{tabular}{ccc}
+	\toprule
+	Task & Type & actionTool	\\
+	\midrule
+	tool control                    & E & 3  \\
+	\hdashline
+	attitude control                & I & 1  \\
+	\hdashline
+	horizontal allignment           & E & 2  \\
+	\hdashline
+	optimal arm shape				& E & 4  \\
+	\bottomrule
+\end{tabular}
+
+After having ensured the robot to stay consistently parallel to the seafloor (or at least parallel to the $ O_{xy} $ plane of the inertial frame) we introduced the tasks to control the robot. First we want to ensure that the robot is alligned to the target, in order to enhance the arm effectiveness. Secondly, we want to actually control the robot and its arm togheter, so the tool control task is implemented. The optimization task is added with the lowest priority. In fact, it should not directly influence the behavior of the harm, but only change the configuration, if possible, in the remaining manifold. 
+
 \subsubsection{Q2: What is the Jacobian relationship for the Joint Preferred Shape task? How was the task reference computed?}
+For the task of optimization of the arm position, the jacobian accounts for the joints for which a preferred position is specified. Specifically, as the first four joints have a preferred poistion, the jacobian will map the vehicle state vector to the vector space of these four joints. 
+$$
+	\bm{\dot{x}} = \bm{J}\bm{\dot{y}}
+$$ $$	
+	\bm{\dot{x}} = \begin{bmatrix} \bm{I}_{[4x4]} \\ \bm{0}_{[4x9]} \end{bmatrix}         
+	\begin{bmatrix} \bm{q}    \\ \bm{\textit{v}} \\ \bm{\omega} \end{bmatrix} 	   
+$$
+For this task, the task reference was computed comparing the current joints position to their preferred, or optimal, value. 
+\begin{lstlisting}
+uvms.xdot.armPrefPos = Saturate(0.5 * (uvms.armPrefPos - uvms.q(1:4)), 0.5);
+\end{lstlisting}
 
 \subsubsection{Q3: What is the difference between having or not having this objective?}
+
+We now want to present the influence of this task on the robot behavior. We want to proceed showing the robot behavior without the task and then with the task active. In both cases, we will qualitatively present the result followed by a more rigorous mathematical description. In this last part, we will consider the joints value as well as the arm dexterity. The arm dexterity is given by the formula
+$$ \kappa = \left|\left| \bm{J} \right|\right|_2 \left|\left| \bm{J}^{-1} \right|\right|_2
+$$
+
+Where $\bm{J}$ is the arm jacobian and $\bm{J}^{-1}$ its inverse. In the case the jacobian is not a square matrix, the pseudo inverse is evaluated. 
+
+The arm dexerity is an indices of the capability of the arm of perform motions aroud the current arm configuration. 
+For sake of completeness, we want also to point out some lack of optimization of this task. In fact, the main goal is to keep the arm to an optimal configuration but, a part of the dexterity, also the arm manipulability should be of concern. In fact, the arm manipulability decreases when the arm is close to a singular configuration. This may deteriorate the arm performances around the considered configuartion. To this aim, the arm manipulability is evaluated for both cases. The definition of the arm manipulability is the following. 
+$$
+	\mu = \sqrt{\left| \bm{J} \bm{J}^T \right|}
+$$
+
+The difference in having or not this task are shown in the following image. We first show the final position of the robot when the task is not active. 
+
+\includegraphics[width=\textwidth]{without_optim}
+
+
+As we can see from the previus figure, the arm is very stretched and the configuration it has reached has a poor dexterity. As a result, a continouos operation on the pipeline is not possible, as it will require the movement of the vehicle. 
+
+The joints are far from what is prescribed ad the optimal value. The figure below clearly shows that the values are not respected. 
+
+\includegraphics[width=\textwidth]{joints_values_no_optim}
+
+Furthermore, the effect of this lack in mantaining the optimal arm configuration is reflected in the arm dexterity. first it drops in the first time instants. After recovering the reduction, the overall dexterity reamins lower than the one achieved when the task is active. 
+
+\includegraphics[width=\textwidth]{dex_no_optim}
+
+Finally, for what concerns the arm manipulability, the following figure shows that the arm stays away from any singulatiry configuration, as its manipulability never decreases too much. However, this is mostly due to luck, as there no control on that. 
+
+\includegraphics[width=\textwidth]{manip_no_optim}
+
+When the task is active, we can see that the arm is a dexterous position, allowing to perform effectively motions on the spot. This deduction is made by looking at the following figure. It is clear that the arm is in a configuration where no joint is close to one of its limit, so the arm can effectively perform a wide range of motions.
+
+\includegraphics[width=\textwidth]{with_optim}
+\centering 
+
+This behavior is desireable as we would like the arm to reach the desired position and also behing able to perform tasks. As we can see from the following figure, the joints assume the desired position.
+
+\includegraphics[width=\textwidth]{joints_values_optim}
+
+Moreover, the arm dexterity is positively influenced by this task. In fact, the following figure reports that its dexterity doesn't drop as in the case without the task activated. Moreover, it increases considerably from the intial value reaching an asymptote.
+
+\includegraphics[width=\textwidth]{dex_optim}
+
+However, as the arm manipulability is not considered, it decades to low value during the execution of the task. In other words, the arm is close to a singularity configuration once reached the target position. 
+
+\includegraphics[width=\textwidth]{manip_optim}
 
 \subsection{Adding mission phases}
 Let us now structure the mission in more than one phase. In the first phase, exploit the previous exercises, and implement a safe waypoint navigation. Move the vehicle to a location close to the current defined end-effector goal position, just slightly above it. Then, trigger a change of action and perform floating manipulation.
@@ -394,9 +471,38 @@ Let us now structure the mission in more than one phase. In the first phase, exp
 Goal: introduce mission phases in the floating manipulation scenario. Observe the difference.
 
 \subsubsection{Q1: Report the unified hierarchy of tasks used and their priorities. Which task is active in which phase/action?}
+The table below reports the hierarchy of tasks for both actions. 
+
+\begin{tabular}{cccc}
+	\toprule
+	Task & Type & safeNavigation & actionTool	\\
+	\midrule
+	tool control                    & E & /  &	5	\\
+	\hdashline
+	attitude control                & I & 1  &	3	\\
+	\hdashline
+	vehicle position control        & E & 2  &	/	\\
+	\hdashline
+	vehicle attitude control        & E & 3  &	/	\\
+	\hdashline
+	horizontal allignment           & E & /  &	4	\\
+	\hdashline
+	joint limit (min)               & I & /  &	1	\\
+	\hdashline
+	joint limit (max)               & I & /  &	2	\\
+	\hdashline
+	optimal arm shape				& E & /  &	6	\\
+	\bottomrule
+\end{tabular}
+
+First, we have the safe navigation action, in this task the main goal is to bring the robot close to the tool target: the pipeline. For this action, the common tasks for safe navigation are included: vehicle position and attitude control and the horizontal attitude control. As always, the safety task comes first, so the horizontal attitude control has the highest priority. It is followed by the two tasks for the vehicle control. The safe navigation is needed in order to avoid possible obstacles and esure that we are moving the arm only in a safe enviroment. 
+
+Secondly, once the robot has reached a position slightly above the pipelin, the action bringing the arm on the pipeline is triggered. In this action, we first ensure the safety of the arm and robot. The first by ensuring that the minimum and maximum values for each joint are respected, while the second is ensured controlling the robot to be parallel to the seafloor. We also included a taks ensuring the allignment of the robot to the target of the tool, in order to facilitate the task of the arm. This last taks comes after all the safety and practical tasks, and it is followed by the optimization task. 
 
 \subsubsection{Q2: What is the difference with the previous simulation (still in exercise 5), where only one action was used?}
 
+The main difference is that in this case the arm is controlled only when the robot is close to the end effector target position. This ensures that the arm is moved only when the robot is in a safe environment. 
+Moreover, we have introduced the allignment to the target, in this way not only the arm maintains a good dexerity around the target position, but the robot itself is able to effectively move and be controlled around the current position. 
 \clearpage
 \section{Exercise 6: Floating Manipulation with Arm-Vehicle Coordination Scheme}
 \subsection{Adding the parallel arm-vehicle coordination scheme}

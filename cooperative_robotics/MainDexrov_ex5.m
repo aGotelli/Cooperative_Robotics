@@ -78,23 +78,6 @@ mission.totalNumOfTasks = numel(mission.activationFunctions);
 uvms.q = [-0.0031 1.2586 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
 %%  EXERCISE 5.1
-% 
-% % Initial position
-% uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
-% 
-% % Initial goal position definition
-% % slightly over the top of the pipe
-% distanceGoalWrtPipe = 0.3;
-% uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
-% uvms.wRg = rotation(pi,0,0);
-% uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
-% 
-% % Actions definition
-% mission.actionTool = [1, 2, 7, 12];
-% 
-% mission.currentAction = mission.actionTool;
-
-%%  EXERCISE 5.2
 
 % Initial position
 uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
@@ -106,17 +89,34 @@ uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
 uvms.wRg = rotation(pi,0,0);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
-% Goal position for safe navigation 
-distance = 2;
-uvms.goalPosition_v = pipe_center + (pipe_radius + distanceGoalWrtPipe + distance)*[0 0 1]';
-uvms.wRg_v = rotation(0, 0, 0);
-
-
 % Actions definition
-mission.actionTool = [1, 2, 7, 10, 11, 12];
-mission.safeNavigation = [2, 3, 4];
+mission.actionTool = [1, 2, 7, 12];
 
-mission.currentAction = mission.safeNavigation;
+mission.currentAction = mission.actionTool;
+
+%%  EXERCISE 5.2
+% 
+% % Initial position
+% uvms.p = [-1.9379 10.4813-6.1 -29.7242-0.1 0 0 0]';
+% 
+% % Initial goal position definition
+% % slightly over the top of the pipe
+% distanceGoalWrtPipe = 0.3;
+% uvms.goalPosition = pipe_center + (pipe_radius + distanceGoalWrtPipe)*[0 0 1]';
+% uvms.wRg = rotation(pi,0,0);
+% uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
+% 
+% % Goal position for safe navigation 
+% distance = 2;
+% uvms.goalPosition_v = pipe_center + (pipe_radius + distanceGoalWrtPipe + distance)*[0 0 1]';
+% uvms.wRg_v = rotation(0, 0, 0);
+% 
+% 
+% % Actions definition
+% mission.actionTool = [1, 2, 7, 10, 11, 12];
+% mission.safeNavigation = [2, 3, 4];
+% 
+% mission.currentAction = mission.safeNavigation;
 
 %% Initialization
 
@@ -179,7 +179,7 @@ for t = 0:deltat:end_time
     [Qp, rhop] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, rhop, uvms.xdot.t,  0.0001,   0.01, 10);
     
     %   OPTIMAL ARM POSITION FRAME TASK
-    [Qp, rhop] = iCAT_task(uvms.A.armPrefPos,    uvms.JarmPrefPos,    Qp, rhop, uvms.xdot.armPrefPos,  0.0001,   0.01, 10);
+    %[Qp, rhop] = iCAT_task(uvms.A.armPrefPos,    uvms.JarmPrefPos,    Qp, rhop, uvms.xdot.armPrefPos,  0.0001,   0.01, 10);
     
     [Qp, rhop] = iCAT_task(eye(13),     eye(13),    Qp, rhop, zeros(13,1),  0.0001,   0.01, 10);    % this task should be the last one
     
@@ -208,7 +208,6 @@ for t = 0:deltat:end_time
     if (mod(t,0.1) == 0)
         t
         phase = mission.phase
-        uvms.q'
     end
     
     % enable this to have the simulation approximately evolving like real

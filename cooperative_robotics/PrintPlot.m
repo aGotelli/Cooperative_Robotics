@@ -141,5 +141,23 @@ legend('Path', 'Sea floor', 'Hard threshold', 'Soft threshold')
 title('Vehicle 2D path with sea floor and thresholds')
 hold off
 
+
+figure(8)
+plot(plt.t, plt.q, 'LineWidth', 1);
+hold on 
+plot(plt.t, plt.desired_arm_pos, '--')
+legend('q_1','q_2','q_3','q_4','q_5','q_6','q_7', 'q_1*','q_2*','q_3*','q_4*');
+
+
+figure(9)
+plot(plt.t, plt.mu, 'LineWidth', 1);
+xlabel('Time [s]')
+ylabel('Manipulability')
+
+figure(10)
+plot(plt.t, plt.dex, 'LineWidth', 1);
+xlabel('Time [s]')
+ylabel('Dexterity')
+
 end
 
