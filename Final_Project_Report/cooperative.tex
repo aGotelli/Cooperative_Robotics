@@ -341,6 +341,25 @@ Here the path that the robot performs is shown in a 3D plot, joint with the misa
 \end{figure}
 
 \subsubsection{Q2: What is the Jacobian relationship for the Alignment to Target control task? How was the task reference computed?}
+The first thing to do is to calculate the vector to which the vehicle axis have to align, that is the distance between the vehicle frame origin  and the target (in the world frame), projected on the horizontal plane of the inertial frame. 
+$$ ^wd = ^wP - ^wO_v$$
+$$^wd_{proj} = ^wd - ((^wd^T \cdot ^wk_w) \cdot ^wk_w)$$
+
+Then the misalignment vector (\(\rho\)) between the x-axis of the vehicle and the \(d_{proj}\) versor (\(n_{d_{proj}}=\frac{d_{proj}}{\|d_{proj}\|}\)) is calculated using the Reduced Versor Lemma, after having projected both versors on the vehicle frame.
+$$^v\rho = \theta n$$
+
+The Jacobian relationship obtained is the following:
+
+$$ \begin{bmatrix} \bm{\omega_x}   \\ \bm{\omega_y} \\ \bm{\omega_z} \end{bmatrix} = J_{ha} \bm{\dot{y}}$$
+$$ \begin{bmatrix} \bm{\omega_x}   \\ \bm{\omega_y} \\ \bm{\omega_z} \end{bmatrix} = n \cdot \begin{bmatrix} \bm{0}_{[3x7]} & -\frac{1}{\|^vd_{proj}\|^2}[^vd_{proj}\wedge] & -\bm{I}_{[3x3]} \end{bmatrix} \begin{bmatrix} \bm{q}   \\ \bm{\textit{v}} \\ \bm{\omega} \end{bmatrix} $$
+
+The task reference is computed using the norm of the misalignment vector, $\theta$. The desired value in this case is \(0\), because we want the two vectors to be aligned.
+
+
+\begin{lstlisting}
+	uvms.xdot.horAlign = Saturate(0.5 * (0 - uvms.theta), 0.5);
+\end{lstlisting}
+
 
 \subsubsection{Q3: Try changing the gain of the alignment task. Try at least three different values, where one is very small. What is the observed behaviour? Could you devise a solution that is gain-independent guaranteeing that the landing is accomplished aligned to the target?}
 
