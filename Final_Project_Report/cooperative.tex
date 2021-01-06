@@ -22,6 +22,7 @@
 \usepackage{amsmath}
 \usepackage{epstopdf}
 \usepackage{float}
+\usepackage{subfigure}
 \usepackage[caption=false,font=footnotesize]{subfig}
 
 \usepackage{listings}
@@ -355,14 +356,57 @@ $$ \begin{bmatrix} \bm{\omega_x}   \\ \bm{\omega_y} \\ \bm{\omega_z} \end{bmatri
 
 The task reference is computed using the norm of the misalignment vector, $\theta$. The desired value in this case is \(0\), because we want the two vectors to be aligned.
 
-
 \begin{lstlisting}
 	uvms.xdot.horAlign = Saturate(0.5 * (0 - uvms.theta), 0.5);
 \end{lstlisting}
 
-
 \subsubsection{Q3: Try changing the gain of the alignment task. Try at least three different values, where one is very small. What is the observed behaviour? Could you devise a solution that is gain-independent guaranteeing that the landing is accomplished aligned to the target?}
+The initial alignment task gain is saturated at 0.5, then we tried to change its value with three different ones: 0.05, 0.2, 0.4 ,0.7.
 
+\begin{figure}[H]
+	\centering
+	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.05\)]
+	{\includegraphics[width=60mm]{3_1_3_gain0_05_landed.png}}
+	\hspace{10mm}
+	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.05\)]
+	{\includegraphics[width=70mm]{3_1_3_gain0_05.png}}
+	\label{im:v_land_gain0_05}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.2\)]
+	{\includegraphics[width=60mm]{3_1_3_gain0_2_landed.png}}
+	\hspace{10mm}
+	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.2\)]
+	{\includegraphics[width=70mm]{3_1_3_gain0_2.png}}
+	\label{im:v_land_gain0_2}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.4\)]
+	{\includegraphics[width=60mm]{3_1_3_gain0_4_landed.png}}
+	\hspace{10mm}
+	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.4\)]
+	{\includegraphics[width=70mm]{3_1_3_gain0_4.png}}
+	\label{im:v_land_gain0_4}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.7\)]
+	{\includegraphics[width=60mm]{3_1_3_gain0_7_landed.png}}
+	\hspace{10mm}
+	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.7\)]
+	{\includegraphics[width=70mm]{3_1_3_gain0_7.png}}
+	\label{im:v_land_gain0_7}
+\end{figure} 
+
+The behaviour of the vehicle changes when the gain value is modified: the smaller the gain, the harder it is for the vehicle to reach the correct alignment with \(d_{proj}\). As it can be seen in the images above, while the time used by the robot to reach the sea floor remains the same, increasing the gain makes it reach different configurations when approaching the sea floor.\\
+For gain values smaller than about \(0.2\), the misalignment vector fails to become a null vector, as you can clearly see in images (b) and (d), so the vehicle is not able to align to the target in time. In the other two cases instead the vehicle manages to align in time to the target, even if, for gain = \(0.4\).
+This shows that this solution is heavily gain-dependent, so we need to think about a solution to ensure that the alignment is always achieved.
+%What we thought is to add a new Action in between the two actual ones that is activated when the vehicle reaches the goal position 
 \subsubsection{Q4: After the landing is accomplished, what happens if you try to move the end-effector? Is the distance to the nodule sufficient to reach it with the end-effector? Comment the observed behaviour. If, after landing, the nodule is not in the manipulator's workspace, how would you solve this problem to guarantee it?}
 
 

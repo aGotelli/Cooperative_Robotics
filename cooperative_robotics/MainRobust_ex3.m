@@ -74,7 +74,7 @@ mission.totalNumOfTasks = numel(mission.activationFunctions);
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
 %% Point 3.1
-% % Initial position
+% Initial position
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task

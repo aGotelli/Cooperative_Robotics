@@ -27,7 +27,7 @@ uvms.xdot.minAlt = Saturate(0.2 * ((uvms.min_offset + uvms.range_offset) - uvms.
 uvms.xdot.landing = Saturate(0.5 * ( - uvms.w_a), 0.5) ;
 
 %%   THE TASK REFERENCE FOR THE HORIZONTAL ALIGNMENT TO TARGET
-uvms.xdot.horAlign = Saturate(0.5 * (0 - uvms.theta), 0.5);
+uvms.xdot.horAlign = Saturate(0.05 * (0 - uvms.theta), 0.05);
 
 %%   THE TASK REFERENCE FOR ENSURING THE TARGET IN THE MANIPULATOR WORKSPACE
 uvms.xdot.distGoal = [Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
