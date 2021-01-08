@@ -142,12 +142,12 @@ Where $ uvms.wTg\_v $ and $ uvms.wTv $ are respectively the transformation matri
 \subsubsection{Q2: What is the behaviour if the Horizontal Attitude is enabled or not? Try changing the initial or target orientation in terms of roll and pitch angles. Discuss the behaviour.}
 In order to observe the robot behaviour we considered three cases:
 \begin{itemize}
-	\item Case 1: Horizontal attitude disabled and same initial and target positions as stated in the exercise description;
-	\item Case 2: Horizontal attitude enabled and same initial position but different target position, which is the following 
+	\item Case 1: Horizontal attitude disabled and original initial and target configurations as stated in the exercise description;
+	\item Case 2: Horizontal attitude enabled, original initial configuration but different target one, which is the following 
 	\begin{gather*}
 		\begin{bmatrix} 10.5 & 37.5 & -38 & \pi/3 & \pi/3 & 0\end{bmatrix}^\top
 	\end{gather*}
-	\item Case 3: Horizontal attitude enabled and different initial and target position, which are the following 
+	\item Case 3: Horizontal attitude enabled and different initial and target configurations, which are the following 
 	\begin{gather*}
 		\begin{bmatrix} 10.5 & 35.5 & -36 & \pi/3 & \pi/3 & \pi/2\end{bmatrix}^\top \\
 		\begin{bmatrix} 10.5 & 37.5 & -38 & \pi/3 & \pi/3 & 0\end{bmatrix}^\top
@@ -155,56 +155,144 @@ In order to observe the robot behaviour we considered three cases:
 \end{itemize}
 
 {\large \textbf{Case 1}} \\
-In this case the behaviour is normal, the robot reaches the target position and attitude without problems.
+In this case the behavior is normal, the robot reaches the target position and attitude without problems.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt}
 	\caption{The robot moves in the Y and Z directions and the yaw angle converges to zero.}
-	\label{fig:case1a}
+	\label{fig:q2case1a}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities}
 	\caption{After an initial transient phase, all the velocities converge to zero.}
-	\label{fig:case1b}
+	\label{fig:q2case1b}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path}
-	\caption{Here we can see that the robot reaches the goal position and that the misalignment vector shrinks to zero.}
-	\label{fig:case1c}
+	\caption{Here we can see that the robot reaches the goal position and that the misalignment vector shrinks towards zero.}
+	\label{fig:q2case1c}
 \end{figure}
 
 {\large \textbf{Case 2}} \\
-In this case the target position has roll and pitch angles both equal to $ \pi/3 $, so the Vehicle Position and Attitude task tries to rotate the robot in order to fullfill its objective, but, since the Horizontal Attitude task is enabled with higher priority, the robot can't reach the final position. In this case we have two conflicting tasks, but since the Horizontal Attitude one has higher priority the robot will try to stay as horizontal as possible: nevertheless, the robot will be a bit tilted since this task is of inequality type.
+In this case the target configuration has roll and pitch angles both equal to $ \pi/3 $, so the Vehicle Position and Attitude task tries to rotate the robot in order to fulfill its objective, but, since the Horizontal Attitude task is enabled with higher priority, the robot can't reach the final configuration. In this case we have two conflicting tasks, but since the Horizontal Attitude one has higher priority the robot will try to stay as horizontal as possible: nevertheless, the robot will remain a bit tilted since this task is of inequality type (it becomes inactive when the norm of the misalignment vector is less than about half a degree).
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt}
 	\caption{The robot moves in the Y and Z directions, but the attitude doesn't converge to the desired one.}
-	\label{fig:case2a}
+	\label{fig:q2case2a}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities}
 	\caption{The robot velocities converge to zero after a while.}
-	\label{fig:case2b}
+	\label{fig:q2case2b}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path}
 	\caption{The robot can reach the goal position, but the misalignment vector keeps growing.}
-	\label{fig:case2c}
+	\label{fig:q2case2c}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct}
 	\caption{The activation function of the Horizontal Attitude task almost immediately reaches an high value, but it can't go back to zero since the robot has conflicting goals.}
-	\label{fig:case2d}
+	\label{fig:q2case2d}
+\end{figure}
+
+{\large \textbf{Case 3}} \\
+Now both the initial configuration and the target one have pitch and roll angles equal to $ \pi/3 $: if the Horizontal Attitude wasn't enabled then the robot would only change its yaw angle and move linearly towards the goal, since the initial and the target pitch and roll angles are the same. In this case Horizontal Attitude is enabled, so this task tries to rotate the robot, whereas the Vehicle Position and Attitude one tries to keep the robot from rotating. The robot will reach the target position, but since the Horizontal Attitude task has higher priority, it will prevent the robot from reaching the target attitude.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAndAtt}
+	\caption{We can see that the pitch and roll angles start from $ \pi/3 $ and converge near to 0: the robot moves in Y and Z, reaching the goal position.}
+	\label{fig:q2case3a}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVelocities}
+	\caption{The robot rotates quite fast in the first 2-3 seconds, but then the angular velocities converge to zero. We can see a different $\dot{z}$ with respect to other cases since the robot is initially tilted.}
+	\label{fig:q2case3b}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_Path}
+	\caption{The robot reaches the goal position, but the misalignment vector continues to grow.}
+	\label{fig:q2case3c}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct}
+	\caption{The activation function is always 1 since the norm of the misalignment vector is always bigger than the maximum allowed value.}
+	\label{fig:q2case3d}
 \end{figure}
 
 
 \subsubsection{Q3: Swap the priorities between Horizontal Attitude and the Vehicle Position control task. Discuss the behaviour.}
+Here I consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy.
+
+{\large \textbf{Case 2}} \\
+In the previous question, the robot had conflicting goals and the safety one was considered the most important: now we still have conflicting goals, but the most important one is that the robot should reach the target configuration. Since the Horizontal Attitude task won't have much effect on the robot, it will reach the target configuration without any problem.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAndAtt}
+	\caption{The robot configuration converges to the target one.}
+	\label{fig:q3case2a}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities}
+	\caption{The robot velocities converge to zero after a brief transient period.}
+	\label{fig:q3case2b}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path}
+	\caption{The robot reaches the target position and the misalignment vector shrinks towards zero.}
+	\label{fig:q3case2c}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct}
+	\caption{The value of the activation value is almost always 1 since the task doesn't have effect on the robot.}
+	\label{fig:q3case2d}
+\end{figure}
+
+
+{\large \textbf{Case 3}} \\
+In the previous question, the Horizontal Attitude task prevented the robot to reach the target attitude: now this task won't have effect, allowing the robot to reach the target configuration.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt}
+	\caption{}
+	\label{fig:q3case3a}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelocities}
+	\caption{}
+	\label{fig:q3case3b}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path}
+	\caption{}
+	\label{fig:q3case3c}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct}
+	\caption{}
+	\label{fig:q3case3d}
+\end{figure}
+
 
 \subsubsection{Q4: What is the behaviour if the Tool Position control task is active and what if it is disabled? Which of the settings should be used for a Safe Waypoint Navigation action? Report the final hierarchy of tasks (and their priorities, see the template table in the introduction) which makes up the Safe Waypoint Navigation action.}
 

@@ -141,13 +141,16 @@ for t = 0:deltat:end_time
 %     [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
     
     %   HORIZONTAL ATTITUDE TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
+%     [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
     
     %   POSITION TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
    
     %   ATTITUDE TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.v_att,    uvms.Jv_att,    Qp, ydotbar, uvms.xdot.v_att,  0.0001,   0.01, 10);
+    
+        %   HORIZONTAL ATTITUDE TASK
+    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
     
     %   TOOL FRAME TASK
     %[Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
@@ -177,9 +180,11 @@ for t = 0:deltat:end_time
     % add debug prints here
     if (mod(t,0.1) == 0)
         t
-        altitude = uvms.w_a
+%         altitude = uvms.w_a
         [ang, lin] = CartError(uvms.wTg_v , uvms.wTv);
-        distance = norm(lin)
+%         distance = norm(lin)
+        norm(uvms.v_rho)
+        uvms.A.ha
     end
 
     % enable this to have the simulation approximately evolving like real

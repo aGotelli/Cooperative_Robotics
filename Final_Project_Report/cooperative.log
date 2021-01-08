@@ -1,0 +1,927 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.12) (preloaded format=pdflatex 2021.1.2)  8 JAN 2021 20:06
+entering extended mode
+**./cooperative.tex
+(cooperative.tex
+LaTeX2e <2020-10-01> patch level 2
+L3 programming layer <2020-12-07> xparse <2020-03-03>
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count177
+\c@section=\count178
+\c@subsection=\count179
+\c@subsubsection=\count180
+\c@paragraph=\count181
+\c@subparagraph=\count182
+\c@figure=\count183
+\c@table=\count184
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count185
+\Gm@cntv=\count186
+\c@Gm@tempcnt=\count187
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks16
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg)
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/base\makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.
+cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.de
+f
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen147
+\Gin@req@width=\dimen148
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics\color.sty
+Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/tools\multicol.sty
+Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
+\c@tracingmulticols=\count188
+\mult@box=\box47
+\multicol@leftmargin=\dimen149
+\c@unbalance=\count189
+\c@collectmore=\count190
+\doublecol@number=\count191
+\multicoltolerance=\count192
+\multicolpretolerance=\count193
+\full@width=\dimen150
+\page@free=\dimen151
+\premulticols=\dimen152
+\postmulticols=\dimen153
+\multicolsep=\skip49
+\multicolbaselineskip=\skip50
+\partial@page=\box48
+\last@line=\box49
+\maxbalancingoverflow=\dimen154
+\mult@rightbox=\box50
+\mult@grightbox=\box51
+\mult@gfirstbox=\box52
+\mult@firstbox=\box53
+\@tempa=\box54
+\@tempa=\box55
+\@tempa=\box56
+\@tempa=\box57
+\@tempa=\box58
+\@tempa=\box59
+\@tempa=\box60
+\@tempa=\box61
+\@tempa=\box62
+\@tempa=\box63
+\@tempa=\box64
+\@tempa=\box65
+\@tempa=\box66
+\@tempa=\box67
+\@tempa=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\c@minrows=\count194
+\c@columnbadness=\count195
+\c@finalcolumnbadness=\count196
+\last@try=\dimen155
+\multicolovershoot=\dimen156
+\multicolundershoot=\dimen157
+\mult@nat@firstbox=\box91
+\colbreak@box=\box92
+\mc@col@check@num=\count197
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/footmisc\footmisc.st
+y
+Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+\FN@temptoken=\toks17
+\footnotemargin=\dimen158
+\c@pp@next@reset=\count198
+Package footmisc Info: Declaring symbol style bringhurst on input line 855.
+Package footmisc Info: Declaring symbol style chicago on input line 863.
+Package footmisc Info: Declaring symbol style wiley on input line 872.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 903.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+.
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen159
+\lightrulewidth=\dimen160
+\cmidrulewidth=\dimen161
+\belowrulesep=\dimen162
+\belowbottomsep=\dimen163
+\aboverulesep=\dimen164
+\abovetopsep=\dimen165
+\cmidrulesep=\dimen166
+\cmidrulekern=\dimen167
+\defaultaddspace=\dimen168
+\@cmidla=\count199
+\@cmidlb=\count266
+\@aboverulesep=\dimen169
+\@belowrulesep=\dimen170
+\@thisruleclass=\count267
+\@lastruleclass=\count268
+\@thisrulewidth=\dimen171
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/arydshln\arydshln.st
+y
+Package: arydshln 2019/02/21 v1.76 
+\dashlinedash=\dimen172
+\dashlinegap=\dimen173
+\adl@box=\box93
+\adl@height=\dimen174
+\adl@heightsave=\dimen175
+\adl@depth=\dimen176
+\adl@depthsave=\dimen177
+\adl@finaldepth=\dimen178
+\adl@columns=\count269
+\adl@ncol=\count270
+\adl@currentcolumn=\count271
+\adl@currentcolumnsave=\count272
+\adl@totalheight=\count273
+\adl@totalheightsave=\count274
+\adl@dash=\count275
+\adl@gap=\count276
+\adl@cla=\count277
+\adl@clb=\count278
+\adl@everyvbox=\toks18
+\adl@LTpagetotal=\dimen179
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks19
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2020/09/23 v2.17i AMS math features
+\@mathmargin=\skip51
+
+For additional information on amsmath, use the `?' option.
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen180
+))
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen181
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count279
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count280
+\leftroot@=\count281
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count282
+\DOTSCASE@=\count283
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box94
+\strutbox@=\box95
+\big@size=\dimen182
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count284
+\c@MaxMatrixCols=\count285
+\dotsspace@=\muskip16
+\c@parentequation=\count286
+\dspbrk@lvl=\count287
+\tag@help=\toks21
+\row@=\count288
+\column@=\count289
+\maxfields@=\count290
+\andhelp@=\toks22
+\eqnshift@=\dimen183
+\alignsep@=\dimen184
+\tagshift@=\dimen185
+\tagwidth@=\dimen186
+\totwidth@=\dimen187
+\lineht@=\dimen188
+\@envbody=\toks23
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\pifont.sty
+Package: pifont 2020/03/25 PSNFSS-v9.3 Pi font support (SPQR) 
+LaTeX Font Info:    Trying to load font information for U+pzd on input line 63.
+
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Trying to load font information for U+psy on input line 64.
+
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+))
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/tools\bm.sty
+Package: bm 2019/07/24 v1.2d Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 209.
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/cancel\cancel.sty
+Package: cancel 2013/04/12 v2.2 Cancel math terms
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/multirow\multirow.sty
+Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
+\multirow@colwidth=\skip54
+\multirow@cntb=\count291
+\multirow@dima=\skip55
+\bigstrutjot=\dimen189
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf.
+sty
+Package: epstopdf 2020-01-24 v2.11 Conversion with epstopdf on the fly (HO)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.
+sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/grfext\grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefin
+ekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+))
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.st
+y
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.
+sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+))
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmd
+s.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-
+base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+))
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count292
+\float@exts=\toks25
+\float@box=\box96
+\@float@everytoks=\toks26
+\@floatcapt=\box97
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/subfigure\subfigure.st
+y
+Package: subfigure 2002/07/30 v2.1.4 subfigure package
+\subfigtopskip=\skip56
+\subfigcapskip=\skip57
+\subfigcaptopadj=\dimen190
+\subfigbottomskip=\skip58
+\subfigcapmargin=\dimen191
+\subfiglabelskip=\skip59
+\c@subfigure=\count293
+\c@lofdepth=\count294
+\c@subtable=\count295
+\c@lotdepth=\count296
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/subfigure\subfigure.cf
+g)
+\subfig@top=\skip60
+\subfig@bottom=\skip61
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/subfig\subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen192
+\captionmargin@=\dimen193
+\captionwidth=\dimen194
+\caption@tempdima=\dimen195
+\caption@indent=\dimen196
+\caption@parindent=\dimen197
+\caption@hangindent=\dimen198
+Package caption Info: Standard document class detected.
+)
+\c@KVtest=\count297
+\sf@farskip=\skip62
+\sf@captopadj=\dimen199
+\sf@capskip=\skip63
+\sf@nearskip=\skip64
+\sf@top=\skip65
+\sf@bottom=\skip66
+) (C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.st
+y
+\lst@mode=\count298
+\lst@gtempboxa=\box98
+\lst@token=\toks27
+\lst@length=\count299
+\lst@currlwidth=\dimen256
+\lst@column=\count300
+\lst@pos=\count301
+\lst@lostspace=\dimen257
+\lst@width=\dimen258
+\lst@newlines=\count302
+\lst@lineno=\count303
+\lst@maxwidth=\dimen259
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count304
+\lst@skipnumbers=\count305
+\lst@framebox=\box99
+)
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pd
+ftex.def
+File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
+\l__kernel_color_stack_int=\count306
+\l__pdf_internal_box=\box100
+) (cooperative.aux)
+\openout1 = `cooperative.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(85.35826pt, 443.57848pt, 85.35826pt)
+* v-part:(T,H,B)=(56.9055pt, 681.15898pt, 56.9055pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=443.57848pt
+* \textheight=681.15898pt
+* \oddsidemargin=13.08827pt
+* \evensidemargin=13.08827pt
+* \topmargin=-52.36449pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.m
+kii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count307
+\scratchdimen=\dimen260
+\scratchbox=\box101
+\nofMPsegments=\count308
+\nofMParguments=\count309
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count310
+\MPscratchDim=\dimen261
+\MPnumerator=\count311
+\makeMPintoPDFobject=\count312
+\everyMPtoPDFconversion=\toks29
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count313
+ [1
+
+
+
+{C:/Users/Davide/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 90.
+
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 90.
+
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+[1
+
+
+] [2
+
+]
+<images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt.png, id=24, 421.5
+75pt x 316.18124pt>
+File: images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt.png Graphic 
+file (type png)
+<use images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Pos
+AndAtt.png  used on input line 162.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities.png, id=25
+, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities.png G
+raphic file (type png)
+<use images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Lin
+AngVelocities.png  used on input line 168.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path.png, id=26, 421.575pt 
+x 316.18124pt>
+File: images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path.png Graphic file 
+(type png)
+<use images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Pat
+h.png  used on input line 175.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [3 <./images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt.png (PNG co
+py)> <./images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities.png
+ (PNG copy)>]
+<images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt.png, id=30, 4
+21.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt.png Grap
+hic file (type png)
+<use images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos
+_PosAndAtt.png  used on input line 185.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities.png, i
+d=31, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities.p
+ng Graphic file (type png)
+<use images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities.pn
+g>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos
+_LinAngVelocities.png  used on input line 191.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path.png, id=32, 421.57
+5pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path.png Graphic f
+ile (type png)
+<use images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos
+_Path.png  used on input line 197.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [4 <./images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path.png (PNG copy)> 
+<./images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt.png (PNG co
+py)>]
+<images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct.png, id=36, 
+421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct.png Gra
+phic file (type png)
+<use images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos
+_ActivFunct.png  used on input line 203.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [5 <./images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities.
+png (PNG copy)> <./images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path.
+png (PNG copy)>]
+<images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAndAtt.png, id=
+40, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAndAtt.png
+ Graphic file (type png)
+<use images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAndAtt.png>
+
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentE
+ndpos_PosAndAtt.png  used on input line 213.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVelocities.p
+ng, id=41, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVelocit
+ies.png Graphic file (type png)
+<use images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVelociti
+es.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentE
+ndpos_LinAngVelocities.png  used on input line 219.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_Path.png, id=42, 4
+21.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_Path.png Grap
+hic file (type png)
+<use images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_Path.png>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentE
+ndpos_Path.png  used on input line 225.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [6 <./images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct.png (P
+NG copy)> <./images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAnd
+Att.png (PNG copy)>]
+<images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct.png, id
+=47, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct.pn
+g Graphic file (type png)
+<use images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct.png
+>
+Package pdftex.def Info: images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentE
+ndpos_ActivFunct.png  used on input line 231.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [7 <./images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVeloci
+ties.png (PNG copy)> <./images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEn
+dpos_Path.png (PNG copy)>]
+<images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAndAtt.png, id=51, 4
+21.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAndAtt.png Grap
+hic file (type png)
+<use images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAndAtt.png>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos
+_PosAndAtt.png  used on input line 244.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities.png, i
+d=52, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities.p
+ng Graphic file (type png)
+<use images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities.pn
+g>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos
+_LinAngVelocities.png  used on input line 250.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path.png, id=53, 421.57
+5pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path.png Graphic f
+ile (type png)
+<use images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path.png>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos
+_Path.png  used on input line 256.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [8 <./images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct.p
+ng (PNG copy)> <./images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAnd
+Att.png (PNG copy)>]
+<images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct.png, id=57, 
+421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct.png Gra
+phic file (type png)
+<use images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct.png>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos
+_ActivFunct.png  used on input line 262.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [9 <./images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities.
+png (PNG copy)> <./images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path.
+png (PNG copy)>]
+<images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt.png, id=
+61, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt.png
+ Graphic file (type png)
+<use images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt.png>
+
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentE
+ndpos_PosAndAtt.png  used on input line 273.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelocities.p
+ng, id=62, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelocit
+ies.png Graphic file (type png)
+<use images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelociti
+es.png>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentE
+ndpos_LinAngVelocities.png  used on input line 279.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+<images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path.png, id=63, 4
+21.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path.png Grap
+hic file (type png)
+<use images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path.png>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentE
+ndpos_Path.png  used on input line 285.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [10 <./images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct.png (
+PNG copy)> <./images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAn
+dAtt.png (PNG copy)>]
+<images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct.png, id
+=67, 421.575pt x 316.18124pt>
+File: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct.pn
+g Graphic file (type png)
+<use images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct.png
+>
+Package pdftex.def Info: images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentE
+ndpos_ActivFunct.png  used on input line 291.
+(pdftex.def)             Requested size: 310.50357pt x 232.88011pt.
+ [11 <./images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVeloc
+ities.png (PNG copy)> <./images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentE
+ndpos_Path.png (PNG copy)>] [12 <./images/Ex1/HorAtt_LowPrio_DifferentStartpos_
+DifferentEndpos_ActivFunct.png (PNG copy)>] [13
+
+]
+<./images/Ex3//vehicle_aligned_landing.png, id=78, 761.84625pt x 572.89032pt>
+File: ./images/Ex3//vehicle_aligned_landing.png Graphic file (type png)
+<use ./images/Ex3//vehicle_aligned_landing.png>
+Package pdftex.def Info: ./images/Ex3//vehicle_aligned_landing.png  used on inp
+ut line 418.
+(pdftex.def)             Requested size: 266.65018pt x 200.5146pt.
+ [14
+
+]
+<./images/Ex3//plot_3_1_misalignment.png, id=90, 421.575pt x 316.18124pt>
+File: ./images/Ex3//plot_3_1_misalignment.png Graphic file (type png)
+<use ./images/Ex3//plot_3_1_misalignment.png>
+Package pdftex.def Info: ./images/Ex3//plot_3_1_misalignment.png  used on input
+ line 427.
+(pdftex.def)             Requested size: 274.0205pt x 205.51537pt.
+ [15 <./images/Ex3//vehicle_aligned_landing.png> <./images/Ex3//plot_3_1_misali
+gnment.png (PNG copy)>]
+<./images/Ex3//3_1_3_gain0_05_landed.png, id=97, 546.54187pt x 484.05844pt>
+File: ./images/Ex3//3_1_3_gain0_05_landed.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_05_landed.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_05_landed.png  used on input
+ line 457.
+(pdftex.def)             Requested size: 170.71652pt x 151.2014pt.
+<./images/Ex3//3_1_3_gain0_05.png, id=98, 421.575pt x 316.18124pt>
+File: ./images/Ex3//3_1_3_gain0_05.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_05.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_05.png  used on input line 4
+60.
+(pdftex.def)             Requested size: 199.16928pt x 149.37712pt.
+<./images/Ex3//3_1_3_gain0_2_landed.png, id=99, 505.89pt x 453.94594pt>
+File: ./images/Ex3//3_1_3_gain0_2_landed.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_2_landed.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_2_landed.png  used on input 
+line 467.
+(pdftex.def)             Requested size: 170.71652pt x 153.18974pt.
+<./images/Ex3//3_1_3_gain0_2.png, id=100, 421.575pt x 316.18124pt>
+File: ./images/Ex3//3_1_3_gain0_2.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_2.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_2.png  used on input line 47
+0.
+(pdftex.def)             Requested size: 199.16928pt x 149.37712pt.
+<./images/Ex3//3_1_3_gain0_4_landed.png, id=101, 520.94624pt x 458.46281pt>
+File: ./images/Ex3//3_1_3_gain0_4_landed.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_4_landed.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_4_landed.png  used on input 
+line 477.
+(pdftex.def)             Requested size: 170.71652pt x 150.23686pt.
+<./images/Ex3//3_1_3_gain0_4.png, id=102, 421.575pt x 316.18124pt>
+File: ./images/Ex3//3_1_3_gain0_4.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_4.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_4.png  used on input line 48
+0.
+(pdftex.def)             Requested size: 199.16928pt x 149.37712pt.
+ [16 <./images/Ex3//3_1_3_gain0_05_landed.png> <./images/Ex3//3_1_3_gain0_05.pn
+g (PNG copy)> <./images/Ex3//3_1_3_gain0_2_landed.png> <./images/Ex3//3_1_3_gai
+n0_2.png (PNG copy)>]
+<./images/Ex3//3_1_3_gain0_7_landed.png, id=112, 578.91281pt x 496.85625pt>
+File: ./images/Ex3//3_1_3_gain0_7_landed.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_7_landed.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_7_landed.png  used on input 
+line 487.
+(pdftex.def)             Requested size: 170.71652pt x 146.51825pt.
+<./images/Ex3//3_1_3_gain0_7.png, id=113, 421.575pt x 316.18124pt>
+File: ./images/Ex3//3_1_3_gain0_7.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_7.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_7.png  used on input line 49
+0.
+(pdftex.def)             Requested size: 199.16928pt x 149.37712pt.
+<./images/Ex3//3_1_3_gain0_1_independent.png, id=114, 421.575pt x 316.18124pt>
+File: ./images/Ex3//3_1_3_gain0_1_independent.png Graphic file (type png)
+<use ./images/Ex3//3_1_3_gain0_1_independent.png>
+Package pdftex.def Info: ./images/Ex3//3_1_3_gain0_1_independent.png  used on i
+nput line 502.
+(pdftex.def)             Requested size: 227.62204pt x 170.72084pt.
+ [17 <./images/Ex3//3_1_3_gain0_4_landed.png> <./images/Ex3//3_1_3_gain0_4.png 
+(PNG copy)> <./images/Ex3//3_1_3_gain0_7_landed.png> <./images/Ex3//3_1_3_gain0
+_7.png (PNG copy)>] [18 <./images/Ex3//3_1_3_gain0_1_independent.png (PNG copy)
+>] [19
+
+] [20
+
+]
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 5
+77.
+
+(C:\Users\Davide\AppData\Local\Programs\MiKTeX\tex/latex/base\omlcmr.fd
+File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 577.
+<./images/Ex6//tool_coord.png, id=130, 421.575pt x 316.18124pt>
+File: ./images/Ex6//tool_coord.png Graphic file (type png)
+<use ./images/Ex6//tool_coord.png>
+Package pdftex.def Info: ./images/Ex6//tool_coord.png  used on input line 593.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 593--595
+ [][] 
+ []
+
+[21
+
+]
+<./images/Ex6//Vehicle_arm_volocities.png, id=134, 421.575pt x 316.18124pt>
+File: ./images/Ex6//Vehicle_arm_volocities.png Graphic file (type png)
+<use ./images/Ex6//Vehicle_arm_volocities.png>
+Package pdftex.def Info: ./images/Ex6//Vehicle_arm_volocities.png  used on inpu
+t line 599.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [22 <./images/Ex6//tool_coord.png (PNG copy)>]
+<./images/Ex6//EE_velocities.png, id=138, 421.575pt x 316.18124pt>
+File: ./images/Ex6//EE_velocities.png Graphic file (type png)
+<use ./images/Ex6//EE_velocities.png>
+Package pdftex.def Info: ./images/Ex6//EE_velocities.png  used on input line 60
+6.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [23 <./images/Ex6//Vehicle_arm_volocities.png (PNG copy)>]
+<./images/Ex6//tool_coord_sinus_debole.png, id=142, 421.575pt x 316.18124pt>
+File: ./images/Ex6//tool_coord_sinus_debole.png Graphic file (type png)
+<use ./images/Ex6//tool_coord_sinus_debole.png>
+Package pdftex.def Info: ./images/Ex6//tool_coord_sinus_debole.png  used on inp
+ut line 623.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [24 <./images/Ex6//EE_velocities.png (PNG copy)>]
+<./images/Ex6//Vehicle_arm_volocities_sinus_debole.png, id=147, 421.575pt x 316
+.18124pt>
+File: ./images/Ex6//Vehicle_arm_volocities_sinus_debole.png Graphic file (type 
+png)
+<use ./images/Ex6//Vehicle_arm_volocities_sinus_debole.png>
+Package pdftex.def Info: ./images/Ex6//Vehicle_arm_volocities_sinus_debole.png 
+ used on input line 627.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//EE_velocities_sinus_debole.png, id=148, 421.575pt x 316.18124pt>
+
+File: ./images/Ex6//EE_velocities_sinus_debole.png Graphic file (type png)
+<use ./images/Ex6//EE_velocities_sinus_debole.png>
+Package pdftex.def Info: ./images/Ex6//EE_velocities_sinus_debole.png  used on 
+input line 631.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [25 <./images/Ex6//tool_coord_sinus_debole.png (PNG copy)> <./images/Ex6//Vehi
+cle_arm_volocities_sinus_debole.png (PNG copy)>]
+<./images/Ex6//tool_coord_sinus_forte.png, id=152, 421.575pt x 316.18124pt>
+File: ./images/Ex6//tool_coord_sinus_forte.png Graphic file (type png)
+<use ./images/Ex6//tool_coord_sinus_forte.png>
+Package pdftex.def Info: ./images/Ex6//tool_coord_sinus_forte.png  used on inpu
+t line 646.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [26 <./images/Ex6//EE_velocities_sinus_debole.png (PNG copy)>]
+<./images/Ex6//Vehicle_arm_volocities_sinus_forte.png, id=156, 421.575pt x 316.
+18124pt>
+File: ./images/Ex6//Vehicle_arm_volocities_sinus_forte.png Graphic file (type p
+ng)
+<use ./images/Ex6//Vehicle_arm_volocities_sinus_forte.png>
+Package pdftex.def Info: ./images/Ex6//Vehicle_arm_volocities_sinus_forte.png  
+used on input line 649.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+<./images/Ex6//EE_velocities_sinus_forte.png, id=157, 421.575pt x 316.18124pt>
+File: ./images/Ex6//EE_velocities_sinus_forte.png Graphic file (type png)
+<use ./images/Ex6//EE_velocities_sinus_forte.png>
+Package pdftex.def Info: ./images/Ex6//EE_velocities_sinus_forte.png  used on i
+nput line 652.
+(pdftex.def)             Requested size: 443.57848pt x 332.69pt.
+ [27 <./images/Ex6//tool_coord_sinus_forte.png (PNG copy)> <./images/Ex6//Vehic
+le_arm_volocities_sinus_forte.png (PNG copy)>] [28 <./images/Ex6//EE_velocities
+_sinus_forte.png (PNG copy)>]
+(cooperative.aux) ) 
+Here is how much of TeX's memory you used:
+ 7215 strings out of 479697
+ 121033 string characters out of 2866659
+ 396341 words of memory out of 3000000
+ 24107 multiletter control sequences out of 15000+200000
+ 419348 words of font info for 84 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 66i,14n,72p,723b,1227s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\Davide\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\tcrm1000.pk><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Davide/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Davide/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/Davide/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Da
+vide/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex9.pf
+b><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmmi5.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmmi7.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Davide/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/Davide/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/Davide/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><C:/U
+sers/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.
+pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmr5.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmr6.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/
+public/amsfonts/cm/cmr7.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Davide/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Davide/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Davide/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/Davide
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Use
+rs/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pf
+b><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmsy9.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
+sfonts/cm/cmti10.pfb><C:/Users/Davide/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmtt10.pfb>
+Output written on cooperative.pdf (29 pages, 2760760 bytes).
+PDF statistics:
+ 247 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 196 words of extra memory for PDF output out of 10000 (max. 10000000)
+
