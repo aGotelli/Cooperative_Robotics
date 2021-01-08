@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 25;
+end_time = 55;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -74,19 +74,19 @@ mission.totalNumOfTasks = numel(mission.activationFunctions);
 uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]'; 
 
 %% Point 3.1
-% Initial position
-uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-
-% Defines the goal position for the vehicle position and attitude task
-uvms.goalPosition_v = [10.5   37.5  -38]';
-uvms.wRg_v = rotation(0, -0.06, 0.5);
-
-% Actions definition
-mission.actionSafeNavigation = [2, 3, 4, 5];
-mission.actionAlignedLanding = [2, 6, 7];
-
-
-mission.currentAction = mission.actionSafeNavigation;
+% % Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Defines the goal position for the vehicle position and attitude task
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.wRg_v = rotation(0, -0.06, 0.5);
+% 
+% % Actions definition
+% mission.actionSafeNavigation = [2, 3, 4, 5];
+% mission.actionAlignedLanding = [2, 6, 7];
+% 
+% 
+% mission.currentAction = mission.actionSafeNavigation;
 
 %% Point 3.1.3
 % % Initial position
@@ -104,22 +104,22 @@ mission.currentAction = mission.actionSafeNavigation;
 % 
 % mission.currentAction = mission.actionSafeNavigation;
 %% Point 3.1.4
-% % Initial position
-% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% Initial position
+uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+
+% Defines the goal position for the vehicle position and attitude task
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.goalPosition_v = [10.5   35.5  -38]';
+uvms.wRg_v = rotation(0, -0.06, 0.5);
 % 
-% % Defines the goal position for the vehicle position and attitude task
-% % uvms.goalPosition_v = [10.5   37.5  -38]';
-% uvms.goalPosition_v = [10.5   35.5  -38]';
-% uvms.wRg_v = rotation(0, -0.06, 0.5);
-% % 
-%  
-% % Actions definition
-% mission.actionSafeNavigation = [2, 3, 4, 5];
-% mission.actionAligning = [2, 5, 7, 8];
-% mission.actionAlignedLanding = [2, 6, 7, 8];
-% mission.actionGraspObject = [1, 2, 6, 8];
-% 
-% mission.currentAction = mission.actionSafeNavigation;
+ 
+% Actions definition
+mission.actionSafeNavigation = [2, 3, 4, 5];
+mission.actionAligning = [2, 5, 7, 8];
+mission.actionAlignedLanding = [2, 6, 7, 8];
+mission.actionGraspObject = [1, 2, 6, 8];
+
+mission.currentAction = mission.actionSafeNavigation;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';

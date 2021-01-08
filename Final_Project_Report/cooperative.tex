@@ -406,7 +406,16 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 The behaviour of the vehicle changes when the gain value is modified: the smaller the gain, the harder it is for the vehicle to reach the correct alignment with \(d_{proj}\). As it can be seen in the images above, while the time used by the robot to reach the sea floor remains the same, increasing the gain makes it reach different configurations when approaching the sea floor.\\
 For gain values smaller than about \(0.2\), the misalignment vector fails to become a null vector, as you can clearly see in images (b) and (d), so the vehicle is not able to align to the target in time. In the other two cases instead the vehicle manages to align in time to the target, even if, for gain = \(0.4\).
 This shows that this solution is heavily gain-dependent, so we need to think about a solution to ensure that the alignment is always achieved.
-%What we thought is to add a new Action in between the two actual ones that is activated when the vehicle reaches the goal position 
+What we thought was to add a new Action in between the two actual ones that is activated when the vehicle reaches the goal position for the Safe Navigation action. This new Action is composed by two tasks, horizontal attitude for safety and the horizontal aligning to the target. This action is performed until the module of the misalignment vector, $\theta$, becomes lower than \(0.02 \) \({rad}\).\\
+Then, the vehicle start the landing, but the misalignment vector between its x-axis and \(n_{d_{proj}}\) is already very close to zero, so it is guaranteed that it will land aligned to the target, independently from the gain of the alignment task.
+\begin{figure}[H]
+	\centering
+	\subfigure[Robot path and misalignment vector with gain = \(0.1\) (gain independent)]
+	{\includegraphics[width=80mm]{3_1_3_gain0_1_independent.png}}
+	\label{im:v_land_gain0_1_ind}
+\end{figure} 
+The behaviour obtained shows that the vehicle manages to land aligned with the target even if the gain value is very low.
+ 
 \subsubsection{Q4: After the landing is accomplished, what happens if you try to move the end-effector? Is the distance to the nodule sufficient to reach it with the end-effector? Comment the observed behaviour. If, after landing, the nodule is not in the manipulator's workspace, how would you solve this problem to guarantee it?}
 
 
