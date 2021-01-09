@@ -71,8 +71,16 @@ xlabel("Time [s]")
 legend('Aha');
 title("Horizontal attitude activation function")
 
+
+%% Plot the Horizontal Attitude activation function
+figure(5);
+hplot = plot((1:size(plt.angTool, 2)) * 2, plt.angTool);
+set(hplot, 'LineWidth', 2);
+xlabel("Time [s]")
+title("Norm of the end-effector's misalignment vector")
+
 %% Plot the 2D path with the sea floor and the thresholds
-% figure(7)
+% figure(6)
 % % initially distance = 0, ground is wrong
 % ground = plt.history.z - plt.distance;
 % % ground = ground(100:end);

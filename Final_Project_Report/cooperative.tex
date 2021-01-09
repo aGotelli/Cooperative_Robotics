@@ -235,7 +235,7 @@ Now both the initial configuration and the target one have pitch and roll angles
 
 
 \subsubsection{Q3: Swap the priorities between Horizontal Attitude and the Vehicle Position control task. Discuss the behaviour.}
-Here I consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy.
+Here I consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy. \\
 
 {\large \textbf{Case 2}} \\
 In the previous question, the robot had conflicting goals and the safety one was considered the most important: now we still have conflicting goals, but the most important one is that the robot should reach the target configuration. Since the Horizontal Attitude task won't have much effect on the robot, it will reach the target configuration without any problem.
@@ -248,7 +248,7 @@ In the previous question, the robot had conflicting goals and the safety one was
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities}
-	\caption{The robot velocities converge to zero after a brief transient period.}
+	\caption{The robot velocities all converge to zero after a brief transient period.}
 	\label{fig:q3case2b}
 \end{figure}
 \begin{figure}[H]
@@ -271,31 +271,83 @@ In the previous question, the Horizontal Attitude task prevented the robot to re
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt}
-	\caption{}
+	\caption{The robot moves in Y and Z and the yaw angle correctly converges to zero.}
 	\label{fig:q3case3a}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelocities}
-	\caption{}
+	\caption{The robot velocities converge to zero after a brief transient period.}
 	\label{fig:q3case3b}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path}
-	\caption{}
+	\caption{The robot reaches the target position and the misalignment vector shrinks towards zero.}
 	\label{fig:q3case3c}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct}
-	\caption{}
+	\caption{The value of the activation function is always 1 since its corresponding task has the lowest priority.}
 	\label{fig:q3case3d}
 \end{figure}
 
 
 \subsubsection{Q4: What is the behaviour if the Tool Position control task is active and what if it is disabled? Which of the settings should be used for a Safe Waypoint Navigation action? Report the final hierarchy of tasks (and their priorities, see the template table in the introduction) which makes up the Safe Waypoint Navigation action.}
 
+In the previous exercises we observed the robot's behaviour when the Tool Position control task was disabled: the end-effector doesn't move since it doesn't have a target configuration to reach, so the robot reaches its defined target configuration as expected. \\
+When we try to enable with highest priority the Tool Position task having tool's target configuration
+\begin{gather*}
+	\begin{bmatrix} 12.2025 & 37.3748 & -39.8860 & 0 & \pi & \pi/2\end{bmatrix}^\top
+\end{gather*}
+in the previously considered Case 1, it interferes with the Vehicle Position task by making the robot not reach its desired target configuration, as shown in the following figures.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_PosAndAtt}
+	\caption{The robot's configuration doesn't reach the desired one: the position is quite close, but the attitude is not.}
+	\label{fig:q4a}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_LinAngVelocities}
+	\caption{The robot's velocities spike at around 5 and 7 seconds due to the end-effector's motion.}
+	\label{fig:q4b}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_Path}
+	\caption{Here we can see better that the robot doesn't reach the target position and the misalignment vector doesn't shrink towards zero.}
+	\label{fig:q4c}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_MisalignVectNorm}
+	\caption{The norm of the misalignment vector between the tool frame and the tool's target frame reaches zero.}
+	\label{fig:q4d}
+\end{figure}
+
+When implementing a Safe Waypoint Navigation action the best setting should be to disable the Tool Position task since it may interfere with other goals or worse, may present as a risk to the robot's safety: in fact, the end-effector motion may result in accidental collisions between either the vehicle or the manipulator arm and the environment, which can in turn break the system. \\
+For this reason, the final hierarchy of tasks which make up the Safe Waypoint Navigation action is the following:
+\begin{table}[htb]
+	\caption{Hierarchy table for the Safe Waypoint Navigation action $\mathcal{A}_{1}$.}
+	\label{tb1:ex1.1.4SafeWaypointNavigationTable}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{ccc}
+			\toprule
+			Task & Type & $\mathcal{A}_{1}$ \\
+			\midrule
+			Horizontal Attitude & I & 1 \\
+			\hdashline
+			Vehicle Position    & E & 2 \\
+			\hdashline
+			Vehicle Attitude    & E & 3 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
 
 \subsection{Adding a safety minimum altitude control objective}
 Initialize the vehicle at the position:
@@ -311,6 +363,29 @@ Goal: Implement a task to control the altitude from the seafloor. Check that at 
 
 
 \subsubsection{Q1: Report the new hierarchy of tasks of the Safe Waypoint Navigation and their priorities. Comment how you choose the priority level for the minimum altitude.}
+We added the Minimum Altitude control task to the previous hierarchy, obtaining the following updated table:
+
+\begin{table}[htb]
+	\caption{Updated hierarchy table for the Safe Waypoint Navigation action $\mathcal{A}_{1}$.}
+	\label{tb2:ex1.2.1SafeWaypointNavigationTable}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{ccc}
+			\toprule
+			Task & Type & $\mathcal{A}_{1}$ \\
+			\midrule
+			Vehicle Minimum Altitude & I & 1 \\
+			\hdashline
+			Horizontal Attitude      & I & 2 \\
+			\hdashline
+			Vehicle Position 	     & E & 3 \\
+			\hdashline
+			Vehicle Attitude         & E & 4 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+Since this new task is a safety one, it must have the highest priority: we put it at priority level 1 but it could also be put at priority level 2 just under the Horizontal Attitude task. The priority of the safety tasks is not important as long as they have higher priority than the other tasks. This is because, as we've seen in question 1.1.3, if a safety task has a lower priority than the action-defining task(s) then it won't have a huge effect on the robot's behaviour or any effect at all.
 
 \subsubsection{Q2: What is the Jacobian relationship for the Minimum Altitude control task? Report the formula for the desired task reference generation, and the activation thresholds.}
 

@@ -50,10 +50,16 @@ if mod(t, 2) == 0 && t ~= 0 % t == floor(t) to plot every second
     plt.vehi.y(index) = j'*uvms.wTv(1:3,4);
     plt.vehi.z(index) = k'*uvms.wTv(1:3,4);
     
-    %   Misalignment vector
+    %   The end-effector position
+    plt.ee(index, :) = uvms.wTv(1:3,4);
+    
+    %   Misalignment vector of the vehicle
     plt.ang.x(index) = i'*uvms.ang;
     plt.ang.y(index) = j'*uvms.ang;
     plt.ang.z(index) = k'*uvms.ang;
+    
+    %   Norm of the misalignment vector of the end-effector
+    plt.angTool(index) = norm(uvms.angTool);
 end
 
 plt.distance(loop) = uvms.w_a;
