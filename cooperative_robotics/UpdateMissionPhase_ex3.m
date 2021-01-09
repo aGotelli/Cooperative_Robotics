@@ -18,7 +18,6 @@ function [uvms, mission] = UpdateMissionPhase_ex3(uvms, mission)
             
         case 2  
             if (uvms.theta < 0.02 && uvms.dist_to_goal_proj < 2)
-%             if (uvms.theta < 0.02)
                 mission.phase = 3;
                 mission.phase_time = 0;
                 mission.switch = 1;

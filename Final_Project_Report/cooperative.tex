@@ -64,7 +64,7 @@
 
 \normalsize
 Authors: Piccinini Davide, Porta Francesco and Gotelli Andrea \\
-EMAILs: 4343879@studenti.unige.it, 4404040@studenti.unige.it \\
+EMAILs: 4404040@studenti.unige.it, 4376330@studenti.unige.it, 4343879@studenti.unige.it \\
 Date: 21/12/2020
 \end{center}
 \clearpage
@@ -453,7 +453,7 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 
 \begin{figure}[H]
 	\centering
-	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.05\)]
+	\subfigure[Position of the vehicle when it approches the ground with gain = \(0.05\)]
 	{\includegraphics[width=60mm]{3_1_3_gain0_05_landed.png}}
 	\hspace{10mm}
 	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.05\)]
@@ -463,7 +463,7 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 
 \begin{figure}[H]
 	\centering
-	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.2\)]
+	\subfigure[Position of the vehicle when it approches the ground with gain = \(0.2\)]
 	{\includegraphics[width=60mm]{3_1_3_gain0_2_landed.png}}
 	\hspace{10mm}
 	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.2\)]
@@ -473,7 +473,7 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 
 \begin{figure}[H]
 	\centering
-	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.4\)]
+	\subfigure[Position of the vehicle when it approches the ground with gain = \(0.4\)]
 	{\includegraphics[width=60mm]{3_1_3_gain0_4_landed.png}}
 	\hspace{10mm}
 	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.4\)]
@@ -483,7 +483,7 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 
 \begin{figure}[H]
 	\centering
-	\subfigure[Heading of the vehicle when it approches the ground with gain = \(0.7\)]
+	\subfigure[Position of the vehicle when it approches the ground with gain = \(0.7\)]
 	{\includegraphics[width=60mm]{3_1_3_gain0_7_landed.png}}
 	\hspace{10mm}
 	\subfigure[Path of the vehicle and misalignment vector with gain = \(0.7\)]
@@ -506,8 +506,27 @@ The behaviour obtained shows that the vehicle manages to land aligned with the t
  
 \subsubsection{Q4: After the landing is accomplished, what happens if you try to move the end-effector? Is the distance to the nodule sufficient to reach it with the end-effector? Comment the observed behaviour. If, after landing, the nodule is not in the manipulator's workspace, how would you solve this problem to guarantee it?}
 
+In order to move the end effector after landing is accomplished, we need to introduce a new action, that we called Grasp Object, that will be performed after the altitude previous action is concluded, that is when the vehicle altitude from the sea floor is lower than \(0.1 m\). This action is composed by three tasks: 
+\begin{itemize}
+	\item the Horizontal Attitude, for safety
+	\item the Vehicle Altitude Control, that is the same task present in the landing action, which is needed to let the vehicle remain at the same altitude from the sea floor
+	\item the Tool Position Control, that is needed to move the end effector of the arm on the desired position
+\end{itemize}
+After the landing is accomplished, the robot arm starts moving towards the target and, since there is no constraint task on the vehicle velocities, the body shifts laterally and leans froward, following the arm movement, until the end effector reaches the goal position.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Position of the vehicle after the grasping is completed]
+	{\includegraphics[width=70mm]{3_1_4_vehic_grasp_sim.png}}
+	\hspace{10mm}
+	\subfigure[Path of the vehicle and misalignment vector ]
+	{\includegraphics[width=70mm]{3_1_4_vehic_grasp.png}}
+	\label{im:v_land_grasp}
+\end{figure} 
+So I observed that in this case the distance to the nodule is sufficient to reach it with the end-effector. Nevertheless it is not guaranteed to happen, so it is a good idea to add a new task that ensures that the target will be in the manipulator space when the landing is accomplished.
 
 \clearpage
+
 \section{Exercise 4: Implementing a Fixed-base Manipulation Action}
 \subsection{Adding non-reactive tasks}
 To manipulate as a fixed based manipulator, we need to constraint the vehicle to not move, otherwise the tool frame position task will make the vehicle move.
