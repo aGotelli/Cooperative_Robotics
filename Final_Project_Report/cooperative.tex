@@ -126,8 +126,8 @@ The Vehicle Position and Attitude control task controls both the position and th
 Since the goal position and goal attitude are expressed with respect to the world frame, our task reference vector $ \dot{x} = J\dot{y} $ needs to be projected on the world frame too. \\
 For this reason, since the control vector $ \dot{y} = \begin{bmatrix} \dot{q} & \dot{v} & \dot{\omega}\end{bmatrix}^\top $ is projected in the vehicle frame, the two Jacobian matrices will be:
 \begin{gather*}
-uvms.Jv\_pos = \begin{bmatrix} zeros(3, 7) & uvms.wTv(1:3, 1:3) & zeros(3,3)\end{bmatrix}^\top \\
-uvms.Jv\_att = \begin{bmatrix} zeros(3, 7) & zeros(3, 3) & uvms.wTv(1:3, 1:3)\end{bmatrix}^\top
+uvms.Jv\_pos = \begin{bmatrix} zeros(3, 7) & uvms.wTv(1:3, 1:3) & zeros(3,3)\end{bmatrix} \\
+uvms.Jv\_att = \begin{bmatrix} zeros(3, 7) & zeros(3, 3) & uvms.wTv(1:3, 1:3)\end{bmatrix}
 \end{gather*}
 
 The task reference vector must be in the form $ \dot{\bar{x}} = \lambda(\bar{x} - x), \lambda > 0 $, where the reference value $ \bar{x} $ represents the desired value and $ x $ is the current value. In our case the desired value is the goal position (or attitude) obtained with the \textit{CartError()} function and the current value is the current position (or attitude). \\
@@ -388,10 +388,36 @@ We added the Minimum Altitude control task to the previous hierarchy, obtaining 
 Since this new task is a safety one, it must have the highest priority: we put it at priority level 1 but it could also be put at priority level 2 just under the Horizontal Attitude task. The priority of the safety tasks is not important as long as they have higher priority than the other tasks. This is because, as we've seen in question 1.1.3, if a safety task has a lower priority than the action-defining task(s) then it won't have a huge effect on the robot's behaviour or any effect at all.
 
 \subsubsection{Q2: What is the Jacobian relationship for the Minimum Altitude control task? Report the formula for the desired task reference generation, and the activation thresholds.}
+Our variable of interest $ a $ is the altitude of the vehicle with respect to the sea floor, so we want to find the jacobian relationship between the control vector $ \dot{y} $ and the time derivative of our variable of interest $ \dot{a} $. \\
+Let's define the following vector
+\begin{gather*}
+	^{w}\boldsymbol{d} = a \cdot ^{w}\boldsymbol{k} = ^{w}O_{v} - Q
+\end{gather*}
+as the one representing the altitude of the robot with respect to the world frame:$ ^{w}\boldsymbol{k} $ is the versor along the z-axis of the world frame, $ ^{w}O_{v} $ is the origin of the vehicle frame and $ Q $ is a point on the sea floor for which the previous equality holds. \\
+We have that the derivative of the altitude will be
+\begin{gather*}
+	\dot{a} = ^{w}\boldsymbol{k} \cdot D_{w}(^{w}\boldsymbol{d}) \\
+	D_{w}(^{w}\boldsymbol{d}) = D_{w}(^{w}O_{v}) - D_{w}Q = D_{w}(^{w}O_{v}) = ^{w}\boldsymbol{v}_{v/w} \\
+	\dot{a} = ^{w}\boldsymbol{k} \cdot ^{w}\boldsymbol{v}_{v/w}
+\end{gather*}
+where $ D_{w} $ is the derivative operator with respect to the world frame and $ ^{w}\boldsymbol{v}_{v/w} $ is the velocity of the vehicle with respect to the world frame projected on the world frame. The equality $ D_{w}Q = 0 $ comes from the fact that the point $ Q $ doesn't move with respect to the world frame. \\
+Thus, the jacobian matrix will be
+\begin{gather*}
+	uvms.JminAlt = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)]
+\end{gather*}
+where $ k' $ is $ ^{w}\boldsymbol{k} $ transposed and $ uvms.wTv(1:3, 1:3) $ is the rotation matrix of the vehicle frame with respect to the world frame. \\ \\
+Since the task is of inequality type, we want the robot to reach an altitude belonging to the interval for which the value of the activation function is 0: we established that the activation function is 0 for altitudes greater than 1.5 m and is 1 for altitudes lower than 1 m. \\
+The formula for the task reference is the following
+\begin{gather*}
+	uvms.xdot.minAlt = 0.2 * ((uvms.min\_offset + uvms.range\_offset) - uvms.w\_a)
+\end{gather*}
+where $ uvms.min\_offset = 1 m $, $ uvms.range\_offset = 0.5 m $ and $ uvms.w\_a $ is the altitude of the vehicle.
 
 \subsubsection{Q3: Try imposing a minimum altitude of 1, 5, 10 m respectively. What is the behaviour? Does the vehicle reach its final goal in all cases?}
 
+
 \subsubsection{Q4: How was the sensor distance processed to obtain the altitude measurement? Does it work in all cases or some underlying assumptions are implicitly made?}
+
 
 \clearpage
 
