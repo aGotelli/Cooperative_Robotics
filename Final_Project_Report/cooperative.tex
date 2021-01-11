@@ -634,6 +634,24 @@ After the landing is accomplished, the robot arm starts moving towards the targe
 	\label{im:v_land_grasp}
 \end{figure} 
 So I observed that in this case the distance to the nodule is sufficient to reach it with the end-effector. Nevertheless it is not guaranteed to happen, so it is a good idea to add a new task that ensures that the target will be in the manipulator space when the landing is accomplished.
+Since we want to maintain the vehicle to certain range of distance from the target in order to let it remain in the manipulator workspace, we need to control the robot position on the inertial horizontal plane. To do so, the Jacobian matrix will be
+\begin{lstlisting}
+uvms.JdistGoal = [zeros(2, 7) -w_Dxy * uvms.wTv(1:3, 1:3)  zeros(2, 3)];
+\end{lstlisting}
+with \(^wD_{xy} = \begin{bmatrix} 1 & 0 & 0 \\	0 & 1 & 0 \end{bmatrix}\).\\\\
+%The minus sign is given by ...\\\\
+The task reference is obtained using the \(x\) and \(y\) components of the distance between the vehicle frame and the target projected on the horizontal inertial frame.
+The desired values are set as: 
+\begin{lstlisting}
+uvms.ensured_distance_x = 1.5;
+uvms.ensured_distance_y = 0.5;
+\end{lstlisting}
+The task reference is the following: 
+\begin{lstlisting}
+uvms.xdot.distGoal = 
+[Saturate(0.5 * (uvms.ensured_distance_x - uvms.xd), 0.5) ;
+ Saturate(0.5 * (uvms.ensured_distance_y - uvms.yd), 0.5)];
+\end{lstlisting}
 \clearpage
 
 \section{Exercise 4: Implementing a Fixed-base Manipulation Action}
