@@ -63,6 +63,7 @@ if mod(t, 2) == 0 && t ~= 0 % t == floor(t) to plot every second
 end
 
 plt.distance(loop) = uvms.w_a;
+plt.a(10, loop) = uvms.A.minAlt;
 plt.min_offset = uvms.min_offset;
 plt.range = uvms.range_offset;
 plt.initPos = uvms.initPosition;

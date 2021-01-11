@@ -77,7 +77,7 @@ uvms.JminAlt = [];
 uvms.xdot.minAlt = 0;
 uvms.A.minAlt = 0;
 
-uvms.min_offset = 1;
+uvms.min_offset = 10;
 uvms.range_offset = 0.5;
 
 uvms.w_a = 0;

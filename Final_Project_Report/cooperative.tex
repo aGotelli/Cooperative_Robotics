@@ -126,15 +126,15 @@ The Vehicle Position and Attitude control task controls both the position and th
 Since the goal position and goal attitude are expressed with respect to the world frame, our task reference vector $ \dot{x} = J\dot{y} $ needs to be projected on the world frame too. \\
 For this reason, since the control vector $ \dot{y} = \begin{bmatrix} \dot{q} & \dot{v} & \dot{\omega}\end{bmatrix}^\top $ is projected in the vehicle frame, the two Jacobian matrices will be:
 \begin{gather*}
-uvms.Jv\_pos = \begin{bmatrix} zeros(3, 7) & uvms.wTv(1:3, 1:3) & zeros(3,3)\end{bmatrix} \\
-uvms.Jv\_att = \begin{bmatrix} zeros(3, 7) & zeros(3, 3) & uvms.wTv(1:3, 1:3)\end{bmatrix}
+uvms.Jv\_pos = [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3,3)]; \\
+uvms.Jv\_att = [zeros(3, 7), zeros(3, 3), uvms.wTv(1:3, 1:3)];
 \end{gather*}
 
 The task reference vector must be in the form $ \dot{\bar{x}} = \lambda(\bar{x} - x), \lambda > 0 $, where the reference value $ \bar{x} $ represents the desired value and $ x $ is the current value. In our case the desired value is the goal position (or attitude) obtained with the \textit{CartError()} function and the current value is the current position (or attitude). \\
 The two task reference vectors are computed in this way:
 \begin{gather*}
-[ang, lin] = CartError(uvms.wTg\_v , uvms.wTv);\\
-uvms.xdot.v\_pos = Saturate(0.5 * lin, 0.5);\\
+[ang, lin] = CartError(uvms.wTg\_v , uvms.wTv); \\
+uvms.xdot.v\_pos = Saturate(0.5 * lin, 0.5); \\
 uvms.xdot.v\_att = Saturate(0.5 * ang, 0.5);
 \end{gather*}
 Where $ uvms.wTg\_v $ and $ uvms.wTv $ are respectively the transformation matrix of the goal frame with respect to the world frame and the transformation matrix of the vehicle frame with respect to the world frame. 
@@ -403,7 +403,7 @@ We have that the derivative of the altitude will be
 where $ D_{w} $ is the derivative operator with respect to the world frame and $ ^{w}\boldsymbol{v}_{v/w} $ is the velocity of the vehicle with respect to the world frame projected on the world frame. The equality $ D_{w}Q = 0 $ comes from the fact that the point $ Q $ doesn't move with respect to the world frame. \\
 Thus, the jacobian matrix will be
 \begin{gather*}
-	uvms.JminAlt = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)]
+	uvms.JminAlt = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)];
 \end{gather*}
 where $ k' $ is $ ^{w}\boldsymbol{k} $ transposed and $ uvms.wTv(1:3, 1:3) $ is the rotation matrix of the vehicle frame with respect to the world frame. \\ \\
 Since the task is of inequality type, we want the robot to reach an altitude belonging to the interval for which the value of the activation function is 0: we established that the activation function is 0 for altitudes greater than 1.5 m and is 1 for altitudes lower than 1 m. \\
@@ -417,7 +417,16 @@ where $ uvms.min\_offset = 1 m $, $ uvms.range\_offset = 0.5 m $ and $ uvms.w\_a
 
 
 \subsubsection{Q4: How was the sensor distance processed to obtain the altitude measurement? Does it work in all cases or some underlying assumptions are implicitly made?}
-
+Our Matlab code used to compute the altitude measurement is the following
+\begin{gather*}
+	k = [0, 0, 1]'; \\
+	v\_d = [0 0 uvms.sensorDistance]'; \\
+	w\_d = uvms.wTv(1:3, 1:3) * v\_d; \\
+	uvms.w\_a = k' * w\_d;
+\end{gather*}
+To obtain the vehicle altitude $ uvms.w\_a $ we took the vector representing the sensor distance in the vehicle frame, project it into the world frame and then perform the dot product to get the projection of $ w\_d $ onto the z-axis of the world frame. \\
+The altitude is not simply the sensor distance measurement since the vehicle can be in a tilted position, which results in an sensor distance value greater than the actual altitude: but, by computing the altitude via dot product we make the implicit assumption that the sea floor is flat. This results from the definition of the dot product itself. Obviously, this assumption won't always hold: there might be areas in which the sea floor is almost flat, but in most cases this is not true. \\
+Moreover, this assumption is pessimistic: in the ideal case the computed altitude will be equal to the actual one, but often we're overestimating how close we are to the sea floor; this isn't bad per se since this is a safety task, but it might happen that the vehicle could get closer to the sea floor without actually violating the minimum altitude requirement but it isn't allowed due to the altitude overestimation.
 
 \clearpage
 

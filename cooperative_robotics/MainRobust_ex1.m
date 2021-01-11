@@ -9,7 +9,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 60;
+end_time = 50;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -81,9 +81,9 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 % % Initial position
 % uvms.p = [10.5 35.5 -36 0 0 pi/2]';
 % 
-% % Defines the goal position for the end-effector/tool position task
-% uvms.goalPosition = [12.2025   37.3748  -39.8860]';
-% uvms.wRg = rotation(0, pi, pi/2);
+% Defines the goal position for the end-effector/tool position task
+uvms.goalPosition = [12.2025   37.3748  -39.8860]';
+uvms.wRg = rotation(0, pi, pi/2);
 % 
 % % Defines the goal position for the vehicle position and attitude task
 % uvms.goalPosition_v = [10.5   37.5  -38]';
@@ -138,13 +138,13 @@ for t = 0:deltat:end_time
     Qp = eye(13); 
     
     %   SAFETY MINIMUM ALTITUDE TASK
-%     [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.minAlt,    uvms.JminAlt,    Qp, ydotbar, uvms.xdot.minAlt,  0.0001,   0.01, 10);
     
     %   HORIZONTAL ATTITUDE TASK
-%     [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,    Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
 
         %   TOOL FRAME TASK
-    [Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
+%     [Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt,    Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
     
     %   POSITION TASK
     [Qp, ydotbar] = iCAT_task(uvms.A.v_pos,    uvms.Jv_pos,    Qp, ydotbar, uvms.xdot.v_pos,  0.0001,   0.01, 10);
@@ -180,11 +180,12 @@ for t = 0:deltat:end_time
     % add debug prints here
     if (mod(t,0.1) == 0)
         t
-%         altitude = uvms.w_a
+        altitude = uvms.w_a
         [ang, lin] = CartError(uvms.wTg_v , uvms.wTv);
-%         distance = norm(lin)
-        norm(uvms.v_rho)
-        uvms.A.ha
+        distance = norm(lin)
+        activation = uvms.A.minAlt
+%         norm(uvms.v_rho)
+%         uvms.A.ha
     end
 
     % enable this to have the simulation approximately evolving like real
