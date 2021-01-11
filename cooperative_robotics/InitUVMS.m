@@ -56,6 +56,8 @@ uvms.A.jl = zeros(7,7);
 uvms.A.mu = 0;
 uvms.A.t = zeros(6,6);
 
+uvms.angTool = [];
+
 %%   INITIALIZATION FOR HORIZONTAL ATTITUDE CONTROL
 uvms.A.ha = zeros(1,1);
 uvms.Jha = [];
@@ -75,7 +77,7 @@ uvms.JminAlt = [];
 uvms.xdot.minAlt = 0;
 uvms.A.minAlt = 0;
 
-uvms.min_offset = 1;
+uvms.min_offset = 10;
 uvms.range_offset = 0.5;
 
 uvms.w_a = 0;

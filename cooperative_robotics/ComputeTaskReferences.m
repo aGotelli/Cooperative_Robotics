@@ -21,7 +21,7 @@ uvms.xdot.v_pos = Saturate(0.5 * lin , 0.5) ;
 uvms.xdot.v_att = Saturate(0.5 * ang , 0.5) ;
 
 %%   THE TASK REFERENCE FOR ENSURING THE OFFSET
-uvms.xdot.minAlt = Saturate(0.2 * ((uvms.min_offset + uvms.range_offset) - uvms.w_a), 0.2) ;
+uvms.xdot.minAlt = Saturate(0.5 * ((uvms.min_offset + uvms.range_offset) - uvms.w_a), 0.5) ;
 
 %%   THE TASK REFERENCE FOR LANDING
 uvms.xdot.landing = Saturate(0.5 * ( - uvms.w_a), 0.5) ;

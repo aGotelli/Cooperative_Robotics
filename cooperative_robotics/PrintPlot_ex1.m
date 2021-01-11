@@ -1,41 +1,41 @@
 function [ ] = PrintPlot_ex1( plt )
 
 %% Plot the robot position and attitude
-figure(1);
-s1 = subplot(2,1,1);
-hplot = plot(plt.t, plt.p(1:3, :));
-set(hplot, 'LineWidth', 1);
-xlabel("Time [s]")
-ylabel("Position [m]")
-legend('x','y','z')
-title(s1, "Robot position")
-s2 = subplot(2,1,2);
-hplot = plot(plt.t, plt.p(4:6, :));
-set(hplot, 'LineWidth', 1);
-xlabel("Time [s]")
-ylabel("Attitude [rad]")
-legend('roll','pitch','yaw');
-title(s2, "Robot attitude")
+% figure
+% s1 = subplot(2,1,1);
+% hplot = plot(plt.t, plt.p(1:3, :));
+% set(hplot, 'LineWidth', 1);
+% xlabel("Time [s]")
+% ylabel("Position [m]")
+% legend('x','y','z')
+% title(s1, "Robot position")
+% s2 = subplot(2,1,2);
+% hplot = plot(plt.t, plt.p(4:6, :));
+% set(hplot, 'LineWidth', 1);
+% xlabel("Time [s]")
+% ylabel("Attitude [rad]")
+% legend('roll','pitch','yaw');
+% title(s2, "Robot attitude")
 
 %% Plot the robot linear and angular velocities
-figure(2);
-s1 = subplot(2,1,1);
-hplot = plot(plt.t, plt.p_dot(1:3, :));
-set(hplot, 'LineWidth', 1);
-xlabel("Time [s]")
-ylabel("Linear velocity [m/s]")
-legend('xdot', 'ydot','zdot')
-title(s1, "Robot linear velocities")
-s2 = subplot(2,1,2);
-hplot = plot(plt.t, plt.p_dot(4:6, :));
-set(hplot, 'LineWidth', 1);
-xlabel("Time [s]")
-ylabel("Angular velocity [rad/s]")
-legend('omega_x','omega_y','omega_z');
-title(s2, "Robot angular velocities")
+% figure
+% s1 = subplot(2,1,1);
+% hplot = plot(plt.t, plt.p_dot(1:3, :));
+% set(hplot, 'LineWidth', 1);
+% xlabel("Time [s]")
+% ylabel("Linear velocity [m/s]")
+% legend('xdot', 'ydot','zdot')
+% title(s1, "Robot linear velocities")
+% s2 = subplot(2,1,2);
+% hplot = plot(plt.t, plt.p_dot(4:6, :));
+% set(hplot, 'LineWidth', 1);
+% xlabel("Time [s]")
+% ylabel("Angular velocity [rad/s]")
+% legend('omega_x','omega_y','omega_z');
+% title(s2, "Robot angular velocities")
 
 %% Plot the 3D path and the misalignment vector
-figure(3)
+figure
 hold on
 % rock_center = [12.2025   37.3748  -39.8860]'; % in world frame coordinates
 
@@ -64,29 +64,48 @@ legend('Initial position', 'Goal position', '3D path', 'Misalignment vector')
 title("Robot's path")
 
 %% Plot the Horizontal Attitude activation function
-figure(4);
-hplot = plot(plt.t, plt.a(9,:));
-set(hplot, 'LineWidth', 2);
-xlabel("Time [s]")
-legend('Aha');
-title("Horizontal attitude activation function")
+% figure
+% hplot = plot(plt.t, plt.a(9,:));
+% set(hplot, 'LineWidth', 2);
+% xlabel("Time [s]")
+% legend('Aha');
+% title("Horizontal attitude activation function")
+
+%% Plot the norm of the end-effector's misalignment vector
+% figure
+% hplot = plot((1:size(plt.angTool, 2)) * 2, plt.angTool);
+% set(hplot, 'LineWidth', 2);
+% xlabel("Time [s]")
+% title("Norm of the end-effector's misalignment vector")
 
 %% Plot the 2D path with the sea floor and the thresholds
-% figure(7)
-% % initially distance = 0, ground is wrong
-% ground = plt.history.z - plt.distance;
-% % ground = ground(100:end);
-% thresh_hard = ground + plt.min_offset;
-% thresh_soft = ground + plt.min_offset + plt.range;
-% 
-% hold on
-% plot(plt.history.x,plt.history.z,'LineWidth',2)
-% plot(plt.history.x,ground, 'r')
-% plot(plt.history.x,thresh_hard, 'k')
-% plot(plt.history.x,thresh_soft, 'g-')
-% legend('Path', 'Sea floor', 'Hard threshold', 'Soft threshold')
-% title('Vehicle 2D path with sea floor and thresholds')
-% hold off
+figure
+% initially distance = 0, ground is wrong
+ground = plt.history.z - plt.distance;
+% ground = ground(100:end);
+thresh_hard = ground + plt.min_offset;
+thresh_soft = ground + plt.min_offset + plt.range;
+
+hold on
+plot(plt.history.y,plt.history.z,'LineWidth',2)
+plot(plt.history.y,ground, 'r')
+plot(plt.history.y,thresh_hard, 'k')
+plot(plt.history.y,thresh_soft, 'g-')
+legend('Path', 'Sea floor', 'Hard threshold', 'Soft threshold')
+title('Vehicle 2D path with sea floor and thresholds')
+hold off
+
+%% Plot the vehicle altitude and the activation of the minimum altitude task over time
+figure
+s1 = subplot(2, 1, 1);
+plot(plt.t, plt.distance);
+xlabel("Time [s]")
+ylabel("Altitude [m]")
+title(s1, "Vehicle altitude")
+s2 = subplot(2, 1, 2);
+plot(plt.t, plt.a(10, :));
+xlabel("Time [s]")
+title(s2, "Value of the activation function")
 
 end
 
