@@ -549,8 +549,8 @@ $$^v\rho = \theta n$$
 
 The Jacobian relationship obtained is the following:
 
-$$ \begin{bmatrix} \bm{\omega_x}   \\ \bm{\omega_y} \\ \bm{\omega_z} \end{bmatrix} = J_{ha} \bm{\dot{y}}$$
-$$ \begin{bmatrix} \bm{\omega_x}   \\ \bm{\omega_y} \\ \bm{\omega_z} \end{bmatrix} = n \cdot \begin{bmatrix} \bm{0}_{[3x7]} & -\frac{1}{\|^vd_{proj}\|^2}[^vd_{proj}\wedge] & -\bm{I}_{[3x3]} \end{bmatrix} \begin{bmatrix} \bm{q}   \\ \bm{\textit{v}} \\ \bm{\omega} \end{bmatrix} $$
+$$ \bm{\dot{\theta}} = J_{ha} \bm{\dot{y}}$$
+$$ \bm{\dot{\theta}} = n \cdot \begin{bmatrix} \bm{0}_{[3x7]} & -\frac{1}{\|^vd_{proj}\|^2}[^vd_{proj}\wedge] & -\bm{I}_{[3x3]} \end{bmatrix} \begin{bmatrix} \bm{q}   \\ \bm{\textit{v}} \\ \bm{\omega} \end{bmatrix} $$
 
 The task reference is computed using the norm of the misalignment vector, $\theta$. The desired value in this case is \(0\), because we want the two vectors to be aligned.
 
@@ -634,7 +634,6 @@ After the landing is accomplished, the robot arm starts moving towards the targe
 	\label{im:v_land_grasp}
 \end{figure} 
 So I observed that in this case the distance to the nodule is sufficient to reach it with the end-effector. Nevertheless it is not guaranteed to happen, so it is a good idea to add a new task that ensures that the target will be in the manipulator space when the landing is accomplished.
-
 \clearpage
 
 \section{Exercise 4: Implementing a Fixed-base Manipulation Action}
