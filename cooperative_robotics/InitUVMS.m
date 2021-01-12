@@ -77,7 +77,7 @@ uvms.JminAlt = [];
 uvms.xdot.minAlt = 0;
 uvms.A.minAlt = 0;
 
-uvms.min_offset = 10;
+uvms.min_offset = 1;
 uvms.range_offset = 0.5;
 
 uvms.w_a = 0;
@@ -102,8 +102,8 @@ uvms.yd = 0;
 uvms.JdistGoal = [];
 uvms.A.distGoal = 0;
 uvms.xdot.distGoal = 0;
-uvms.ensured_distance_x = 1.5;
-uvms.ensured_distance_y = 0.5;
+uvms.ensured_distance_x = 1;
+uvms.ensured_distance_y = 1;
 
 %%  ADDING THE DEFINITION FOR CONSTRAINING VELOCITIES
 uvms.Jconstraint = [];

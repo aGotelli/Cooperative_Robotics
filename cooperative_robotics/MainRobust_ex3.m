@@ -111,11 +111,12 @@ uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task
 % uvms.goalPosition_v = [10.5   37.5  -38]';
-uvms.goalPosition_v = [10.5   35.5  -38]';
-% uvms.goalPosition_v = [12.5   38.5  -38]';
+uvms.goalPosition_v = [9.5   34.5  -38]';
+% uvms.goalPosition_v = [9.5   41.5  -38]';
+% uvms.goalPosition_v = [14   36.5  -38]';
+
 
 uvms.wRg_v = rotation(0, -0.06, 0.5);
-% 
  
 % Actions definition
 mission.actionSafeNavigation = [2, 3, 4, 5];
@@ -220,6 +221,7 @@ for t = 0:deltat:end_time
         phase = mission.phase
         xd = uvms.xd
         yd = uvms.yd
+        distActiv = uvms.A.distGoal
 %         activ = uvms.A.horAlign
 %         uvms.w_a
 %         activ = uvms.A.distGoal
