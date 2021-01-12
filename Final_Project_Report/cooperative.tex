@@ -159,20 +159,16 @@ In this case the behavior is normal, the robot reaches the target position and a
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt}
-	\caption{The robot moves in the Y and Z directions and the yaw angle converges to zero.}
-	\label{fig:q2case1a}
+	\subfigure[The robot moves in Y and Z and the yaw angle converges to zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_PosAndAtt}}
+	\hspace{10mm}
+	\subfigure[After an initial transient phase, all the velocities converge to zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities}}
+	\label{fig:q2case1ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_LinAngVelocities}
-	\caption{After an initial transient phase, all the velocities converge to zero.}
-	\label{fig:q2case1b}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path}
+	\includegraphics[scale=0.55]{images/Ex1/HorAtt_Disabled_SameStartpos_SameEndpos_Path}
 	\caption{Here we can see that the robot reaches the goal position and that the misalignment vector shrinks towards zero.}
 	\label{fig:q2case1c}
 \end{figure}
@@ -182,27 +178,21 @@ In this case the target configuration has roll and pitch angles both equal to $ 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt}
-	\caption{The robot moves in the Y and Z directions, but the attitude doesn't converge to the desired one.}
-	\label{fig:q2case2a}
+	\subfigure[The robot moves in the Y and Z directions, but the attitude doesn't converge to the desired one.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_PosAndAtt}}
+	\hspace{10mm}
+	\subfigure[The robot velocities converge to zero after a while.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities}}
+	\label{fig:q2case2ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_LinAngVelocities}
-	\caption{The robot velocities converge to zero after a while.}
-	\label{fig:q2case2b}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path}
-	\caption{The robot can reach the goal position, but the misalignment vector keeps growing.}
-	\label{fig:q2case2c}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct}
-	\caption{The activation function of the Horizontal Attitude task almost immediately reaches an high value, but it can't go back to zero since the robot has conflicting goals.}
-	\label{fig:q2case2d}
+	\subfigure[The robot can reach the goal position, but the misalignment vector keeps growing.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_Path}}
+	\hspace{10mm}
+	\subfigure[The activation function of the Horizontal Attitude task almost immediately reaches an high value, but it can't go back to zero since the robot has conflicting goals.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_SameStartpos_DifferentEndpos_ActivFunct}}
+	\label{fig:q2case2cd}
 \end{figure}
 
 {\large \textbf{Case 3}} \\
@@ -210,29 +200,22 @@ Now both the initial configuration and the target one have pitch and roll angles
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAndAtt}
-	\caption{We can see that the pitch and roll angles start from $ \pi/3 $ and converge near to 0: the robot moves in Y and Z, reaching the goal position.}
-	\label{fig:q2case3a}
+	\subfigure[We can see that the pitch and roll angles start from $ \pi/3 $ and converge near to 0: the robot moves in Y and Z, reaching the goal position.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_PosAndAtt}}
+	\hspace{10mm}
+	\subfigure[The robot rotates quite fast in the first 2-3 seconds, but then the angular velocities converge to zero. We can see a different $\dot{z}$ with respect to other cases since the robot is initially tilted.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVelocities}}
+	\label{fig:q2case3ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_LinAngVelocities}
-	\caption{The robot rotates quite fast in the first 2-3 seconds, but then the angular velocities converge to zero. We can see a different $\dot{z}$ with respect to other cases since the robot is initially tilted.}
-	\label{fig:q2case3b}
+	\subfigure[The robot reaches the goal position, but the misalignment vector continues to grow.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_Path}}
+	\hspace{10mm}
+	\subfigure[The activation function is always 1 since the norm of the misalignment vector is always bigger than the maximum allowed value.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct}}
+	\label{fig:q2case3cd}
 \end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_Path}
-	\caption{The robot reaches the goal position, but the misalignment vector continues to grow.}
-	\label{fig:q2case3c}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct}
-	\caption{The activation function is always 1 since the norm of the misalignment vector is always bigger than the maximum allowed value.}
-	\label{fig:q2case3d}
-\end{figure}
-
 
 \subsubsection{Q3: Swap the priorities between Horizontal Attitude and the Vehicle Position control task. Discuss the behaviour.}
 Here I consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy. \\
@@ -241,27 +224,21 @@ Here I consider Case 2 and Case 3 which have been mentioned in the previous ques
 In the previous question, the robot had conflicting goals and the safety one was considered the most important: now we still have conflicting goals, but the most important one is that the robot should reach the target configuration. Since the Horizontal Attitude task won't have much effect on the robot, it will reach the target configuration without any problem.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAndAtt}
-	\caption{The robot configuration converges to the target one.}
-	\label{fig:q3case2a}
+	\subfigure[The robot configuration converges to the target one.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_PosAndAtt}}
+	\hspace{10mm}
+	\subfigure[The robot velocities all converge to zero after a brief transient period.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities}}
+	\label{fig:q3case2ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_LinAngVelocities}
-	\caption{The robot velocities all converge to zero after a brief transient period.}
-	\label{fig:q3case2b}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path}
-	\caption{The robot reaches the target position and the misalignment vector shrinks towards zero.}
-	\label{fig:q3case2c}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct}
-	\caption{The value of the activation value is almost always 1 since the task doesn't have effect on the robot.}
-	\label{fig:q3case2d}
+	\subfigure[The robot reaches the target position and the misalignment vector shrinks towards zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_Path}}
+	\hspace{10mm}
+	\subfigure[The value of the activation value is almost always 1 since the task doesn't have effect on the robot.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_SameStartpos_DifferentEndpos_ActivFunct}}
+	\label{fig:q3case2cd}
 \end{figure}
 
 
@@ -270,29 +247,22 @@ In the previous question, the Horizontal Attitude task prevented the robot to re
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt}
-	\caption{The robot moves in Y and Z and the yaw angle correctly converges to zero.}
-	\label{fig:q3case3a}
+	\subfigure[The robot moves in Y and Z and the yaw angle correctly converges to zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_PosAndAtt}}
+	\hspace{10mm}
+	\subfigure[The robot velocities converge to zero after a brief transient period.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelocities}}
+	\label{fig:q3case3ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_LinAngVelocities}
-	\caption{The robot velocities converge to zero after a brief transient period.}
-	\label{fig:q3case3b}
+	\subfigure[The robot reaches the target position and the misalignment vector shrinks towards zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path}}
+	\hspace{10mm}
+	\subfigure[The value of the activation function is always 1 since its corresponding task has the lowest priority.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct}}
+	\label{fig:q3case3cd}
 \end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_Path}
-	\caption{The robot reaches the target position and the misalignment vector shrinks towards zero.}
-	\label{fig:q3case3c}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_LowPrio_DifferentStartpos_DifferentEndpos_ActivFunct}
-	\caption{The value of the activation function is always 1 since its corresponding task has the lowest priority.}
-	\label{fig:q3case3d}
-\end{figure}
-
 
 \subsubsection{Q4: What is the behaviour if the Tool Position control task is active and what if it is disabled? Which of the settings should be used for a Safe Waypoint Navigation action? Report the final hierarchy of tasks (and their priorities, see the template table in the introduction) which makes up the Safe Waypoint Navigation action.}
 
@@ -305,27 +275,21 @@ in the previously considered Case 1, it interferes with the Vehicle Position tas
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_PosAndAtt}
-	\caption{The robot's configuration doesn't reach the desired one: the position is quite close, but the attitude is not.}
-	\label{fig:q4a}
+	\subfigure[The robot's configuration doesn't reach the desired one: the position is quite close, but the attitude is not.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_Tool_Enabled_PosAndAtt}}
+	\hspace{10mm}
+	\subfigure[The robot's velocities spike at around 5 and 7 seconds due to the end-effector's motion.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_Tool_Enabled_LinAngVelocities}}
+	\label{fig:q4ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_LinAngVelocities}
-	\caption{The robot's velocities spike at around 5 and 7 seconds due to the end-effector's motion.}
-	\label{fig:q4b}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_Path}
-	\caption{Here we can see better that the robot doesn't reach the target position and the misalignment vector doesn't shrink towards zero.}
-	\label{fig:q4c}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/Ex1/HorAtt_Disabled_Tool_Enabled_MisalignVectNorm}
-	\caption{The norm of the misalignment vector between the tool frame and the tool's target frame reaches zero.}
-	\label{fig:q4d}
+	\subfigure[Here we can see better that the robot doesn't reach the target position and the misalignment vector doesn't shrink towards zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_Tool_Enabled_Path}}
+	\hspace{10mm}
+	\subfigure[The norm of the misalignment vector between the tool frame and the tool's target frame reaches zero.]
+	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_Tool_Enabled_MisalignVectNorm}}
+	\label{fig:q4cd}
 \end{figure}
 
 When implementing a Safe Waypoint Navigation action the best setting should be to disable the Tool Position task since it may interfere with other goals or worse, may present as a risk to the robot's safety: in fact, the end-effector motion may result in accidental collisions between either the vehicle or the manipulator arm and the environment, which can in turn break the system. \\
@@ -385,6 +349,7 @@ We added the Minimum Altitude control task to the previous hierarchy, obtaining 
 		\end{tabular}
 	\end{center}
 \end{table}
+
 Since this new task is a safety one, it must have the highest priority: we put it at priority level 1 but it could also be put at priority level 2 just under the Horizontal Attitude task. The priority of the safety tasks is not important as long as they have higher priority than the other tasks. This is because, as we've seen in question 1.1.3, if a safety task has a lower priority than the action-defining task(s) then it won't have a huge effect on the robot's behaviour or any effect at all.
 
 \subsubsection{Q2: What is the Jacobian relationship for the Minimum Altitude control task? Report the formula for the desired task reference generation, and the activation thresholds.}
@@ -414,7 +379,64 @@ The formula for the task reference is the following
 where $ uvms.min\_offset = 1 m $, $ uvms.range\_offset = 0.5 m $ and $ uvms.w\_a $ is the altitude of the vehicle.
 
 \subsubsection{Q3: Try imposing a minimum altitude of 1, 5, 10 m respectively. What is the behaviour? Does the vehicle reach its final goal in all cases?}
+We tried setting the minimum altitude to the three requested values, obtaining the following results: \\
 
+{\large \textbf{Minimum altitude equal to 1 m}} \\
+The vehicle's initial and target positions are at an altitude greater than 1 m, so it reaches its goal by moving over the small hill on the sea floor as we can clearly see from the second image.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[The vehicle reaches the target position while respecting the minimum altitude requirement.]
+	{\includegraphics[width=70mm]{images/Ex1/SafeNavigation_1m_Path}}
+	\hspace{10mm}
+	\subfigure[We can see that the vehicle's path doesn't violate the hard threshold. Note that the vehicle's initial position is on the right side of the plot.]
+	{\includegraphics[width=70mm]{images/Ex1/SafeNavigation_1m_2DPath_WithThresholds}}
+	\label{fig:ex1.2.3_case1m_ab}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.55]{images/Ex1/SafeNavigation_1m_AltAndActFunct}
+	\caption{The altitude of the vehicle goes really close to 1 m at around 10 seconds: correspondingly, the value of the activation function becomes almost 1.}
+	\label{fig:ex1.2.3_case1m_c}
+\end{figure}
+
+{\large \textbf{Minimum altitude equal to 5 m}} \\
+Since the initial position of the vehicle is at about 1.3 m of altitude, in the first 10 seconds it moves upwards to respect the minimum altitude constraint. Once it reaches the quote of 5 m, the vehicle keeps on moving to reach the target position, which is also at about 1.3 m of altitude: for this reason, the vehicle will reach the x and y coordinates of the target position, but it will remain at around 5 m of altitude.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[The vehicle doesn't reach the target position.]
+	{\includegraphics[width=70mm]{images/Ex1/SafeNavigation_5m_Path}}
+	\hspace{10mm}
+	\subfigure[We can see that the vehicle moves upwards to respect the minimum altitude constraint.]
+	{\includegraphics[width=70mm]{images/Ex1/SafeNavigation_5m_2DPath_WithThresholds}}
+	\label{fig:ex1.2.3_case5m_ab}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.55]{images/Ex1/SafeNavigation_5m_AltAndActFunct}
+	\caption{The altitude reaches 5 m in about 10 seconds, after which the value of the activation function starts getting down.}
+	\label{fig:ex1.2.3_case5m_c}
+\end{figure}
+
+{\large \textbf{Minimum altitude equal to 10 m}} \\
+We can make the same considerations as the previous case, the only thing that changes is that the vehicle will take more time to reach the requested minimum altitude. The vehicle will not reach again its exact target position.
+
+\begin{figure}[H]
+	\centering
+	\subfigure[The vehicle doesn't reach its target position.]
+	{\includegraphics[width=70mm]{images/Ex1/SafeNavigation_10m_Path}}
+	\hspace{10mm}
+	\subfigure[The vehicle takes more time to reach the altitude of 10 m.]
+	{\includegraphics[width=70mm]{images/Ex1/SafeNavigation_10m_2DPath_WithThresholds}}
+	\label{fig:ex1.2.3_case10m_ab}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.55]{images/Ex1/SafeNavigation_10m_AltAndActFunct}
+	\caption{As soon as the vehicle reaches the minimum altitude, the value of the activation function starts getting down.}
+	\label{fig:ex1.2.3_case10m_c}
+\end{figure}
 
 \subsubsection{Q4: How was the sensor distance processed to obtain the altitude measurement? Does it work in all cases or some underlying assumptions are implicitly made?}
 Our Matlab code used to compute the altitude measurement is the following
