@@ -644,7 +644,7 @@ In order to move the end effector after landing is accomplished, we need to intr
 	\item the Vehicle Altitude Control, that is the same task present in the landing action, which is needed to let the vehicle remain at the same altitude from the sea floor
 	\item the Tool Position Control, that is needed to move the end effector of the arm on the desired position
 \end{itemize}
-After the landing is accomplished, the robot arm starts moving towards the target and, since there is no constraint task on the vehicle velocities, the body shifts laterally and leans froward, following the arm movement, until the end effector reaches the goal position.
+After the landing is accomplished, the robot arm starts moving towards the target and, since there is no constraint task on the vehicle velocities, the body shifts laterally and leans forward, following the arm movement, until the end effector reaches the goal position.
 
 \begin{figure}[H]
 	\centering
@@ -707,9 +707,65 @@ To manipulate as a fixed based manipulator, we need to constraint the vehicle to
 
 Goal: Add a constraint task that fixes the vehicle velocity to zero. Land on the seafloor. Try reaching the rock position with the end-effector, and observe that the vehicle does not move.
 
+\begin{figure}[H]
+	\centering
+	\subfigure[The vehicle reaches the target position, aligns to the rock, lands in front of it and finally moves the end-effector on top of it while remaining still.]
+	{\includegraphics[width=70mm]{images/Ex4/Constraint_NoCurrent_Path}}
+	\hspace{10mm}
+	\subfigure[The vehicle conpletes the landing phase at about 24 seconds, then moves a bit due to the smooth transition between actions, and finally stays still until the end of the simulation.]
+	{\includegraphics[width=70mm]{images/Ex4/Constraint_NoCurrent_LinAngVel}}
+	\label{fig:ex4.1.1Mission}
+\end{figure}
+
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. At which priority level did you add the constraint task?}
+Here is the hierarchy table which summarizes the four actions we implemented to fulfill the exercise's request. We can see that the Constraint task was placed in the fourth action (i.e. the last one to be performed) at the highest priority: this is mandatory because in this way we completely fix the vehicle's velocities to be 0 and the other lower priority tasks won't be able to change them. If we were to place this task at a lower priority level, higher priority ones would be able to change the vehicle's velocities.
+
+\begin{table}[htb]
+	\caption{Hierarchy table defined to perform the four actions that make up the fixed-base manipulation objective.}
+	\begin{itemize}
+		\item Action 1 ($\mathcal{A}_{1}$) : Safe Navigation
+		\item Action 2 ($\mathcal{A}_{2}$) : Aligning to the target
+		\item Action 3 ($\mathcal{A}_{3}$) : Landing
+		\item Action 4 ($\mathcal{A}_{4}$) : Constrain Velocities and Reach the Target with the End-Effector
+	\end{itemize}
+	\label{tb5:ex4.1.1HierarchyTable}
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{cccccc}
+			\toprule
+			Task & Type & $\mathcal{A}_{1}$ & $\mathcal{A}_{2}$ & $\mathcal{A}_{3}$ & $\mathcal{A}_{4}$ \\
+			\midrule
+			Tool Position                     & E &   &   &   & 5 \\
+			\hdashline
+			Horizontal Attitude               & I & 2 & 2 & 1 & 2 \\
+			\hdashline
+			Vehicle Position                  & E & 3 &   &   &   \\
+			\hdashline
+			Vehicle Attitude                  & E & 4 &   &   &   \\
+			\hdashline
+			Vehicle Minimum Altitude          & I & 1 & 1 &   &   \\
+			\hdashline
+			Vehicle Altitude Control          & E &   &   & 3 & 3 \\
+			\hdashline
+			Alignment to Target               & E &   & 3 & 2 &   \\
+			\hdashline
+			Ensuring Distance from the Target & I &   & 4 & 4 & 4 \\
+			\hdashline
+			Constrain Velocities              & E &   &   &   & 1 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
 
 \subsubsection{Q2: What is the Jacobian relationship for the Vehicle Null Velocity task? How was the task reference computed?}
+The Jacobian relationship is really simple. Since the variables of interest are the vehicle's linear and angular velocities projected on the vehicle frame, to extract them from the control vector we need to multiply it by
+\begin{gather*}
+	uvms.Jconstraint = [zeros(6,7), eye(6,6)];
+\end{gather*}
+Moreover, we want the vehicle to be still: this means setting all velocities to 0. Thus, the task reference vector will be
+\begin{gather*}
+	uvms.xdot.constraint = zeros(6,1);
+\end{gather*}
 
 \subsubsection{Q3: Suppose that the vehicle is floating, i.e. not landed on the seafloor. What would happen, if due to currents, the vehicle moves?}
 

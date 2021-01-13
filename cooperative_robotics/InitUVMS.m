@@ -102,8 +102,8 @@ uvms.yd = 0;
 uvms.JdistGoal = [];
 uvms.A.distGoal = 0;
 uvms.xdot.distGoal = 0;
-uvms.ensured_distance_x = 1;
-uvms.ensured_distance_y = 1;
+uvms.ensured_distance_x = 1.5;
+uvms.ensured_distance_y = 1.5;
 
 %%  ADDING THE DEFINITION FOR CONSTRAINING VELOCITIES
 uvms.Jconstraint = [];

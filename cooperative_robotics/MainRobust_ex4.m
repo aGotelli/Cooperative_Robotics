@@ -5,7 +5,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 50;
+end_time = 40;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -80,8 +80,8 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
 % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-uvms.goalPosition_v = [8.5   35.5  -38]';
+uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.goalPosition_v = [8.5   35.5  -38]';
 uvms.wRg_v = rotation(0, -0.06, 0.5);
 
 uvms.goalPosition = rock_center;
@@ -209,6 +209,13 @@ for t = 0:deltat:end_time
     uvms.q_dot = ydotbar(1:7);
     uvms.p_dot = ydotbar(8:13);
     
+    % Ex 4.1.3: Adding the disturbances
+%     disturb = [0 0.0 0]';
+%     disturb_ang = [0 1 0]';
+%     disturb_ang = disturb_ang*0.2*sin(2*pi*0.5*t);
+%     uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
+%     uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
+    
     % Integration
 	uvms.q = uvms.q + uvms.q_dot*deltat;
     % beware: p_dot should be projected on <v>
@@ -237,10 +244,10 @@ for t = 0:deltat:end_time
 %         distance = w_vlin
 %         theta = uvms.theta
         phase = mission.phase
-%         activ_constr = uvms.A.constraint
-        activLB = uvms.A.lbJointLimits
-        activUB = uvms.A.ubJointLimits
-        joint_pos = uvms.q
+        activ_constr = uvms.A.constraint
+%         activLB = uvms.A.lbJointLimits
+%         activUB = uvms.A.ubJointLimits
+%         joint_pos = uvms.q
 %         uvms.w_a
 %         activ = uvms.A.distGoal
 %         dist = uvms.dist_to_goal_proj
@@ -254,5 +261,5 @@ end
 fclose(uVehicle);
 fclose(uArm);
 
-PrintPlot(plt);
+PrintPlot_ex4(plt);
 
