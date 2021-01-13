@@ -122,7 +122,7 @@ Goal: Implement a vehicle position and attitude control task, and test that the 
 
 \subsubsection{Q1: What is the Jacobian relationship for the Vehicle Position and Attitude control task? How was the task reference computed?}
 
-The Vehicle Position and Attitude control task controls both the position and the attitude of the vehicle in order to make them converge to a desired goal position. Since there are in principle one goal for the position and another for the attitude, there are two Jacobian matrices, one for each control problem. \\
+The Vehicle Position and Attitude control task control respectively the position and the attitude of the vehicle in order to make them converge to a desired goal position. Since there are in principle one goal for the position and another for the attitude, there are two Jacobian matrices, one for each control problem. \\
 Since the goal position and goal attitude are expressed with respect to the world frame, our task reference vector $ \dot{x} = J\dot{y} $ needs to be projected on the world frame too. \\
 For this reason, since the control vector $ \dot{y} = \begin{bmatrix} \dot{q} & \dot{v} & \dot{\omega}\end{bmatrix}^\top $ is projected in the vehicle frame, the two Jacobian matrices will be:
 \begin{gather*}
@@ -174,7 +174,7 @@ In this case the behavior is normal, the robot reaches the target position and a
 \end{figure}
 
 {\large \textbf{Case 2}} \\
-In this case the target configuration has roll and pitch angles both equal to $ \pi/3 $, so the Vehicle Position and Attitude task tries to rotate the robot in order to fulfill its objective, but, since the Horizontal Attitude task is enabled with higher priority, the robot can't reach the final configuration. In this case we have two conflicting tasks, but since the Horizontal Attitude one has higher priority the robot will try to stay as horizontal as possible: nevertheless, the robot will remain a bit tilted since this task is of inequality type (it becomes inactive when the norm of the misalignment vector is less than about half a degree).
+In this case the target configuration has roll and pitch angles both equal to $ \pi/3 $, so the Vehicle Position and Attitude task tries to rotate the robot in order to fulfill its objective, but, since the Horizontal Attitude task is enabled with higher priority, the robot can't reach the final configuration because it will try to stay as horizontal as possible. Nevertheless, the robot will remain a bit tilted since this task is of inequality type (it becomes inactive when the norm of the misalignment vector is less than about half a degree) and so it does not constrain the robot in a certain interval of tilting angle.
 
 \begin{figure}[H]
 	\centering
@@ -196,7 +196,7 @@ In this case the target configuration has roll and pitch angles both equal to $ 
 \end{figure}
 
 {\large \textbf{Case 3}} \\
-Now both the initial configuration and the target one have pitch and roll angles equal to $ \pi/3 $: if the Horizontal Attitude wasn't enabled then the robot would only change its yaw angle and move linearly towards the goal, since the initial and the target pitch and roll angles are the same. In this case Horizontal Attitude is enabled, so this task tries to rotate the robot, whereas the Vehicle Position and Attitude one tries to keep the robot from rotating. The robot will reach the target position, but since the Horizontal Attitude task has higher priority, it will prevent the robot from reaching the target attitude.
+Now both the initial configuration and the target one have pitch and roll angles equal to $ \pi/3 $: if the Horizontal Attitude wasn't enabled then the robot would only change its yaw angle and move linearly towards the goal, since the initial and the target pitch and roll angles are the same. In this case Horizontal Attitude is enabled, so this task tries to rotate the robot, whereas the Vehicle Attitude one tries to keep the robot from rotating. The robot will reach the target position, but since the Horizontal Attitude task has higher priority, it will prevent the robot from reaching the target attitude.
 
 \begin{figure}[H]
 	\centering
@@ -218,7 +218,7 @@ Now both the initial configuration and the target one have pitch and roll angles
 \end{figure}
 
 \subsubsection{Q3: Swap the priorities between Horizontal Attitude and the Vehicle Position control task. Discuss the behaviour.}
-Here I consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy. \\
+Here we consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy. \\
 
 {\large \textbf{Case 2}} \\
 In the previous question, the robot had conflicting goals and the safety one was considered the most important: now we still have conflicting goals, but the most important one is that the robot should reach the target configuration. Since the Horizontal Attitude task won't have much effect on the robot, it will reach the target configuration without any problem.
@@ -353,7 +353,7 @@ We added the Minimum Altitude control task to the previous hierarchy, obtaining 
 Since this new task is a safety one, it must have the highest priority: we put it at priority level 1 but it could also be put at priority level 2 just under the Horizontal Attitude task. The priority of the safety tasks is not important as long as they have higher priority than the other tasks. This is because, as we've seen in question 1.1.3, if a safety task has a lower priority than the action-defining task(s) then it won't have a huge effect on the robot's behaviour or any effect at all.
 
 \subsubsection{Q2: What is the Jacobian relationship for the Minimum Altitude control task? Report the formula for the desired task reference generation, and the activation thresholds.}
-Our variable of interest $ a $ is the altitude of the vehicle with respect to the sea floor, so we want to find the jacobian relationship between the control vector $ \dot{y} $ and the time derivative of our variable of interest $ \dot{a} $. \\
+Our variable of interest $ a $ is the altitude of the vehicle, with respect to the sea floor, measured by one of the sensors onboard. So we want to find the jacobian relationship between the control vector $ \dot{y} $ and the time derivative of our variable of interest $ \dot{a} $. \\
 Let's define the following vector
 \begin{gather*}
 	^{w}\boldsymbol{d} = a \cdot ^{w}\boldsymbol{k} = ^{w}O_{v} - Q
@@ -420,7 +420,7 @@ Since the initial position of the vehicle is at about 1.3 m of altitude, in the 
 \end{figure}
 
 {\large \textbf{Minimum altitude equal to 10 m}} \\
-We can make the same considerations as the previous case, the only thing that changes is that the vehicle will take more time to reach the requested minimum altitude. The vehicle will not reach again its exact target position.
+We can make the same considerations as the previous case, the only thing that changes is that the vehicle will take more time to reach the requested minimum altitude. Again, the vehicle will not reach its exact target position.
 
 \begin{figure}[H]
 	\centering
@@ -449,6 +449,7 @@ Our Matlab code used to compute the altitude measurement is the following
 To obtain the vehicle altitude $ uvms.w\_a $ we took the vector representing the sensor distance in the vehicle frame, project it into the world frame and then perform the dot product to get the projection of $ w\_d $ onto the z-axis of the world frame. \\
 The altitude is not simply the sensor distance measurement since the vehicle can be in a tilted position, which results in an sensor distance value greater than the actual altitude: but, by computing the altitude via dot product we make the implicit assumption that the sea floor is flat. This results from the definition of the dot product itself. Obviously, this assumption won't always hold: there might be areas in which the sea floor is almost flat, but in most cases this is not true. \\
 Moreover, this assumption is pessimistic: in the ideal case the computed altitude will be equal to the actual one, but often we're overestimating how close we are to the sea floor; this isn't bad per se since this is a safety task, but it might happen that the vehicle could get closer to the sea floor without actually violating the minimum altitude requirement but it isn't allowed due to the altitude overestimation.
+Finally, we also assume of being able to know the robot orientation with respect to the reference frame at any time instant. Even if this is mostly the case, due to the simplicity of the measurement, it is still an underling assumption of this task. 
 
 \clearpage
 
@@ -581,7 +582,7 @@ The task reference is computed using the norm of the misalignment vector, $\thet
 \end{lstlisting}
 
 \subsubsection{Q3: Try changing the gain of the alignment task. Try at least three different values, where one is very small. What is the observed behaviour? Could you devise a solution that is gain-independent guaranteeing that the landing is accomplished aligned to the target?}
-The initial alignment task gain is saturated at 0.5, then we tried to change its value with three different ones: 0.05, 0.2, 0.4 ,0.7.
+The initial alignment task gain is saturated at 0.5, then we tried to change its value with four different ones: 0.05, 0.2, 0.4 ,0.7.
 
 \begin{figure}[H]
 	\centering
@@ -624,7 +625,7 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 \end{figure} 
 
 The behaviour of the vehicle changes when the gain value is modified: the smaller the gain, the harder it is for the vehicle to reach the correct alignment with \(d_{proj}\). As it can be seen in the images above, while the time used by the robot to reach the sea floor remains the same, increasing the gain makes it reach different configurations when approaching the sea floor.\\
-For gain values smaller than about \(0.2\), the misalignment vector fails to become a null vector, as you can clearly see in images (b) and (d), so the vehicle is not able to align to the target in time. In the other two cases instead the vehicle manages to align in time to the target, even if, for gain = \(0.4\).
+For gain values smaller than about \(0.2\), the misalignment vector fails to become a null vector, as can be seen in images (b) and (d), where the vehicle is not able to align to the target in time. In the other two cases instead the vehicle manages to align in time to the target, even if, for gain = \(0.4\).
 This shows that this solution is heavily gain-dependent, so we need to think about a solution to ensure that the alignment is always achieved.
 What we thought was to add a new Action in between the two actual ones that is activated when the vehicle reaches the goal position for the Safe Navigation action. This new Action is composed by two tasks, horizontal attitude for safety and the horizontal aligning to the target. This action is performed until the module of the misalignment vector, $\theta$, becomes lower than \(0.02 \) \({rad}\).\\
 Then, the vehicle start the landing, but the misalignment vector between its x-axis and \(n_{d_{proj}}\) is already very close to zero, so it is guaranteed that it will land aligned to the target, independently from the gain of the alignment task.
@@ -638,7 +639,7 @@ The behaviour obtained shows that the vehicle manages to land aligned with the t
  
 \subsubsection{Q4: After the landing is accomplished, what happens if you try to move the end-effector? Is the distance to the nodule sufficient to reach it with the end-effector? Comment the observed behaviour. If, after landing, the nodule is not in the manipulator's workspace, how would you solve this problem to guarantee it?}
 
-In order to move the end effector after landing is accomplished, we need to introduce a new action, that we called Grasp Object, that will be performed after the altitude previous action is concluded, that is when the vehicle altitude from the sea floor is lower than \(0.1 m\). This action is composed by three tasks: 
+In order to move the end effector after landing is accomplished, we need to introduce a new action, that we called Grasp Object, that will be performed after the altitude previous action is concluded, that is, when the vehicle altitude from the sea floor is lower than \(0.1 m\). This action is composed by three tasks: 
 \begin{itemize}
 	\item the Horizontal Attitude, for safety
 	\item the Vehicle Altitude Control, that is the same task present in the landing action, which is needed to let the vehicle remain at the same altitude from the sea floor
