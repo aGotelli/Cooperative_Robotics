@@ -61,6 +61,7 @@ ylabel('y [m]');
 zlabel('z [m]');
 legend('Initial position', 'Goal position', '3D path', 'Rock center' , 'Misalignment vector')
 % legend('Initial position', 'Goal position', '3D path', 'Misalignment vector')
+% legend('Initial position', '3D path')
 title("Robot's path")
 
 %% Plot the Horizontal Attitude activation function
@@ -95,7 +96,7 @@ title("Robot's path")
 % title('Vehicle 2D path with sea floor and thresholds')
 % hold off
 
-%% Plot the vehicle altitude and the activation of the minimum altitude task over time
+%% Plot the vehicle altitude and the activation value of the minimum altitude task over time
 % figure
 % s1 = subplot(2, 1, 1);
 % plot(plt.t, plt.distance);
@@ -106,6 +107,19 @@ title("Robot's path")
 % plot(plt.t, plt.a(10, :));
 % xlabel("Time [s]")
 % title(s2, "Value of the activation function")
+
+%% Plot the activation value of both tasks for the joint limits
+figure
+s1 = subplot(2,1,1);
+hplot = plot(plt.t, plt.aJointsMin);
+set(hplot, 'LineWidth', 1);
+legend('q_1','q_2','q_3','q_4','q_5','q_6','q_7');
+title(s1, "Value of the lower bound joint limits activation function")
+s2 = subplot(2,1,2);
+hplot = plot(plt.t, plt.aJointsMax);
+set(hplot, 'LineWidth', 1);
+legend('q_1','q_2','q_3','q_4','q_5','q_6','q_7');
+title(s2, "Value of the upper bound joint limits activation function")
 
 end
 

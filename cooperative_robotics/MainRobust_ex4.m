@@ -76,24 +76,24 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 
 
 %% Point 4.1.1
-% Initial position
-uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-
-% Defines the goal position for the vehicle position and attitude task
-uvms.goalPosition_v = [10.5   37.5  -38]';
-% uvms.goalPosition_v = [8.5   35.5  -38]';
-uvms.wRg_v = rotation(0, -0.06, 0.5);
-
-uvms.goalPosition = rock_center;
-uvms.wRg = rotation(0, pi, pi/2);
-
-% Actions definition
-mission.actionSafeNavigation = [2, 3, 4, 5];
-mission.actionAligning = [2, 5, 7, 8];
-mission.actionAlignedLanding = [2, 6, 7, 8];
-mission.actionGraspObject = [1, 2, 6, 8, 9];
-
-mission.currentAction = mission.actionSafeNavigation;
+% % Initial position
+% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
+% 
+% % Defines the goal position for the vehicle position and attitude task
+% uvms.goalPosition_v = [10.5   37.5  -38]';
+% % uvms.goalPosition_v = [8.5   35.5  -38]';
+% uvms.wRg_v = rotation(0, -0.06, 0.5);
+% 
+% uvms.goalPosition = rock_center;
+% uvms.wRg = rotation(0, pi, pi/2);
+% 
+% % Actions definition
+% mission.actionSafeNavigation = [2, 3, 4, 5];
+% mission.actionAligning = [2, 5, 7, 8];
+% mission.actionAlignedLanding = [2, 6, 7, 8];
+% mission.actionGraspObject = [1, 2, 6, 8, 9];
+% 
+% mission.currentAction = mission.actionSafeNavigation;
 
 %% Point 4.1.3
 % % Initial position
@@ -105,30 +105,26 @@ mission.currentAction = mission.actionSafeNavigation;
 % mission.currentAction = mission.actionConstraint;
 
 %% Point 4.2
-% % Initial position
-% uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
-% 
-% % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-% % uvms.goalPosition_v = [9.5   37.5  -38]';
-% % uvms.goalPosition_v = rock_center + [0 0 2 ]';
-% 
-% uvms.wRg_v = rotation(0, -0.06, 0.5);
-% 
-% uvms.goalPosition = rock_center;
-% uvms.wRg = rotation(0, pi, pi/2);
-% 
-% % Actions definition
-% mission.actionSafeNavigation = [2, 3, 4, 5];
-% mission.actionAligning = [2, 5, 7, 8];
-% mission.actionAlignedLanding = [2, 6, 7, 8];
-% mission.actionGraspObject = [1, 2, 6, 8, 9, 10, 11];
-% mission.actionSafeNavigation = [3, 4, 5];
-% mission.actionAligning = [5, 8];
-% mission.actionAlignedLanding = [6, 8];
-% mission.actionGraspObject = [1, 6, 8, 9, 10, 11];
+% Initial position
+uvms.p = [8.5 38.5 -36 0 -0.06 0.5]';
 
-% mission.currentAction = mission.actionSafeNavigation;
+% Defines the goal position for the vehicle position and attitude task
+uvms.goalPosition_v = [10.5   37.5  -38]';
+% uvms.goalPosition_v = [9.5   37.5  -38]';
+% uvms.goalPosition_v = rock_center + [0 0 2 ]';
+
+uvms.wRg_v = rotation(0, -0.06, 0.5);
+
+uvms.goalPosition = rock_center;
+uvms.wRg = rotation(0, pi, pi/2);
+
+% Actions definition
+mission.actionSafeNavigation = [2, 3, 4, 5];
+mission.actionAligning = [2, 5, 7, 8];
+mission.actionAlignedLanding = [2, 6, 7, 8];
+mission.actionGraspObject = [1, 2, 6, 8, 9, 10, 11];
+
+mission.currentAction = mission.actionSafeNavigation;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
@@ -210,11 +206,11 @@ for t = 0:deltat:end_time
     uvms.p_dot = ydotbar(8:13);
     
     % Ex 4.1.3: Adding the disturbances
-%     disturb = [0 0.0 0]';
+%     disturb = [0 0 0]';
 %     disturb_ang = [0 1 0]';
-%     disturb_ang = disturb_ang*0.2*sin(2*pi*0.5*t);
-%     uvms.p_dot(1:3) = uvms.wTv(1:3,1:3)*disturb;
-%     uvms.p_dot(4:6) = uvms.wTv(1:3,1:3)*disturb_ang;
+%     disturb_ang = disturb_ang*0.35*sin(2*pi*0.5*t);
+%     uvms.p_dot(1:3) = uvms.vTw(1:3,1:3)*disturb;
+%     uvms.p_dot(4:6) = uvms.vTw(1:3,1:3)*disturb_ang;
     
     % Integration
 	uvms.q = uvms.q + uvms.q_dot*deltat;
@@ -243,8 +239,8 @@ for t = 0:deltat:end_time
 %         [~, w_vlin] = CartError(uvms.wTg_v , uvms.wTv);
 %         distance = w_vlin
 %         theta = uvms.theta
-        phase = mission.phase
-        activ_constr = uvms.A.constraint
+%         phase = mission.phase
+%         activ_constr = uvms.A.constraint
 %         activLB = uvms.A.lbJointLimits
 %         activUB = uvms.A.ubJointLimits
 %         joint_pos = uvms.q
@@ -255,7 +251,7 @@ for t = 0:deltat:end_time
 
     % enable this to have the simulation approximately evolving like real
     % time. Remove to go as fast as possible
-    SlowdownToRealtime(deltat);
+%     SlowdownToRealtime(deltat);
 end
 
 fclose(uVehicle);

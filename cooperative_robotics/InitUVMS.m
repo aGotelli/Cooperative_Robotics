@@ -40,7 +40,9 @@ uvms.misalignVector = zeros(3,1);
 
 uvms.wTg_v = eye(4,4);
 uvms.wRg_v = eye(3,3);
+uvms.wRg = eye(3,3);
 uvms.goalPosition_v = zeros(3,1);
+uvms.goalPosition = zeros(3,1);
 
 uvms.Jjl = [];
 uvms.Jmu = [];
@@ -102,8 +104,8 @@ uvms.yd = 0;
 uvms.JdistGoal = [];
 uvms.A.distGoal = 0;
 uvms.xdot.distGoal = 0;
-uvms.ensured_distance_x = 1.5;
-uvms.ensured_distance_y = 1.5;
+uvms.ensured_distance_x = 2;
+uvms.ensured_distance_y = 2;
 
 %%  ADDING THE DEFINITION FOR CONSTRAINING VELOCITIES
 uvms.Jconstraint = [];
