@@ -83,7 +83,7 @@ Date: 21/12/2020
 
 Use the following template when you need to discuss the hierarchy of tasks of a given action or set of actions:
 \begin{table}[htb]
-	\caption{Example of actions/hierarchy table: a number in a given cell represents the priority of the control task (row) in the hierarchy of the control action (column). The type column indicates whether the objective is an equality (E) or inequality (I) one.}
+	\caption{Example of actions/hierarchy table: a number in a given cell represents the priority of the control task (row) in the hierarchy of the control action (column). The type column indicates whether the objective is an equality (E) or  (I) one.}
 	\label{tbl:actions_table}
 	\begin{center}
 		\footnotesize
@@ -464,9 +464,37 @@ Goal: add a control task to regulate the altitude to zero.
 
 \subsubsection{Q1: Report the hierarchy of task used and their priorities to implement the Landing Action. Comment how you choose the priority level for the altitude control task.}
 
+\begin{table}[htb]
+	\caption{Task hierarchy for the set of actions used to move the vehicle near the target and then align it.}
+	\begin{itemize}
+		\item Action ($\mathcal{A}_{1}$) : Landing (Vehicle Altitude control)
+	\end{itemize}
+	\label{tb_align:actions_table}
+	% Horizontal attitude = 2
+	% Vehicle altitude control = 6
+	% A1:[2, 6]
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{ccc}
+			\toprule
+			Task & Type & $\mathcal{A}_{1}$ \\
+			\midrule
+			Horizontal Attitude             & I & 1 \\
+			\hdashline
+			Vehicle Altitude Control        & E & 2 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+The basic Landing Action is only composed by two tasks: one safety task which is the Horizontal Attitude, and one action defining task, the Vehicle Altitude Control.\\
+The priority level of the horizontal attitude task has to be higher, because it is a safety task, while the other one is an action defining task, so it must have a lower priority.
+
 \subsubsection{Q2: What is the Jacobian relationship for the Altitude control task? How was the task reference computed?}
 
+
 \subsubsection{Q3: how does this task differs from a minimum altitude control task?}
+This task is different with respect to the minimum altitude control task because they belong to two different categories of tasks: the minimum altitude control is a safety task, that is necessary, for example, during safe navigation to ensure that the robot stays at a safe altitude from the sea floor; instead, this task belongs to the action defining category, because it represents the final scope of the action.\\
+Moreover, they are different also because the minimum altitude control task objective is of inequality type, while the landing task one is of equality type.
 
 \subsection{Adding mission phases and change of action}
 Initialize the vehicle at the position:
