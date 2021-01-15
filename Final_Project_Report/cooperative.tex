@@ -466,11 +466,11 @@ Goal: add a control task to regulate the altitude to zero.
 \subsubsection{Q1: Report the hierarchy of task used and their priorities to implement the Landing Action. Comment how you choose the priority level for the altitude control task.}
 
 \begin{table}[htb]
-	\caption{Task hierarchy for the set of actions used to move the vehicle near the target and then align it.}
+	\caption{Task hierarchy for the action landing.}
 	\begin{itemize}
 		\item Action ($\mathcal{A}_{1}$) : Landing (Vehicle Altitude control)
 	\end{itemize}
-	\label{tb_align:actions_table}
+	\label{tb_align:actions_table_2_1}
 	% Horizontal attitude = 2
 	% Vehicle altitude control = 6
 	% A1:[2, 6]
@@ -491,11 +491,22 @@ The basic Landing Action is only composed by two tasks: one safety task which is
 The priority level of the horizontal attitude task has to be higher, because it is a safety task, while the other one is an action defining task, so it must have a lower priority.
 
 \subsubsection{Q2: What is the Jacobian relationship for the Altitude control task? How was the task reference computed?}
+The Jacobian relationship is exactly the same as the one for minimum altitude control, because in both case we want to control the altitude of the vehicle from the sea floor, even if the objective is different. For this reason we will not explain again the details, which can be found in section \textbf{1.2.2}.
+The Jacobian matrix obtained is:
+\begin{lstlisting}
+uvms.Jlanding = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)];
+\end{lstlisting}
 
+The task reference, instead, is different, because this time the objective is to land on the sea floor, so the vehicle needs to reach the altitude zero.\\ 
+The variable controlled is the altitude from the sea floor (\(uvms.w\_a\)), and the desired value will be obviously 0.\\
+The task reference obtained is the following:
+\begin{lstlisting}
+uvms.xdot.landing = Saturate(0.5 * (0 - uvms.w_a), 0.5) 
+\end{lstlisting}
 
 \subsubsection{Q3: how does this task differs from a minimum altitude control task?}
 This task is different with respect to the minimum altitude control task because they belong to two different categories of tasks: the minimum altitude control is a safety task, that is necessary, for example, during safe navigation to ensure that the robot stays at a safe altitude from the sea floor; instead, this task belongs to the action defining category, because it represents the final scope of the action.\\
-Moreover, they are different also because the minimum altitude control task objective is of inequality type, while the landing task one is of equality type.
+Moreover, they are different also because the minimum altitude control task objective is of inequality type, while the landing task one is of equality type, Which means that their activation functions will be different.
 
 \subsection{Adding mission phases and change of action}
 Initialize the vehicle at the position:
@@ -509,6 +520,51 @@ Use a "safe waypoint navigation action" to reach the following position:
 When the position has been reached, land on the seafloor using the basic "landing" action.
 
 \subsubsection{Q1: Report the unified hierarchy of tasks used and their priorities.}
+\begin{table}[htb]
+	\caption{Task hierarchy for the set of actions used to move the vehicle to a goal and then land.}
+	\begin{itemize}
+		\item Action ($\mathcal{A}_{1}$) : Landing (Vehicle Altitude control)
+		\item Action ($\mathcal{A}_{2}$) : Safe Waypoint Navigation
+	\end{itemize}
+	\label{tb_align:actions_table_2_2}
+	% Horizontal attitude = 2
+	% Vehicle position = 3
+	% Vehicle attitude = 4
+	% Vehicle minimum altitude = 5
+	% Vehicle altitude control = 6
+	% A1 = [2, 3, 4, 5];
+	% A2 = [2, 6];
+	
+	\begin{center}
+		\footnotesize
+		\begin{tabular}{cccc}
+			\toprule
+			Task & Type & $\mathcal{A}_{1}$ & $\mathcal{A}_{2}$\\
+			\midrule
+			Horizontal attitude             & I & 2 & 1 \\
+			\hdashline
+			Vehicle position            	& E & 3 &   \\
+			\hdashline
+			Vehicle attitude            	& E & 4 &   \\
+			\hdashline
+			Vehicle minimum altitude        & I & 1 &   \\
+			\hdashline
+			Vehicle altitude control        & E &   & 2 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\subfigure[Position of the vehicle when landed on the seafloor.]
+	{\includegraphics[width=70mm]{land_sim.png}}
+	\hspace{10mm}
+	\subfigure[Path of the vehicle and misalignment vector]
+	{\includegraphics[width=70mm]{land_path.png}}
+	\caption{Behaviour of the robot performing the safe navigation and landing.}
+	\label{im:v_first_landing}
+\end{figure} 
 
 \subsubsection{Q2: How did you implement the transition from one action to the other?}
 

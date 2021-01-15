@@ -88,18 +88,18 @@ mission.actionLanding = [2,6];
 mission.currentAction = mission.actionLanding;
 
 %% Point 2.2
-% % Initial position
-% uvms.p = [8.5 38.5 -36 0 0.06 0]';
-% 
-% % Defines the goal position for the vehicle position and attitude task
-% uvms.goalPosition_v = [10.5   37.5  -38]';
-% uvms.wRg_v = rotation(0, 0, 0.5);
-% 
-% % Actions definition
-% mission.actionLanding = [2,6];
-% mission.actionSafeNavigation = [2, 3, 4, 5];
-% 
-% mission.currentAction = mission.actionSafeNavigation;
+% Initial position
+uvms.p = [8.5 38.5 -36 0 0.06 0]';
+
+% Defines the goal position for the vehicle position and attitude task
+uvms.goalPosition_v = [10.5   37.5  -38]';
+uvms.wRg_v = rotation(0, 0, 0.5);
+
+% Actions definition
+mission.actionLanding = [2,6];
+mission.actionSafeNavigation = [2, 3, 4, 5];
+
+mission.currentAction = mission.actionSafeNavigation;
 
 %% Initialization
 uvms.initPosition = uvms.p(1:3)';
