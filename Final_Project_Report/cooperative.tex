@@ -69,41 +69,7 @@ EMAILs: 4404040@studenti.unige.it, 4376330@studenti.unige.it, 4343879@studenti.u
 Date: 21/12/2020
 \end{center}
 \clearpage
-\mainmatter
-\section*{General notes}
 
-\begin{itemize}
-	\item Exercises 1-4 are done with the ROBUST matlab main and unity visualization tools. Exercises 5-6 are done with the DexROV matlab main and unity visualization tools.
-	\item Comment and discuss the simulations, in a concise scientific manner. Further comments, other than the questions, can be added, although there is no need to write 10 pages for each exercise.
-	\item Aid the discussion with screenshots of the simulated environment (compress them to maintain a small overall file size), and graphs of the relevant variables (i.e. activation functions of inequality tasks, task variables, and so on). Graphs should always report the units of measure in both axes, and legends whenever relevant.
-	\item Report the thresholds whenever relevant.
-	\item Report the mathematical formula employed to derive the task jacobians and the control laws when asked, including where they are projected.
-	\item If needed, part of the code can be inserted as a discussion reference.
-\end{itemize}
-
-
-Use the following template when you need to discuss the hierarchy of tasks of a given action or set of actions:
-\begin{table}[htb]
-	\caption{Example of actions/hierarchy table: a number in a given cell represents the priority of the control task (row) in the hierarchy of the control action (column). The type column indicates whether the objective is an equality (E) or  (I) one.}
-	\label{tbl:actions_table}
-	\begin{center}
-		\footnotesize
-		\begin{tabular}{ccccc}
-			\toprule
-			Task & Type & $\mathcal{A}_{1}$ & $\mathcal{A}_{2}$ & $\mathcal{A}_{3} $	 \\
-			\midrule
-			Task A                    & I & 1 &   & 1  \\
-			\hdashline
-			Task B                & I & 2 & 1 &   \\
-			\hdashline
-			Task C                       & E &   & 2 & 2   \\
-
-			\bottomrule
-		\end{tabular}
-	\end{center}
-\end{table}% %
-
-\clearpage
 
 
 \section{Exercise 1: Implement a “Safe Waypoint Navigation” Action.}
@@ -122,23 +88,23 @@ Goal: Implement a vehicle position and attitude control task, and test that the 
 
 
 \subsubsection{Q1: What is the Jacobian relationship for the Vehicle Position and Attitude control task? How was the task reference computed?}
-
 The Vehicle Position and Attitude control task control respectively the position and the attitude of the vehicle in order to make them converge to a desired goal position. Since there are in principle one goal for the position and another for the attitude, there are two Jacobian matrices, one for each control problem. \\
 Since the goal position and goal attitude are expressed with respect to the world frame, our task reference vector $ \dot{x} = J\dot{y} $ needs to be projected on the world frame too. \\
 For this reason, since the control vector $ \dot{y} = \begin{bmatrix} \dot{q} & \dot{v} & \dot{\omega}\end{bmatrix}^\top $ is projected in the vehicle frame, the two Jacobian matrices will be:
-\begin{gather*}
-uvms.Jv\_pos = [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3,3)]; \\
-uvms.Jv\_att = [zeros(3, 7), zeros(3, 3), uvms.wTv(1:3, 1:3)];
-\end{gather*}
+\begin{lstlisting}
+uvms.Jv_pos = [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3,3)]; 
+uvms.Jv_att = [zeros(3, 7), zeros(3, 3), uvms.wTv(1:3, 1:3)];
+\end{lstlisting}
 
 The task reference vector must be in the form $ \dot{\bar{x}} = \lambda(\bar{x} - x), \lambda > 0 $, where the reference value $ \bar{x} $ represents the desired value and $ x $ is the current value. In our case the desired value is the goal position (or attitude) obtained with the \textit{CartError()} function and the current value is the current position (or attitude). \\
 The two task reference vectors are computed in this way:
-\begin{gather*}
-[ang, lin] = CartError(uvms.wTg\_v , uvms.wTv); \\
-uvms.xdot.v\_pos = Saturate(0.5 * lin, 0.5); \\
-uvms.xdot.v\_att = Saturate(0.5 * ang, 0.5);
-\end{gather*}
+\begin{lstlisting}
+[ang, lin] = CartError(uvms.wTg_v , uvms.wTv);
+uvms.xdot.v_pos = Saturate(0.5 * lin, 0.5);
+uvms.xdot.v_att = Saturate(0.5 * ang, 0.5);
+\end{lstlisting}
 Where $ uvms.wTg\_v $ and $ uvms.wTv $ are respectively the transformation matrix of the goal frame with respect to the world frame and the transformation matrix of the vehicle frame with respect to the world frame. 
+
 
 \subsubsection{Q2: What is the behaviour if the Horizontal Attitude is enabled or not? Try changing the initial or target orientation in terms of roll and pitch angles. Discuss the behaviour.}
 In order to observe the robot behaviour we considered three cases:
@@ -157,7 +123,6 @@ In order to observe the robot behaviour we considered three cases:
 
 {\large \textbf{Case 1}} \\
 In this case the behavior is normal, the robot reaches the target position and attitude without problems.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[The robot moves in Y and Z and the yaw angle converges to zero.]
@@ -176,7 +141,6 @@ In this case the behavior is normal, the robot reaches the target position and a
 
 {\large \textbf{Case 2}} \\
 In this case the target configuration has roll and pitch angles both equal to $ \pi/3 $, so the Vehicle Position and Attitude task tries to rotate the robot in order to fulfill its objective, but, since the Horizontal Attitude task is enabled with higher priority, the robot can't reach the final configuration because it will try to stay as horizontal as possible. Nevertheless, the robot will remain a bit tilted since this task is of inequality type (it becomes inactive when the norm of the misalignment vector is less than about half a degree) and so it does not constrain the robot in a certain interval of tilting angle.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[The robot moves in the Y and Z directions, but the attitude doesn't converge to the desired one.]
@@ -198,7 +162,6 @@ In this case the target configuration has roll and pitch angles both equal to $ 
 
 {\large \textbf{Case 3}} \\
 Now both the initial configuration and the target one have pitch and roll angles equal to $ \pi/3 $: if the Horizontal Attitude wasn't enabled then the robot would only change its yaw angle and move linearly towards the goal, since the initial and the target pitch and roll angles are the same. In this case Horizontal Attitude is enabled, so this task tries to rotate the robot, whereas the Vehicle Attitude one tries to keep the robot from rotating. The robot will reach the target position, but since the Horizontal Attitude task has higher priority, it will prevent the robot from reaching the target attitude.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[We can see that the pitch and roll angles start from $ \pi/3 $ and converge near to 0: the robot moves in Y and Z, reaching the goal position.]
@@ -217,6 +180,7 @@ Now both the initial configuration and the target one have pitch and roll angles
 	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Enabled_DifferentStartpos_DifferentEndpos_ActivFunct}}
 	\label{fig:q2case3cd}
 \end{figure}
+
 
 \subsubsection{Q3: Swap the priorities between Horizontal Attitude and the Vehicle Position control task. Discuss the behaviour.}
 Here we consider Case 2 and Case 3 which have been mentioned in the previous question, but with the Horizontal Attitude task at the bottom of the hierarchy. \\
@@ -242,10 +206,8 @@ In the previous question, the robot had conflicting goals and the safety one was
 	\label{fig:q3case2cd}
 \end{figure}
 
-
 {\large \textbf{Case 3}} \\
 In the previous question, the Horizontal Attitude task prevented the robot to reach the target attitude: now this task won't have effect, allowing the robot to reach the target configuration.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[The robot moves in Y and Z and the yaw angle correctly converges to zero.]
@@ -265,8 +227,8 @@ In the previous question, the Horizontal Attitude task prevented the robot to re
 	\label{fig:q3case3cd}
 \end{figure}
 
-\subsubsection{Q4: What is the behaviour if the Tool Position control task is active and what if it is disabled? Which of the settings should be used for a Safe Waypoint Navigation action? Report the final hierarchy of tasks (and their priorities, see the template table in the introduction) which makes up the Safe Waypoint Navigation action.}
 
+\subsubsection{Q4: What is the behaviour if the Tool Position control task is active and what if it is disabled? Which of the settings should be used for a Safe Waypoint Navigation action? Report the final hierarchy of tasks (and their priorities, see the template table in the introduction) which makes up the Safe Waypoint Navigation action.}
 In the previous exercises we observed the robot's behaviour when the Tool Position control task was disabled: the end-effector doesn't move since it doesn't have a target configuration to reach, so the robot reaches its defined target configuration as expected. \\
 When we try to enable with highest priority the Tool Position task having tool's target configuration
 \begin{gather*}
@@ -314,6 +276,7 @@ For this reason, the final hierarchy of tasks which make up the Safe Waypoint Na
 	\end{center}
 \end{table}
 
+
 \subsection{Adding a safety minimum altitude control objective}
 Initialize the vehicle at the position:
 \begin{displaymath}
@@ -329,7 +292,6 @@ Goal: Implement a task to control the altitude from the seafloor. Check that at 
 
 \subsubsection{Q1: Report the new hierarchy of tasks of the Safe Waypoint Navigation and their priorities. Comment how you choose the priority level for the minimum altitude.}
 We added the Minimum Altitude control task to the previous hierarchy, obtaining the following updated table:
-
 \begin{table}[htb]
 	\caption{Updated hierarchy table for the Safe Waypoint Navigation action $\mathcal{A}_{1}$.}
 	\label{tb2:ex1.2.1SafeWaypointNavigationTable}
@@ -353,13 +315,16 @@ We added the Minimum Altitude control task to the previous hierarchy, obtaining 
 
 Since this new task is a safety one, it must have the highest priority: we put it at priority level 1 but it could also be put at priority level 2 just under the Horizontal Attitude task. The priority of the safety tasks is not important as long as they have higher priority than the other tasks. This is because, as we've seen in question 1.1.3, if a safety task has a lower priority than the action-defining task(s) then it won't have a huge effect on the robot's behaviour or any effect at all.
 
+
 \subsubsection{Q2: What is the Jacobian relationship for the Minimum Altitude control task? Report the formula for the desired task reference generation, and the activation thresholds.}
 Our variable of interest $ a $ is the altitude of the vehicle, with respect to the sea floor, measured by one of the sensors onboard. So we want to find the jacobian relationship between the control vector $ \dot{y} $ and the time derivative of our variable of interest $ \dot{a} $. \\
+
 Let's define the following vector
 \begin{gather*}
 	^{w}\boldsymbol{d} = a \cdot ^{w}\boldsymbol{k} = ^{w}O_{v} - Q
 \end{gather*}
 as the one representing the altitude of the robot with respect to the world frame:$ ^{w}\boldsymbol{k} $ is the versor along the z-axis of the world frame, $ ^{w}O_{v} $ is the origin of the vehicle frame and $ Q $ is a point on the sea floor for which the previous equality holds. \\
+
 We have that the derivative of the altitude will be
 \begin{gather*}
 	\dot{a} = ^{w}\boldsymbol{k} \cdot D_{w}(^{w}\boldsymbol{d}) \\
@@ -367,24 +332,27 @@ We have that the derivative of the altitude will be
 	\dot{a} = ^{w}\boldsymbol{k} \cdot ^{w}\boldsymbol{v}_{v/w}
 \end{gather*}
 where $ D_{w} $ is the derivative operator with respect to the world frame and $ ^{w}\boldsymbol{v}_{v/w} $ is the velocity of the vehicle with respect to the world frame projected on the world frame. The equality $ D_{w}Q = 0 $ comes from the fact that the point $ Q $ doesn't move with respect to the world frame. \\
+
 Thus, the jacobian matrix will be
-\begin{gather*}
-	uvms.JminAlt = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)];
-\end{gather*}
+\begin{lstlisting}
+uvms.JminAlt = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)];
+\end{lstlisting}
 where $ k' $ is $ ^{w}\boldsymbol{k} $ transposed and $ uvms.wTv(1:3, 1:3) $ is the rotation matrix of the vehicle frame with respect to the world frame. \\ \\
+
 Since the task is of inequality type, we want the robot to reach an altitude belonging to the interval for which the value of the activation function is 0: we established that the activation function is 0 for altitudes greater than 1.5 m and is 1 for altitudes lower than 1 m. \\
+
 The formula for the task reference is the following
-\begin{gather*}
-	uvms.xdot.minAlt = 0.2 * ((uvms.min\_offset + uvms.range\_offset) - uvms.w\_a)
-\end{gather*}
+\begin{lstlisting}
+uvms.xdot.minAlt = Saturate(0.5 * ((uvms.min_offset + uvms.range_offset) - uvms.w_a), 0.5);
+\end{lstlisting}
 where $ uvms.min\_offset = 1 m $, $ uvms.range\_offset = 0.5 m $ and $ uvms.w\_a $ is the altitude of the vehicle.
+
 
 \subsubsection{Q3: Try imposing a minimum altitude of 1, 5, 10 m respectively. What is the behaviour? Does the vehicle reach its final goal in all cases?}
 We tried setting the minimum altitude to the three requested values, obtaining the following results: \\
 
 {\large \textbf{Minimum altitude equal to 1 m}} \\
 The vehicle's initial and target positions are at an altitude greater than 1 m, so it reaches its goal by moving over the small hill on the sea floor as we can clearly see from the second image.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[The vehicle reaches the target position while respecting the minimum altitude requirement.]
@@ -403,7 +371,6 @@ The vehicle's initial and target positions are at an altitude greater than 1 m, 
 
 {\large \textbf{Minimum altitude equal to 5 m}} \\
 Since the initial position of the vehicle is at about 1.3 m of altitude, in the first 10 seconds it moves upwards to respect the minimum altitude constraint. Once it reaches the quote of 5 m, the vehicle keeps on moving to reach the target position, which is also at about 1.3 m of altitude: for this reason, the vehicle will reach the x and y coordinates of the target position, but it will remain at around 5 m of altitude.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[The vehicle doesn't reach the target position.]
@@ -422,7 +389,6 @@ Since the initial position of the vehicle is at about 1.3 m of altitude, in the 
 
 {\large \textbf{Minimum altitude equal to 10 m}} \\
 We can make the same considerations as the previous case, the only thing that changes is that the vehicle will take more time to reach the requested minimum altitude. Again, the vehicle will not reach its exact target position.
-
 \begin{figure}[H]
 	\centering
 	\subfigure[The vehicle doesn't reach its target position.]
@@ -439,20 +405,25 @@ We can make the same considerations as the previous case, the only thing that ch
 	\label{fig:ex1.2.3_case10m_c}
 \end{figure}
 
+
 \subsubsection{Q4: How was the sensor distance processed to obtain the altitude measurement? Does it work in all cases or some underlying assumptions are implicitly made?}
 Our Matlab code used to compute the altitude measurement is the following
-\begin{gather*}
-	k = [0, 0, 1]'; \\
-	v\_d = [0 0 uvms.sensorDistance]'; \\
-	w\_d = uvms.wTv(1:3, 1:3) * v\_d; \\
-	uvms.w\_a = k' * w\_d;
-\end{gather*}
+\begin{lstlisting}
+k = [0, 0, 1]';
+v_d = [0, 0, uvms.sensorDistance]';
+w_d = uvms.wTv(1:3, 1:3) * v_d;
+uvms.w_a = k' * w_d;
+\end{lstlisting}
 To obtain the vehicle altitude $ uvms.w\_a $ we took the vector representing the sensor distance in the vehicle frame, project it into the world frame and then perform the dot product to get the projection of $ w\_d $ onto the z-axis of the world frame. \\
+
 The altitude is not simply the sensor distance measurement since the vehicle can be in a tilted position, which results in an sensor distance value greater than the actual altitude: but, by computing the altitude via dot product we make the implicit assumption that the sea floor is flat. This results from the definition of the dot product itself. Obviously, this assumption won't always hold: there might be areas in which the sea floor is almost flat, but in most cases this is not true. \\
+
 Moreover, this assumption is pessimistic: in the ideal case the computed altitude will be equal to the actual one, but often we're overestimating how close we are to the sea floor; this isn't bad per se since this is a safety task, but it might happen that the vehicle could get closer to the sea floor without actually violating the minimum altitude requirement but it isn't allowed due to the altitude overestimation.
 Finally, we also assume of being able to know the robot orientation with respect to the reference frame at any time instant. Even if this is mostly the case, due to the simplicity of the measurement, it is still an underling assumption of this task. 
 
 \clearpage
+
+
 
 \section{Exercise 2: Implement a Basic “Landing” Action.}
 \subsection{Adding an altitude control objective}
@@ -594,7 +565,7 @@ Goal: Add an alignment task between the longitudinal axis of the vehicle ($x$ ax
 		\item Action 1 ($\mathcal{A}_{1}$) : Safe Navigation
 		\item Action 2 ($\mathcal{A}_{2}$) : Aligned Landing
 	\end{itemize}
-	\label{tb_align:actions_table}
+	\label{tb_align2:actions_table}
 	% Horizontal attitude = 2
 	% Vehicle position = 3
 	% Vehicle attitude = 4
@@ -716,13 +687,13 @@ What we thought was to add a new Action in between the two actual ones that is a
 
 
 \begin{table}[htb]
-	\caption{Task hierarchy for the set of actions used to create a gain-indipendent allignment action.}
+	\caption{Task hierarchy for the set of actions used to create a gain-independent alignment action.}
 	\begin{itemize}
 		\item Action 1 ($\mathcal{A}_{1}$) : Safe Navigation
-		\item Action 2 ($\mathcal{A}_{2}$) : Aligining
+		\item Action 2 ($\mathcal{A}_{2}$) : Aligning
 		\item Action 3 ($\mathcal{A}_{2}$) : Aligned Landing
 	\end{itemize}
-	\label{tb_align:actions_table}
+	\label{tb_align3:actions_table}
 	% Horizontal attitude = 2
 	% Vehicle position = 3
 	% Vehicle attitude = 4
@@ -828,6 +799,8 @@ It is clear that the vehicle, before landing and while aligning to the target, g
 We are aware that there is no task assuring that the vehicle is distant enough from the target, but it can easily be added using the same task with an opposite activation function (decreasing instead of increasing). 
 \clearpage
 
+
+
 \section{Exercise 4: Implementing a Fixed-base Manipulation Action}
 \subsection{Adding non-reactive tasks}
 To manipulate as a fixed based manipulator, we need to constraint the vehicle to not move, otherwise the tool frame position task will make the vehicle move.
@@ -844,9 +817,9 @@ Goal: Add a constraint task that fixes the vehicle velocity to zero. Land on the
 	\label{fig:ex4.1.1Mission}
 \end{figure}
 
+
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. At which priority level did you add the constraint task?}
 Here is the hierarchy table which summarizes the four actions we implemented to fulfill the exercise's request. We can see that the Constraint task was placed in the fourth action (i.e. the last one to be performed) at the highest priority: this is mandatory because in this way we completely fix the vehicle's velocities to be 0 and the other lower priority tasks won't be able to change them. If we were to place this task at a lower priority level, higher priority ones would be able to change the vehicle's velocities.
-
 \begin{table}[htb]
 	\caption{Hierarchy table defined to perform the four actions that make up the fixed-base manipulation objective.}
 	\begin{itemize}
@@ -884,29 +857,31 @@ Here is the hierarchy table which summarizes the four actions we implemented to 
 	\end{center}
 \end{table}
 
+
 \subsubsection{Q2: What is the Jacobian relationship for the Vehicle Null Velocity task? How was the task reference computed?}
 The Jacobian relationship is really simple. Since the variables of interest are the vehicle's linear and angular velocities projected on the vehicle frame, to extract them from the control vector we need to multiply it by
-\begin{gather*}
-	uvms.Jconstraint = [zeros(6,7), eye(6,6)];
-\end{gather*}
+\begin{lstlisting}
+uvms.Jconstraint = [zeros(6,7), eye(6,6)];
+\end{lstlisting}
 Moreover, we want the vehicle to be still: this means setting all velocities to 0. Thus, the task reference vector will be
-\begin{gather*}
-	uvms.xdot.constraint = zeros(6,1);
-\end{gather*}
+\begin{lstlisting}
+uvms.xdot.constraint = zeros(6,1);
+\end{lstlisting}
+
 
 \subsubsection{Q3: Suppose that the vehicle is floating, i.e. not landed on the seafloor. What would happen, if due to currents, the vehicle moves?}
 We considered two types of currents, a constant one and a sinusoidal one: in this way we can see what happens respectively near the sea floor and at the sea surface.\\
 The constant current was defined in this way:
-\begin{gather*}
-	disturb = [0, 0.3, 0]'; \\
-	uvms.p\_dot(1:3) = uvms.vTw(1:3, 1:3)*disturb;
-\end{gather*}
+\begin{lstlisting}
+disturb = [0, 0.3, 0]';
+uvms.p_dot(1:3) = uvms.vTw(1:3, 1:3)*disturb;
+\end{lstlisting}
 and the sinusoidal one in this way:
-\begin{gather*}
-	disturb\_ang = [0, 1, 0]'; \\
-	disturb\_ang = disturb\_ang*0.35*sin(2*pi*0.5*t); \\
-	uvms.p\_dot(4:6) = uvms.vTw(1:3,1:3)*disturb\_ang;
-\end{gather*}
+\begin{lstlisting}
+disturb_ang = [0, 1, 0]'; \\
+disturb_ang = disturb_ang*0.35*sin(2*pi*0.5*t);
+uvms.p_dot(4:6) = uvms.vTw(1:3,1:3)*disturb_ang;
+\end{lstlisting}
 
 We get the following results:
 \begin{figure}[H]
@@ -919,7 +894,6 @@ We get the following results:
 	\label{fig:ex4.1.3ConstantCurrent}
 \end{figure}
 The constraint task imposes that the reference for the vehicle velocities must be 0, which results in a control vector made of zeros: this vector is then modified by the constant current contribution. For this reason, the vehicle can't stay still and drifts away.
-
 \begin{figure}[H]
 	\centering
 	\caption{With a sinusoidal current we can see that the vehicle keeps rotating.}
@@ -929,33 +903,33 @@ The constraint task imposes that the reference for the vehicle velocities must b
 We can make the same considerations in this case: now the vehicle doesn't move linearly, but keeps rotating. Again, the constraint task can't keep the vehicle still.\\
 There are two ways in which we could solve this problem: the first one involves creating position and attitude tasks of inequality type such that the vehicle doesn't move too much; equality tasks would result in a really high energy consumption. The other way would require sensors capable of measuring the contribution of the current in order to compensate it via a task designed for this purpose.
 
+
 \subsection{Adding a joint limit task}
 Let us now constrain the arm with the actual joint limits. The vector variables \texttt{uvms.jlmin} and \texttt{uvms.jlmax} contain the maximum and minimum values respectively.
 
 Goal: Add a joint limits avoidance task. Land on the seafloor. Try reaching the rock position with the end-effector, and observe that the vehicle does not move and that all the joints are within their limits.
 
-\begin{comment}
 \begin{figure}[H]
 	\centering
-	\subfigure[]
-	{\includegraphics[width=70mm]{images/Ex4/}}
+	\subfigure[The vehicle reaches the goal position, proceeds to align to the target, lands on the sea floor and finally reaches the rock with the end-effector.]
+	{\includegraphics[width=70mm]{images/Ex4/Constraint_JointLimits_Path}}
 	\hspace{10mm}
-	\subfigure[]
-	{\includegraphics[width=70mm]{images/Ex4/}}
+	\subfigure[The vehicle completes the landing again at about 24 seconds, moves a bit due to the smooth transition between actions and then it remains still.]
+	{\includegraphics[width=70mm]{images/Ex4/Constraint_JointLimits_LinAngVel}}
 	\label{fig:ex4.2Joints_ab}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.55]{images/Ex4/}
-	\caption{}
+	\includegraphics[scale=0.55]{images/Ex4/Constraint_JointLimits_ActivFunct}
+	\caption{Here we can see that no joint reaches its maximum or minimum limits: all the activation functions' values are always 0 apart from joint $ q_6 $, which gets near its minimum limit.}
 	\label{fig:ex4.2Joints_c}
 \end{figure}
-\end{comment}
+
 
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. At which priority level did you add the joint limits task?}
 Here is the hierarchy table used to implement the new mission. The only thing that changed with respect to the previous table presented in point 4.1.1 is the fourth action: now it also features the two new tasks, one to avoid the minimum joint limits and the other to avoid the maximum joint limits. \\
-Since they are both safety tasks, they need to have high priority, so we placed them just below the constraint task, which needs to stay at the top of the hierarchy.
 
+Since they are both safety tasks, they need to have high priority, so we placed them just below the constraint task, which needs to stay at the top of the hierarchy.
 \begin{table}[htb]
 	\caption{Hierarchy table defined to perform the four actions that make up the fixed-base manipulation objective.}
 	\begin{itemize}
@@ -997,9 +971,25 @@ Since they are both safety tasks, they need to have high priority, so we placed 
 	\end{center}
 \end{table}
 
+
 \subsubsection{Q2: What is the Jacobian relationship for the Joint Limits task? How was the task reference computed?}
+Our variable of interest is the joint position vector so, since the vehicle velocities don't contribute to the manipulator's joints positions or velocities, the jacobian relationship will simply be:
+\begin{lstlisting}
+uvms.JjointLimits = [eye(7), zeros(7, 6)];
+\end{lstlisting}
+The jacobian matrix is the same for both the maximum joint limits task and the minimum one, but the task references are different. The tasks are both of inequality type, so the task reference must drive the variable of interest to the first point where the activation function is equal to zero: for the minimum task this value is equal to the minimum joint limits vector $ uvms.jlmin $ plus an offset of 0.5 rad, for the maximum task it's the maximum joint limits vector $ uvms.jlmax $ minus the same offset. \\
+
+Thus:
+\begin{lstlisting}
+offset = 0.5; \\
+uvms.xdot.lbjointLimits = Saturate(0.5 * ((uvms.jlmin + offset) - uvms.q), 0.5);
+uvms.xdot.ubjointLimits = Saturate(0.5 * ((uvms.jlmax - offset) - uvms.q), 0.5);
+\end{lstlisting}
 
 \clearpage
+
+
+
 \section{Exercise 5: Floating Manipulation}
 \subsection{Adding an optimization control objective}
 Use the DexROV simulation for this exercise.
@@ -1020,7 +1010,7 @@ In order to accoplish the goal, we have chosen to implement an action with the f
 	\begin{itemize}
 		\item Action 1 ($\mathcal{A}_{1}$) : Tool Optimized Control
 	\end{itemize}
-	\label{tb5:ex4.1.1HierarchyTable}
+	\label{tb7:ex5.1.1HierarchyTable}
 	\begin{center}
 		\footnotesize
 		\begin{tabular}{ccc}
@@ -1149,7 +1139,7 @@ The table below reports the hierarchy of tasks for both actions.
 		\item Action 1 ($\mathcal{A}_{1}$) : Tool Optimized Control
 		\item Action 2 ($\mathcal{A}_{2}$) : Safe Navigation 
 	\end{itemize}
-	\label{tb5:ex4.1.1HierarchyTable}
+	\label{tb8:ex5.2.1HierarchyTable}
 	\begin{center}
 		\footnotesize
 		\begin{tabular}{cccc}
