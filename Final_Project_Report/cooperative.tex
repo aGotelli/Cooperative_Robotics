@@ -538,6 +538,38 @@ When the position has been reached, land on the seafloor using the basic "landin
 \end{figure} 
 
 \subsubsection{Q2: How did you implement the transition from one action to the other?}
+In order to create a system capable of transitioning from one action to the other, we decided to think about a procedure that is not specific for this problem, but that solves the transition between actions once and for all.\\
+The first thing to do is to make a list of all the activation functions of the tasks that will be used, and enumerate them such that each task is identified by a univocal number, corresponding to the position of the task in the list. The priority level of the tasks will not be influenced by this ordering.
+\begin{lstlisting}
+	mission.activationFunctions = {
+	uvms.A.t,...
+	uvms.A.ha,...
+	uvms.A.v_pos,...
+	uvms.A.v_att,...
+	uvms.A.minAlt,...
+	uvms.A.landing }
+\end{lstlisting}
+The phase time is initialized and is be updated at each iteration, until the action is concluded. The first action to be performed is stored in \(mission.currentAction\).\\
+This is the definition of the actions "Safe Navigation" and "Landing":
+\begin{lstlisting}
+	mission.actionLanding = [2,6];
+	mission.actionSafeNavigation = [2, 3, 4, 5];
+	mission.currentAction = mission.actionSafeNavigation;
+\end{lstlisting}
+The phase changes after certain conditions are achieved. For the safe navigation action this happens when the linear distance between the vehicle and the goal is below a certain threshold.\\ 
+At this point the phase time is reset to zero, the current action is saved in a variable called \(previousAction\), and the next action (\(mission.actionLanding\)) becomes the current action. 
+\begin{lstlisting}
+	mission.previousAction = mission.currentAction;
+	mission.currentAction = mission.actionLanding;
+\end{lstlisting}
+The activation function of the tasks is managed in this way:
+\begin{itemize}
+	\item If a task is present in the list of tasks of the current action and it is not present in the previous action, its activation function is multiplied by an increasing bell shaped function.
+	\item If a task is present in the list of tasks of the current action and it is also present in the previous action, its activation function is multiplied by an identity matrix of the corresponding dimension.
+	\item If the task is not present in the list of tasks of the current action and it is present in the previous action, its activation function is multiplied by an decreasing bell shaped function.
+	\item If the task is not present in the list of tasks of the current action and it is not present in the previous action, its activation function is multiplied by a matrix of zeros of the corresponding dimension.
+\end{itemize}
+The bell shaped functions are designed to reach their maximum (or minimum) value after two seconds from the beginning of each phase, so that a smooth transition between the actions is ensured.
 
 \clearpage
 
