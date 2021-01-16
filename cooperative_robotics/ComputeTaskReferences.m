@@ -3,10 +3,10 @@ function [uvms] = ComputeTaskReferences(uvms, mission)
 
 % reference for tool-frame position control task
 [ang, lin] = CartError(uvms.vTg , uvms.vTt);
-uvms.xdot.t = 0.2 * [ang; lin];
+uvms.xdot.t = 0.5 * [ang; lin];
 % limit the requested velocities...
-uvms.xdot.t(1:3) = Saturate(uvms.xdot.t(1:3), 0.2);
-uvms.xdot.t(4:6) = Saturate(uvms.xdot.t(4:6), 0.2);
+uvms.xdot.t(1:3) = Saturate(uvms.xdot.t(1:3), 0.5);
+uvms.xdot.t(4:6) = Saturate(uvms.xdot.t(4:6), 0.5);
 
 %%   Vehicle horizontal attitude
 % xdot = lambda * (x_reference - x)
