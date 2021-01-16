@@ -96,6 +96,26 @@ uvms.Jv_pos = [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3,3)];
 uvms.Jv_att = [zeros(3, 7), zeros(3, 3), uvms.wTv(1:3, 1:3)];
 \end{lstlisting}
 
+The first Jacobian maps the linear velocities of the vehicle from the vector space of the vehicle to the vector space of the reference frame. This forulation comes from the direct need of mimizing the distance between the goal and the vehicle origin. This distance can be expressed as follows. 
+$$
+	^w\bm{d} = ^wO_g - ^wO_v
+$$
+ Thus, the derivative of this vector can be expressed as:
+$$
+	^w\dot{\bm{d}} = D_w ^w\bm{d} = D_w ^wO_g - D_w ^wO_v = ^w\bm{v}_v
+$$
+For what concerns the second Jacobian, it maps the angular velocities of the vehicle from its vector space to the one of the reference frame. This formulation comes from the fact that the aim is to drive the vehicle frame to be alligned to the reference frame. In other words, we want to drive to zero the misalignment vector between the two frames. Using the definition of the derivative of the misalignment vector, we can establish the relation described by the Jacobian above. 
+
+$$
+D^w \bm{\rho} = \bm{n}\bm{n}\cdot \dot{\theta} + \theta N_(\theta) \bm{\omega}_{v/w}
+$$
+
+However, in this expression the term $N_(\theta)$ is orthognal to the misalignment vector. As we want to allign the two frames acting on the misallignment we disregard this second component and we only account for:
+ 
+$$
+\cdot{\bm{x}} = \cdot{\bm{x}} = \bm{\omega}_{v/w}
+$$
+
 The task reference vector must be in the form $ \dot{\bar{x}} = \lambda(\bar{x} - x), \lambda > 0 $, where the reference value $ \bar{x} $ represents the desired value and $ x $ is the current value. In our case the desired value is the goal position (or attitude) obtained with the \textit{CartError()} function and the current value is the current position (or attitude). \\
 The two task reference vectors are computed in this way:
 \begin{lstlisting}
@@ -656,8 +676,26 @@ $$ ^wd = ^wP - ^wO_v$$
 $$^wd_{proj} = ^wd - ((^wd^T \cdot ^wk_w) \cdot ^wk_w)$$
 
 Then the misalignment vector (\(\rho\)) between the x-axis of the vehicle and the \(d_{proj}\) versor (\(n_{d_{proj}}=\frac{d_{proj}}{\|d_{proj}\|}\)) is calculated using the Reduced Versor Lemma, after having projected both versors on the vehicle frame.
-$$^v\rho = \theta n$$
+$$^v\bm{\rho} = \theta \bm{n}$$
 
+Once obtained the misalignment vector $^v\bm{\rho} $ we need to evaluate its derivative. Thus, we refer to the derivative of a rotation vector:
+$$
+D_w ^v\bm{\rho} = \bm{n}\bm{n} \cdot \bm{\omega}_{n_d/i_v} + \theta N_{\theta}\bm{\omega}_{n_d/i_v}
+$$
+
+Exliciting the term $\bm{\omega}_{n_d/i_v}$ in the following form, we can infer the influence of the control vector in this last quantity.
+
+$$
+\bm{\omega}_{n_d/i_v}= \bm{\omega}_{n_d/w} - \bm{\omega}_{i_v/w} = \bm{\omega}_{n_d/w} - \bm{\omega}_{v/w}
+$$
+
+The quantity $ \bm{\omega}_{n_d/w}$ expresses the angular velocity of the unit vector of $^wd_{proj}$ with respect to the reference frame. We can evaluate this quantit considering the relation for the velocities at the vector tip.
+
+$$
+\bm{v}_{^wd_{proj}/w} = \bm{\omega}_{n_d/w} cross ^wd_{proj}
+$$
+ 
+ 
 The Jacobian relationship obtained is the following:
 
 $$ \bm{\dot{\theta}} = J_{ha} \bm{\dot{y}}$$
