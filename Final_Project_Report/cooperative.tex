@@ -95,29 +95,6 @@ For this reason, since the control vector $ \dot{y} = \begin{bmatrix} \dot{q} & 
 uvms.Jv_pos = [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3,3)]; 
 uvms.Jv_att = [zeros(3, 7), zeros(3, 3), uvms.wTv(1:3, 1:3)];
 \end{lstlisting}
-
-\begin{comment}
-The first Jacobian maps the linear velocities of the vehicle from the vector space of the vehicle to the vector space of the reference frame. This formulation comes from the direct need of minimizing the distance between the goal and the vehicle origin. This distance can be expressed as follows. 
-$$
-	^w\bm{d} = ^wO_g - ^wO_v
-$$
- Thus, the derivative of this vector can be expressed as:
-$$
-	^w\dot{\bm{d}} = D_w (^w\bm{d}) = D_w (^wO_g) - D_w (^wO_v) = ^w\bm{v}_v
-$$
-For what concerns the second Jacobian, it maps the angular velocities of the vehicle from its vector space to the one of the reference frame. This formulation comes from the fact that the aim is to drive the vehicle frame to be aligned to the reference frame. In other words, we want to drive to zero the misalignment vector between the two frames. Using the definition of the derivative of the misalignment vector, we can establish the relation described by the Jacobian above. 
-
-$$
-D^w \bm{\rho} = \bm{n}\dot{\theta} + \theta N(\theta) \bm{\omega}_{v/w}
-$$
-
-Since our variable of interest is $ \theta $, we have that:
- 
-$$
-\dot{\bm{x}} = \dot{\theta} = \bm{\omega}_{v/w}
-$$
-\end{comment}
-
 The task reference vector must be in the form $ \dot{\bar{x}} = \lambda(\bar{x} - x), \lambda > 0 $, where the reference value $ \bar{x} $ represents the desired value and $ x $ is the current value. \\
 % In our case the desired value is the goal position (or attitude) obtained with the \textit{CartError()} function and the current value is the current position (or attitude). \\
 The two task reference vectors are computed in this way:
@@ -277,7 +254,6 @@ in the previously considered Case 1, it interferes with the Vehicle Position tas
 	{\includegraphics[width=70mm]{images/Ex1/HorAtt_Disabled_Tool_Enabled_MisalignVectNorm}}
 	\label{fig:q4cd}
 \end{figure}
-
 When implementing a Safe Waypoint Navigation action the best setting should be to disable the Tool Position task since it may interfere with other goals or worse, may present as a risk to the robot's safety: in fact, the end-effector motion may result in accidental collisions between either the vehicle or the manipulator arm and the environment, which can in turn break the system. \\
 For this reason, the final hierarchy of tasks which make up the Safe Waypoint Navigation action is the following:
 \begin{table}[htb]
@@ -314,7 +290,7 @@ Goal: Implement a task to control the altitude from the seafloor. Check that at 
 
 
 \subsubsection{Q1: Report the new hierarchy of tasks of the Safe Waypoint Navigation and their priorities. Comment how you choose the priority level for the minimum altitude.}
-We added the Minimum Altitude control task to the previous hierarchy, obtaining the following updated table:
+We added the Minimum Altitude control task to the previous hierarchy, obtaining the following updated table.
 \begin{table}[htb]
 	\caption{Updated hierarchy table for the Safe Waypoint Navigation action $\mathcal{A}_{1}$.}
 	\label{tb2:ex1.2.1SafeWaypointNavigationTable}
@@ -335,19 +311,16 @@ We added the Minimum Altitude control task to the previous hierarchy, obtaining 
 		\end{tabular}
 	\end{center}
 \end{table}
-
 Since this new task is a safety one, it must have the highest priority: we put it at priority level 1 but it could also be put at priority level 2 just under the Horizontal Attitude task. In this case, the priority of safety tasks is not important as long as they have higher priority than the other tasks (prerequisite, action defining and optimization ones). This is because, as we've seen in question 1.1.3, if a safety task has a lower priority than the action-defining task(s) then it won't have a huge effect on the robot's behaviour or any effect at all.
 
 
 \subsubsection{Q2: What is the Jacobian relationship for the Minimum Altitude control task? Report the formula for the desired task reference generation, and the activation thresholds.}
 Our variable of interest $ a $ is the altitude of the vehicle, with respect to the sea floor. So we want to find the jacobian relationship between the control vector $ \dot{y} $ and the time derivative of our variable of interest $ \dot{a} $. \\
-
 Let's define the following vector
 \begin{gather*}
 	^{w}\boldsymbol{d} = a \cdot ^{w}\boldsymbol{k} = ^{w}O_{v} - Q
 \end{gather*}
 as the one representing the altitude of the robot with respect to the world frame:$ ^{w}\boldsymbol{k} $ is the versor along the z-axis of the world frame, $ ^{w}O_{v} $ is the origin of the vehicle frame and $ Q $ is a point on the sea floor for which the previous equality holds. \\
-
 We have that the derivative of the altitude will be
 \begin{gather*}
 	\dot{a} = ^{w}\boldsymbol{k} \cdot D_{w}(^{w}\boldsymbol{d}) \\
@@ -355,15 +328,12 @@ We have that the derivative of the altitude will be
 	\dot{a} = ^{w}\boldsymbol{k} \cdot ^{w}\boldsymbol{v}_{v/w}
 \end{gather*}
 where $ D_{w} $ is the derivative operator with respect to the world frame and $ ^{w}\boldsymbol{v}_{v/w} $ is the velocity of the vehicle with respect to the world frame projected on the world frame. The equality $ D_{w}Q = 0 $ comes from the fact that the point $ Q $ doesn't move with respect to the world frame. \\
-
 Thus, the jacobian matrix will be
 \begin{lstlisting}
 uvms.JminAlt = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)];
 \end{lstlisting}
-where $ k' $ is $ ^{w}\boldsymbol{k} $ transposed and $ uvms.wTv(1:3, 1:3) $ is the rotation matrix of the vehicle frame with respect to the world frame. \\ \\
-
+where $ k' $ is $ ^{w}\boldsymbol{k} $ transposed and $ uvms.wTv(1:3, 1:3) $ is the rotation matrix of the vehicle frame with respect to the world frame. \\
 Since the task is of inequality type, we want the robot to reach an altitude belonging to the interval for which the value of the activation function is 0: we established that the activation function is 0 for altitudes greater than 1.5 m and is 1 for altitudes lower than 1 m. \\
-
 The formula for the task reference is the following
 \begin{lstlisting}
 uvms.xdot.minAlt = 
@@ -439,9 +409,7 @@ w_d = uvms.wTv(1:3, 1:3) * v_d;
 uvms.w_a = k' * w_d;
 \end{lstlisting}
 To obtain the vehicle altitude $ uvms.w\_a $ we took the vector representing the sensor distance in the vehicle frame, project it into the world frame and then perform the dot product to get the projection of $ w\_d $ onto the z-axis of the world frame. \\
-
 The altitude is not simply the sensor distance measurement since the vehicle can be in a tilted position, which results in an sensor distance value greater than the actual altitude: but, by computing the altitude via dot product we make the implicit assumption that the sea floor is flat. This results from the definition of the dot product itself. Obviously, this assumption won't always hold: there might be areas in which the sea floor is almost flat, but in most cases this is not true. \\
-
 Moreover, this assumption is pessimistic: in the ideal case the computed altitude will be equal to the actual one, but often we're overestimating how close we are to the sea floor; this isn't bad per se since this is a safety task, but it might happen that the vehicle could get closer to the sea floor without actually violating the minimum altitude requirement but it isn't allowed due to the altitude overestimation.
 Finally, we also assume of being able to know the robot orientation with respect to the reference frame at any time instant. Even if this is often the case, it is still an underlying assumption of this task. 
 
@@ -459,7 +427,6 @@ Initialize the vehicle at the position:
 Goal: add a control task to regulate the altitude to zero.
 
 \subsubsection{Q1: Report the hierarchy of task used and their priorities to implement the Landing Action. Comment how you choose the priority level for the altitude control task.}
-
 \begin{table}[htb]
 	\caption{Task hierarchy for the action landing.}
 	\begin{itemize}
@@ -491,7 +458,6 @@ The Jacobian matrix obtained is:
 \begin{lstlisting}
 uvms.Jlanding = k' * [zeros(3, 7), uvms.wTv(1:3, 1:3), zeros(3, 3)];
 \end{lstlisting}
-
 The task reference, instead, is different, because this time the objective is to land on the sea floor, so the vehicle needs to reach the altitude zero.\\ 
 The variable controlled is the altitude from the sea floor (\(uvms.w\_a\)), and the desired value will be obviously 0.\\
 The task reference obtained is the following:
@@ -614,7 +580,6 @@ Then land, aligning to the nodule.
 Goal: Add an alignment task between the longitudinal axis of the vehicle ($x$ axis) and the nodule target. In particular, the $x$ axis of the vehicle should align to the projection, on the inertial horizontal plane, of the unit vector joining the vehicle frame to the nodule frame.
 
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. Comment the behaviour.}
-
 \begin{table}[htb]
 	\caption{Task hierarchy for the set of actions used to move the vehicle near the target and then align it.}
 	\begin{itemize}
@@ -651,8 +616,7 @@ Goal: Add an alignment task between the longitudinal axis of the vehicle ($x$ ax
 			\bottomrule
 		\end{tabular}
 	\end{center}
-\end{table}% %
-
+\end{table}
 The vehicle initially starts from a point quite high with respect to the ground and some meters away from the target ({\small\(\begin{bmatrix} 8.5 & 38.5 & -36 & 0 & -0.06 & 0.5 \end{bmatrix}^\top\)})\\
 The first action performed is the Safe Navigation, which leads the vehicle to move to a specified point using two safety tasks, which have the top priority, the Minimum Altitude Task and the Horizontal Attitude Task, and two tasks to move the vehicle to the goal, the Vehicle Position and Vehicle Attitude Tasks.\\
 When the linear distance between the vehicle and the goal position ({\small \(\begin{bmatrix} 10.5 & 37.5 & -38 & 0 & -0.06 & 0.5 \end{bmatrix}^\top\) }) falls under $0.1 m$, the action changes and the vehicle begins the landing. This second action is called Aligned Landing and it is composed by three tasks, one safety task which is the Horizontal Attitude, and the two tasks for landing in front of the rock: Vehicle Altitude Control that makes the vehicle land on the sea floor, and the Alignment to Target, which makes the vehicle $x$ axis align to the projection on the inertial horizontal plane of the unit vector joining the vehicle frame to the nodule frame.\\ 
@@ -664,7 +628,6 @@ The vehicle successfully manages to land right in front of the rock and with the
 	\caption{Simulation showing the vehicle after landing in front of the rock.}
 	\label{im:v_align_land}
 \end{figure}
-
 Here the path that the robot performs is shown in a 3D plot, joint with the misalignment vector between the x axis of the robot and the projection on the inertial horizontal plane of the unit vector joining the vehicle frame to the rock frame.
 
 \begin{figure}[H]
@@ -737,12 +700,10 @@ The initial alignment task gain is saturated at 0.5, then we tried to change its
 	{\includegraphics[width=70mm]{3_1_3_gain0_7.png}}
 	\label{im:v_land_gain0_7}
 \end{figure} 
-
 The behaviour of the vehicle changes when the gain value is modified: the smaller the gain, the harder it is for the vehicle to reach the correct alignment with \(d_{proj}\). As it can be seen in the images above, while the time used by the robot to reach the sea floor remains the same, increasing the gain makes it reach different configurations when approaching the sea floor.\\
 For gain values smaller than about \(0.2\), the misalignment vector fails to become a null vector, as can be seen in images (b) and (d), where the vehicle is not able to align to the target in time. In the other two cases instead the vehicle manages to align in time to the target, even if, for gain = \(0.4\), some alignment error is still present. \\
 This shows that this solution is heavily gain-dependent, so we need to think about a solution to ensure that the alignment is always achieved.
 What we thought was to add a new Action in between the two actual ones that is activated when the vehicle reaches the goal position for the Safe Navigation action. This new Action is composed by two tasks, horizontal attitude for safety and the horizontal aligning to the target. The vehicle doesn't land until the module of the misalignment vector, $\theta$, becomes lower than \(0.02 \) \({rad}\). The table with the new action is detailed below. \\
-
 
 \begin{table}[htb]
 	\caption{Task hierarchy for the set of actions used to create a gain-independent alignment action.}
@@ -792,7 +753,6 @@ Then, the vehicle start the landing, but the misalignment vector between its x-a
 The behaviour obtained shows that the vehicle manages to land aligned with the target even if the gain value is very low.
  
 \subsubsection{Q4: After the landing is accomplished, what happens if you try to move the end-effector? Is the distance to the nodule sufficient to reach it with the end-effector? Comment the observed behaviour. If, after landing, the nodule is not in the manipulator's workspace, how would you solve this problem to guarantee it?}
-
 In order to move the end effector after landing is accomplished, we need to introduce a new action, that we called Grasp Object, that will be performed after the previous action is concluded, that is, when the vehicle altitude from the sea floor is lower than \(0.1 m\). This action is composed by three tasks: 
 \begin{itemize}
 	\item the Horizontal Attitude, for safety
@@ -938,7 +898,6 @@ disturb_ang = [0, 1, 0]'; \\
 disturb_ang = disturb_ang*0.35*sin(2*pi*0.5*t);
 uvms.p_dot(4:6) = uvms.vTw(1:3,1:3)*disturb_ang;
 \end{lstlisting}
-
 We get the following results:
 \begin{figure}[H]
 	\centering
@@ -984,7 +943,6 @@ Goal: Add a joint limits avoidance task. Land on the seafloor. Try reaching the 
 
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. At which priority level did you add the joint limits task?}
 Here is the hierarchy table used to implement the new mission. The only thing that changed with respect to the previous table presented in point 4.1.1 is the fourth action: now it also features the two new tasks, one to avoid the minimum joint limits and the other to avoid the maximum joint limits. \\
-
 Since they are both safety tasks, they need to have high priority, so we placed them just below the constraint task, which needs to stay at the top of the hierarchy.
 \begin{table}[htb]
 	\caption{Hierarchy table defined to perform the four actions that make up the fixed-base manipulation objective.}
@@ -1034,10 +992,9 @@ Our variable of interest is the joint position vector so, since the vehicle velo
 uvms.JjointLimits = [eye(7), zeros(7, 6)];
 \end{lstlisting}
 The jacobian matrix is the same for both the maximum joint limits task and the minimum one, but the task references are different. The tasks are both of inequality type, so the task reference must drive the variable of interest to the first point where the activation function is equal to zero: for the minimum task this value is equal to the minimum joint limits vector $ uvms.jlmin $ plus an offset of 0.5 rad, for the maximum task it's the maximum joint limits vector $ uvms.jlmax $ minus the same offset. \\
-
 Thus:
 \begin{lstlisting}
-offset = 0.5; \\
+offset = 0.5;
 uvms.xdot.lbjointLimits = Saturate(0.5 * ((uvms.jlmin + offset) - uvms.q), 0.5);
 uvms.xdot.ubjointLimits = Saturate(0.5 * ((uvms.jlmax - offset) - uvms.q), 0.5);
 \end{lstlisting}
@@ -1058,9 +1015,7 @@ The goal is to try to optimize the joint positions, if possible, to keep the fir
 Goal: Add an optimization objective to keep the first four joints of the manipulator in the preferred shape. Observe the behaviour with and without the task
 
 \subsubsection{Q1: Report the hierarchy of tasks used and their priorities in each action. At which priority level did you add the optimization task?}
-
 In order to accomplish the goal, we have chosen to implement an action with the following task. We first want to ensure the safety of the robot so the safety task is added with the highest priority, as shown in the table below. 
-
 \begin{table}[htb]
 	\caption{Hierarchy table defined to perform the arm optimal configuration control.}
 	\begin{itemize}
@@ -1084,8 +1039,6 @@ In order to accomplish the goal, we have chosen to implement an action with the 
 		\end{tabular}
 	\end{center}
 \end{table}
-
-
 After having ensured the robot to stay consistently parallel to the seafloor (or at least parallel to the $ O_{xy} $ plane of the inertial frame) we introduced the tasks to control the robot. First we want to ensure that the robot is aligned to the target, in order to enhance the arm effectiveness. Secondly, we want to actually control the robot and its arm together, so the tool control task is implemented. The optimization task is added with the lowest priority. In fact, it should not directly influence the behavior of the arm, but only change the configuration, if possible, in the remaining manifold. 
 
 \subsubsection{Q2: What is the Jacobian relationship for the Joint Preferred Shape task? How was the task reference computed?}
@@ -1100,42 +1053,30 @@ For this task, the task reference was computed comparing the current joints posi
 \begin{lstlisting}
 uvms.xdot.armPrefPos = Saturate(0.5 * (uvms.armPrefPos - uvms.q(1:4)), 0.5);
 \end{lstlisting}
-
 As equality task, we want to drive the arm as close al possible to the desired optimal configuration, acting on the remaining manifold of solution. 
 
 \subsubsection{Q3: What is the difference between having or not having this objective?}
-
 We now want to present the influence of this task on the robot behavior. We want to proceed showing the robot behavior without the task and then with the task active. In both cases, we will qualitatively present the result followed by a more rigorous mathematical description. In this last part, we will consider the joints value as well as the arm dexterity. The arm dexterity is given by the formula
 $$ \kappa = \left|\left| \bm{J} \right|\right|_2 \left|\left| \bm{J}^{-1} \right|\right|_2
 $$
-
 Where $\bm{J}$ is the arm jacobian and $\bm{J}^{-1}$ its inverse. In the case the jacobian is not a square matrix, the pseudo inverse is evaluated. 
-
 The arm dexterity is an indices of the capability of the arm of perform motions around the current arm configuration. 
 For sake of completeness, we want also to point out some lack of optimization of this task. In fact, the main goal is to keep the arm to an optimal configuration but, a part of the dexterity, also the arm manipulability should be of concern. In fact, the arm manipulability decreases when the arm is close to a singular configuration. This may deteriorate the arm performances around the considered configuration. To this aim, the arm manipulability is evaluated for both cases. The definition of the arm manipulability is the following. 
 $$
 	\mu = \sqrt{\left| \bm{J} \bm{J}^T \right|}
 $$
-
 The difference in having or not this task are shown in the following. \\
 
 {\large \textbf{Behavior without optimization}} \\
 In this first part, we want to describe the robot behavior while trying to bring the arm close to the pipeline. In the following image, the final position where the robot stopped is shown. \\
-
-
 \begin{figure}[H]
 	\centering
 	{\includegraphics[scale=0.35]{without_optim.png}}
 	\caption{Position of the vehicle and arm configuration once reached the pipeline (without optimization task).}
 	\label{im:without_optim}
 \end{figure}
-
-
-
-As we can see from the previus figure, the arm is very stretched and the configuration it has reached has a poor dexterity. As a result, a continouos operation on the pipeline is not possible, as it will require the movement of the vehicle. 
-
+As we can see from the previous figure, the arm is very stretched and the configuration it has reached has a poor dexterity. As a result, a continuous operation on the pipeline is not possible, as it will require the movement of the vehicle. 
 The joints are far from what is prescribed ad the optimal value. The figure below clearly shows that the values are not respected. 
-
 \begin{figure}[H]
 	\centering
 	\subfigure[Joint values without optimization task]
@@ -1148,21 +1089,17 @@ The joints are far from what is prescribed ad the optimal value. The figure belo
 	{\includegraphics[width=70mm]{manip_no_optim.png}}
 	\label{im:Without_optim_results}
 \end{figure} 
-
-Furthermore, the effect of this lack in mantaining the optimal arm configuration is reflected in the arm dexterity. first it drops in the first time instants. After recovering the reduction, the overall dexterity reamins lower than the one achieved when the task is active. Finally, for what concerns the arm manipulability, the following figure shows that the arm stays away from any singulatiry configuration, as its manipulability never decreases too much. However, this is mostly due to luck, as there no control on that. When the task is active, we can see that the arm is a dexterous position, allowing to perform effectively motions on the spot. This deduction is made by looking at the following figure. It is clear that the arm is in a configuration where no joint is close to one of its limit, so the arm can effectively perform a wide range of motions.
+Furthermore, the effect of this lack in maintaining the optimal arm configuration is reflected in the arm dexterity. first it drops in the first time instants. After recovering the reduction, the overall dexterity remains lower than the one achieved when the task is active. Finally, for what concerns the arm manipulability, the following figure shows that the arm stays away from any singularity configuration, as its manipulability never decreases too much. However, this is mostly due to luck, as there no control on that. When the task is active, we can see that the arm is a dexterous position, allowing to perform effectively motions on the spot. This deduction is made by looking at the following figure. It is clear that the arm is in a configuration where no joint is close to one of its limit, so the arm can effectively perform a wide range of motions. \\
 
 
 {\large \textbf{Behavior with optimization}} \\
 We now want to present the results obtained when the optimization task wa defined and activated. First, the effect can be qualitatively seen from the image below. \\
-
 \begin{figure}[H]
 	\centering
 	{\includegraphics[scale=0.35]{with_optim.png}}
 	\caption{Position of the vehicle and arm configuration once reached the pipeline (with optimization task).}
 	\label{im:optim}
 \end{figure}
-
-
 This behavior is desirable as we would like the arm to reach the desired position and also being able to perform tasks. As we can see from the following figures, the joints assume the desired position and the arm dexterity is satisfactory. 
 \begin{figure}[H]
 	\centering
@@ -1176,8 +1113,6 @@ This behavior is desirable as we would like the arm to reach the desired positio
 	{\includegraphics[width=70mm]{manip_optim.png}}
 	\label{im:With_optim_results}
 \end{figure} 
-
-
 Moreover, the arm dexterity is positively influenced by this task. In fact, the following figure reports that its dexterity doesn't drop as in the case without the task activated. Moreover, it increases considerably from the initial value reaching an asymptote. However, as the arm manipulability is not considered, it decades to low value during the execution of the task. In other words, the arm is close to a singularity configuration once reached the target position. In order to counteract this lack of manipulability a prerequisite task should be defined to take care of it at an higher priority level.
 
 
@@ -1188,7 +1123,6 @@ Goal: introduce mission phases in the floating manipulation scenario. Observe th
 
 \subsubsection{Q1: Report the unified hierarchy of tasks used and their priorities. Which task is active in which phase/action?}
 The table below reports the hierarchy of tasks for both actions. 
-
 \begin{table}[htb]
 	\caption{Hierarchy table defined to perform the arm optimal configuration control.}
 	\begin{itemize}
@@ -1221,17 +1155,16 @@ The table below reports the hierarchy of tasks for both actions.
 		\end{tabular}
 	\end{center}
 \end{table}
-
-
 First, we have the safe navigation action, in this task the main goal is to bring the robot close to the tool target: the pipeline. For this action, the common tasks for safe navigation are included: vehicle position and attitude control and the horizontal attitude control. As always, the safety task comes first, so the horizontal attitude control has the highest priority. It is followed by the two tasks for the vehicle control. The safe navigation is needed in order to avoid possible obstacles and ensure that we are moving the arm only in a safe environment. 
-
 Secondly, once the robot has reached a position slightly above the pipeline, the action bringing the arm on the pipeline is triggered. In this action, we first ensure the safety of the arm and robot. The first by ensuring that the minimum and maximum values for each joint are respected, while the second is ensured controlling the robot to be parallel to the seafloor. We also included a tasks ensuring the alignment of the robot to the target of the tool, in order to facilitate the task of the arm. This last tasks comes after all the safety and practical tasks, and it is followed by the optimization task. 
 
 \subsubsection{Q2: What is the difference with the previous simulation (still in exercise 5), where only one action was used?}
-
 The main difference is that in this case the arm is controlled only when the robot is close to the end effector target position. This ensures that the arm is moved only when the robot is in a safe environment. 
 Moreover, we have introduced the alignment to the target, in this way not only the arm maintains a good dexterity around the target position, but the robot itself is able to effectively move and be controlled around the current position. 
 \clearpage
+
+
+
 \section{Exercise 6: Floating Manipulation with Arm-Vehicle Coordination Scheme}
 \subsection{Adding the parallel arm-vehicle coordination scheme}
 Let us now see how the two different subsystems (arm and vehicle) can be properly coordinate. Introduce in the simulation a sinusoidal velocity disturbance acting on the vehicle, and assume the actual vehicle velocity measurable. To do so, add a constant (in the inertial frame) velocity vector to the reference vehicle velocity before integrating it in the simulator.
@@ -1256,9 +1189,7 @@ In order to cope with this disturbances we defined a new task called: armVehiCoo
 This task is placed with the highest hierarchy, limiting the manifold of solution to the one where the vehicle velocities are imposed. In fact, in order to decouple the two systems, we need to feed the arm with the vehicle velocities, the jacobian matrix accounts only for the vehicle velocities, disregarding the arm velocities.
 $ \bm{\dot{x}} = \bm{J\dot{y}} $ which in this case becomes 
 $$ \bm{\dot{x}} = \begin{bmatrix} \bm{0}_{[6x7]} & \bm{I}_{[6x6]} \end{bmatrix} \begin{bmatrix} \bm{\dot{q}}   \\ \bm{v} \\ \bm{\omega} \end{bmatrix} $$
-
 The task takes as a reference the velocities of the vehicle, as this is the input the arm has to compensate. Concerning the activation function, this is defined as an identity matrix, as the task is an equality one. 
-
 
 
 \subsubsection{Q2: Show the plot of the position of the end-effector, showing that it is constant. Show also a plot of the velocities of the vehicle and of the arm.}
@@ -1270,8 +1201,6 @@ In the following images, the end effector position is plotted, showing the three
 	\caption{End effector position (x, y, z).}
 	\label{im:tool_cord1}
 \end{figure}
-
-
 The following image compares the vehicle velocities, expressed in the vehicle frame, and the velocities of the arm joints. The vehicle linear velocities show the effect of the linear disturbance, which brings a change in the vehicle velocities on x and y. 
 The arm velocities are the resultant for the control of the end effector in its original position. 
 
@@ -1281,7 +1210,6 @@ The arm velocities are the resultant for the control of the end effector in its 
 	\caption{Arm joints velocities.}
 	\label{im:arm_vel1}
 \end{figure}
-
 In this last image, we would like to show the evolution of the end effector velocities expressed in the inertial frame. The velocities start with a nonzero infinitesimal value, but they converge to zero in few seconds.
 
 \begin{figure}[H]
@@ -1305,16 +1233,13 @@ uvms.p_dot(4:6) = uvms.vTw(1:3,1:3)*disturb_ang;
 However, as it can be seen in the following images, the end effector does not moves much. 
 The following figure shows that the oscillations of the tool position are of the order of one millimeter, which can be considered as a acceptable result.  \\
 
-
 \begin{figure}[H]
 	\centering
 	{\includegraphics[scale=0.8]{tool_coord_sinus_debole.png}}
 	\caption{End effector position (x, y, z) with weak disturbance.}
 	\label{im:tool_cord2}
 \end{figure}
-
 The following images compares the vehicle velocities with the joint rotational speed.  \\ 
-
 
 \begin{figure}[H]
 	\centering
@@ -1322,10 +1247,7 @@ The following images compares the vehicle velocities with the joint rotational s
 	\caption{Arm joints velocities with weak disturbance.}
 	\label{im:arm_vel2}
 \end{figure}
-
-
 Finally, this last image shows that the end effector velocities remains reasonable small.  \\ 
-
 
 \begin{figure}[H]
 	\centering
@@ -1333,8 +1255,6 @@ Finally, this last image shows that the end effector velocities remains reasonab
 	\caption{End effector velocities in the inertial frame with weak disturbance.}
 	\label{im:tool_vel2}
 \end{figure}
-
- 
 However, if we increase the disturbance too much, the arms cannot cope with the disturbance in the vehicle. As a result, the displacement of the end effector is not negligible. Even if we increase the gain and the saturation of the tool control task, this is not sufficient to cancel the disturbance. The disturbance is added as described below.
 \begin{lstlisting}
 %	Adding the disturbances
@@ -1361,7 +1281,6 @@ desired position. The displacements on x reach almost 10 cm.  \\
 	\caption{Arm joints velocities with strong disturbance.}
 	\label{im:arm_vel3}
 \end{figure}
-
 Comparing the vehicle velocities with either the arm joints or end effector velocities, it is clear that in this case the task fails in its purpose. \\
 
 \begin{figure}[H]
@@ -1370,7 +1289,6 @@ Comparing the vehicle velocities with either the arm joints or end effector velo
 	\caption{End effector velocities in the inertial frame with strong disturbance.}
 	\label{im:tool_vel3}
 \end{figure}
-
 These results were computed using an high gain on the tool control task, trying to counteract to the effect of the changes in the vehicle position. However, these efforts were not sufficient to correct the end effector position. The reason is that this task can cope with disturbances only if they are quantitatively small. The aim of the task is stabilize the end effector in the scenario where small disturbances act on the vehicle; such as current or the slow vehicle dynamics. 
 
 
